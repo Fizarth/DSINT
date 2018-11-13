@@ -2,10 +2,10 @@
 /com/
 /dtables/
 /logback-test.xml
-/ontologia/
-/process/
-/rules/
-/personajes/
-/utilidades/
 /lugares/
+/ontologia/
+/personajes/
+/process/
 /relaciones/
+/rules/
+/utilidades/
