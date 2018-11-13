@@ -1,5 +1,5 @@
 package lugares;
 
 public class HabitacionNino {
-	//saaa
+	//saaaa
 }
