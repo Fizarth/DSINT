@@ -1,6 +1,6 @@
 package ontologia;
 
-public class Iñigo extends Personaje{
+public class Inigo extends Personaje{
 
 	//TODO amigo de 
 	//TODO enemigo de 
@@ -9,8 +9,8 @@ public class Iñigo extends Personaje{
 	
 	private Motivacion motivacion;
 	
-	public Iñigo(Lugar ubicacion) {
-		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Iñigo Montoya" , Origen.ESPAÑA, true, Sexo.HOMBRE,
+	public Inigo(Lugar ubicacion) {
+		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Inigo Montoya" , Origen.ESPANA, true, Sexo.HOMBRE,
 				TipoImportancia.PROTAGONISTA, ubicacion);
 		this.motivacion = Motivacion.VENGAR_PADRE;
 	}

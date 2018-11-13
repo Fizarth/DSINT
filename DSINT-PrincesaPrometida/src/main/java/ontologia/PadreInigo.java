@@ -1,13 +1,13 @@
 package ontologia;
 
-public class PadreIñigo extends Personaje{
+public class PadreInigo extends Personaje{
 	
 	//TODO familiar de 
 	
 	private Profesion profesion;
 
-	public PadreIñigo( Lugar ubicacion) {
-		super(EstadoCivil.INDEFINIDO, EstadoSalud.MUERTO, "Domingo Montoya", Origen.ESPAÑA, true, Sexo.HOMBRE, 
+	public PadreInigo( Lugar ubicacion) {
+		super(EstadoCivil.INDEFINIDO, EstadoSalud.MUERTO, "Domingo Montoya", Origen.ESPANA, true, Sexo.HOMBRE, 
 				TipoImportancia.SECUNDARIO, ubicacion);
 	}
 
