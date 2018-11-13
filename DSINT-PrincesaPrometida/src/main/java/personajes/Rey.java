@@ -11,11 +11,31 @@ public class Rey extends Personaje{
 	private TituloNobiliario titulo;
 	private Profesion profesion;
 
-	public Rey(EstadoCivil estadoCivil, EstadoSalud salud, String nombre, Origen origen, boolean cuento, Sexo sexo,
-			TipoImportancia importancia, Lugar ubicacion) {
-		super(estadoCivil, salud, nombre, origen, cuento, sexo, importancia, ubicacion);
+	public Rey( Lugar ubicacion) {
+		super(EstadoCivil.CASADO, EstadoSalud.VIVO, "El Rey", Origen.FLORIN, true, Sexo.HOMBRE, 
+				TipoImportancia.SECUNDARIO, ubicacion);
+		this.titulo = TituloNobiliario.REY;
+		
 		
 	}
+
+	public TituloNobiliario getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(TituloNobiliario titulo) {
+		this.titulo = titulo;
+	}
+
+	public Profesion getProfesion() {
+		return profesion;
+	}
+
+	public void setProfesion(Profesion profesion) {
+		this.profesion = profesion;
+	}
+	
+	
 	
 	
 
