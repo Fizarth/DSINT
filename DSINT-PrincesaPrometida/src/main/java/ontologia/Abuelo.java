@@ -12,7 +12,4 @@ public class Abuelo extends Personaje {
 	
 	
 	
-	
-	/// comentario norberto
-	
 }
