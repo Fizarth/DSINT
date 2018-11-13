@@ -1,5 +1,12 @@
 package lugares;
 
 public abstract class Lugar {
-	private 
+	private final String nombre;
+	
+	public Lugar(){
+		nombre = getClass().getSimpleName();
+	}
+	
+	
+	
 }
