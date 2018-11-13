@@ -17,6 +17,24 @@ public class Westley extends Personaje {
 				TipoImportancia.PROTAGONISTA, ubicacion);
 		this.motivacion = Motivacion.GANAR_DINERO;
 	}
+
+	public Motivacion getMotivacion() {
+		return motivacion;
+	}
+
+	public void setMotivacion(Motivacion motivacion) {
+		this.motivacion = motivacion;
+	}
+
+	public Profesion getProfesion() {
+		return profesion;
+	}
+
+	public void setProfesion(Profesion profesion) {
+		this.profesion = profesion;
+	}
+	
+	
 	
 	
 
