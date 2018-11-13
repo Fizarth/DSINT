@@ -11,6 +11,9 @@ public class Conoce_a {
 	public Conoce_a(Personaje productor, Personaje afectado) {
 		this.productor = productor;
 		this.afectado = afectado;
+		
+		
+		
 	}
 	
 	
