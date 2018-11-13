@@ -1,7 +1,7 @@
 package personajes;
 
 import lugares.*;
-import ontologia.Profesion;
+import profesiones.Profesion;
 import utilidades.*;
 
 public class Pirata extends Personaje {
