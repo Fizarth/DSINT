@@ -1,6 +1,6 @@
 package personajes;
 
-import ontologia.Lugar;
+import lugares.Lugar;
 import ontologia.Profesion;
 import utilidades.EstadoCivil;
 import utilidades.EstadoSalud;

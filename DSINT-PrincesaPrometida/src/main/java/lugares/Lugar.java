@@ -1,4 +1,4 @@
-package ontologia;
+package lugares;
 
 public abstract class Lugar {
 
