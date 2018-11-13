@@ -1,4 +1,4 @@
-package ontologia;
+package utilidades;
 
 public enum Sexo {
 	HOMBRE, MUJER

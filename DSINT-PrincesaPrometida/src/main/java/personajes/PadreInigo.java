@@ -1,4 +1,12 @@
-package ontologia;
+package personajes;
+
+import ontologia.Lugar;
+import ontologia.Profesion;
+import utilidades.EstadoCivil;
+import utilidades.EstadoSalud;
+import utilidades.Origen;
+import utilidades.Sexo;
+import utilidades.TipoImportancia;
 
 public class PadreInigo extends Personaje{
 	

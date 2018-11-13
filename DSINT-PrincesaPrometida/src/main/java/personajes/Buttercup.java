@@ -1,9 +1,18 @@
-package ontologia;
+package personajes;
+
+import ontologia.Lugar;
+import ontologia.Profesion;
+import utilidades.EstadoCivil;
+import utilidades.EstadoSalud;
+import utilidades.Motivacion;
+import utilidades.Origen;
+import utilidades.Sexo;
+import utilidades.TipoImportancia;
 
 public class Buttercup extends Personaje{
-	//TODO añadir Amigo de
-	//TODO añadir odia_a
-	//TODO añadir quiere_a
+	//TODO aï¿½adir Amigo de
+	//TODO aï¿½adir odia_a
+	//TODO aï¿½adir quiere_a
 	//TODO como poner posteriormente que etsta prometida
 	
 	

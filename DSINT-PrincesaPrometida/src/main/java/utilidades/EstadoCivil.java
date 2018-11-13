@@ -1,4 +1,4 @@
-package ontologia;
+package utilidades;
 
 public enum EstadoCivil {
 	SOLTERO, CASADO, INDEFINIDO

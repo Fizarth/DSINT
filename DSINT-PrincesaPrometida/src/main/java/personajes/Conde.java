@@ -1,10 +1,20 @@
-package ontologia;
+package personajes;
+
+import ontologia.Lugar;
+import ontologia.Profesion;
+import utilidades.EstadoCivil;
+import utilidades.EstadoSalud;
+import utilidades.Motivacion;
+import utilidades.Origen;
+import utilidades.Sexo;
+import utilidades.TipoImportancia;
+import utilidades.TituloNobiliario;
 
 public class Conde extends Personaje{
 
-	//TODO añadir amigo de
-	//TODO alñadir conoce_a
-	//TODO añadir enemigo de
+	//TODO aï¿½adir amigo de
+	//TODO alï¿½adir conoce_a
+	//TODO aï¿½adir enemigo de
 	
 	private Motivacion motivacion;
 	private TituloNobiliario titulo;
