@@ -63,3 +63,30 @@ rule "Relacion Conocer"
         System.out.println("Relaciones de: " + p2.getNombre() + " = " + p2.getRelacionesPersonaje().toString());
      
 end
+
+rule "Weatley se va a hacer fortuna"
+    when
+    	l: Lugar(nombre == "Mar")
+   		lg: Lugar(nombre == "Granja");
+        p1: Westley(nombre == "Weasley", ubicacionActual== lg,motivacion == Motivacion.GANAR_DINERO)
+   		
+    then
+    	modify(p1){
+    		setUbicacionActual(l);
+    	}
+     System.out.println(p1.getNombre() + " se va a " + l.getNombre() + " para " + p1.getMotivacion());
+end
+
+
+rule "Weatley muere"
+    when
+    	lm: Lugar(nombre == "Mar")
+        p: Personaje(nombre == "Weasley",ubicacionActual == lm)
+   		p2: Personaje(nombre== "Robert el Pirata")
+    then
+    	modify(p){
+    		setEstadoSalud(EstadoSalud.MUERTO);
+    	}
+     System.out.println(p.getNombre() + " esta " + p.getEstadoSalud() +" asesinado por " + p2.getNombre());
+end
+

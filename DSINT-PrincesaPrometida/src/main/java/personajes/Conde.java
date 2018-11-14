@@ -12,9 +12,9 @@ import utilidades.TituloNobiliario;
 
 public class Conde extends Personaje{
 
-	//TODO aï¿½adir amigo de
-	//TODO alï¿½adir conoce_a
-	//TODO aï¿½adir enemigo de
+	//TODO añadir amigo de
+	//TODO añadir conoce_a
+	//TODO añadir enemigo de
 	
 	private Motivacion motivacion;
 	private TituloNobiliario titulo;
