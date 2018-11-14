@@ -8,14 +8,15 @@ import relaciones.*;
 import utilidades.*;
 
 
-rule "Hello World"
+rule "Añadir Lugar a Weatley"
     when
-        m : Message( status == Message.HELLO, myMessage : message )
+    	p : Personaje(nombre == "Weasley", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
+    	l : Lugar(nombre == "Granja")
     then
-        System.out.println( myMessage );
-        m.setMessage( "Goodbye cruel world" );
-        m.setStatus( Message.GOODBYE );
-        update( m );
+        modify(p){
+			setUbicacionActual(l);
+		}
+		System.out.println("Se ha actualizado Ubicacion de: "+ p.getNombre() +" a " + l.getNombre());
 end
 
 rule "GoodBye"
