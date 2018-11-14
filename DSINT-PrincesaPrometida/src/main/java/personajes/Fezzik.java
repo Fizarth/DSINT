@@ -16,10 +16,8 @@ public class Fezzik extends Personaje{
 	private Motivacion motivacion;
 	private Profesion profesion;
 
-	public Fezzik(EstadoCivil estadoCivil, EstadoSalud salud, String nombre, Origen origen, boolean cuento, Sexo sexo,
-			TipoImportancia importancia, Lugar ubicacion) {
-		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Fezzik", Origen.TURQUIA, true, Sexo.HOMBRE, TipoImportancia.PROTAGONISTA, 
-				ubicacion);
+	public Fezzik() {
+		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Fezzik", Origen.TURQUIA, true, Sexo.HOMBRE, TipoImportancia.PROTAGONISTA);
 		this.motivacion = Motivacion.TENER_TRABAJO;
 		// TODO Auto-generated constructor stub
 	}

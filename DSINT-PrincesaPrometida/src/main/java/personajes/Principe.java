@@ -15,9 +15,9 @@ public class Principe extends Personaje {
 	private TituloNobiliario titulo;
 	private Profesion profesion;
 	
-	public Principe(Lugar ubicacion) {
+	public Principe() {
 		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Principe Humperdink", Origen.FLORIN, true, Sexo.HOMBRE, 
-				TipoImportancia.PROTAGONISTA, ubicacion);
+				TipoImportancia.PROTAGONISTA);
 		this.motivacion = Motivacion.DECLARAR_GUERRA;
 		this.titulo = TituloNobiliario.PRINCIPE;
 	}

@@ -11,9 +11,9 @@ public class Nieto extends Personaje {
 
 	//TODO familiar de 
 	
-	public Nieto( Lugar ubicacion) {
+	public Nieto() {
 		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "El Nieto", Origen.CHICAGO, false, Sexo.HOMBRE, 
-				TipoImportancia.SECUNDARIO, ubicacion);
+				TipoImportancia.SECUNDARIO);
 		
 	}
 	

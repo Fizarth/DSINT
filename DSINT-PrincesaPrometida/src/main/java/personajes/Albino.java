@@ -13,9 +13,9 @@ public class Albino extends Personaje{
 	private Profesion trabaja_de;
 	//TODO aa�adir conoce_a
 	
-	public Albino(EstadoCivil estadoCivil, EstadoSalud salud, String nombre, Origen origen, boolean cuento,
-			Sexo sexo, TipoImportancia importancia, Lugar ubicacion) {
-		super(estadoCivil, salud, nombre, origen,cuento, sexo, importancia, ubicacion);
+	public Albino() {
+		super(EstadoCivil.INDEFINIDO, EstadoSalud.VIVO, "Jai", Origen.FLORIN,true, Sexo.HOMBRE,
+				TipoImportancia.SECUNDARIO);
 	}
 	
 	public Profesion getTrabaja_de() {

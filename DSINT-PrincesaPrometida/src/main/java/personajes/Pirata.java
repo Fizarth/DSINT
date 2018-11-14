@@ -9,9 +9,9 @@ public class Pirata extends Personaje {
 	private Motivacion motivacion;
 	private Profesion profesion;
 	
-	public Pirata(Lugar ubicacion) {
+	public Pirata() {
 		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Robert el Pirata", Origen.INGLATERRA, true, Sexo.HOMBRE,
-				TipoImportancia.SECUNDARIO, ubicacion);
+				TipoImportancia.SECUNDARIO);
 		this.motivacion = Motivacion.SECUESTRAR_PRINCESA;
 	}
 

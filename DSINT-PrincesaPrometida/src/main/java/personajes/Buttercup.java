@@ -19,8 +19,8 @@ public class Buttercup extends Personaje{
 	private Motivacion motivacion;
 	private Profesion profesion;
 	
-	public Buttercup(EstadoCivil estadoCivil, EstadoSalud salud , Lugar ubicacion) {
-		super(estadoCivil, salud, "Buttercup", Origen.FLORIN,true, Sexo.MUJER, TipoImportancia.PROTAGONISTA, ubicacion);
+	public Buttercup() {
+		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Buttercup", Origen.FLORIN,true, Sexo.MUJER, TipoImportancia.PROTAGONISTA);
 		//TODO no se si esto cambia a lo largo de la historia y ponerlo como posible valor o dejarlo preestablecido.
 		this.motivacion =  Motivacion.ESTAR_CON_WEASLEY;
 	}

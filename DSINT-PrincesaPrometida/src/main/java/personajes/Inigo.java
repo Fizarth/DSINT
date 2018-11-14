@@ -17,9 +17,9 @@ public class Inigo extends Personaje{
 	
 	private Motivacion motivacion;
 	
-	public Inigo(Lugar ubicacion) {
+	public Inigo() {
 		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Inigo Montoya" , Origen.ESPANA, true, Sexo.HOMBRE,
-				TipoImportancia.PROTAGONISTA, ubicacion);
+				TipoImportancia.PROTAGONISTA);
 		this.motivacion = Motivacion.VENGAR_PADRE;
 	}
 
