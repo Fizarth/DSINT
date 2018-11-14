@@ -2,5 +2,9 @@ package lugares;
 
 public class HabitacionNino extends Lugar{
 
-	//sdojbwug
+	public HabitacionNino() {
+		super("Habitación del Niño");
+		// TODO Auto-generated constructor stub
+	}
+
 }
