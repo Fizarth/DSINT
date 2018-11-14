@@ -1,5 +1,5 @@
 package lugares;
 
-public class PozoDesesperacion {
+public class PozoDesesperacion extends Lugar{
 
 }

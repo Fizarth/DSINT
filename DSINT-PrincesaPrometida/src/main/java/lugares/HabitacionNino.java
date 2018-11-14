@@ -1,6 +1,6 @@
 package lugares;
 
-public class HabitacionNino {
+public class HabitacionNino extends Lugar{
 
 	//sdojbwug
 }
