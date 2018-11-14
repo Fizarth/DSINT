@@ -14,9 +14,9 @@ public class PadreInigo extends Personaje{
 	
 	private Profesion profesion;
 
-	public PadreInigo( Lugar ubicacion) {
+	public PadreInigo() {
 		super(EstadoCivil.INDEFINIDO, EstadoSalud.MUERTO, "Domingo Montoya", Origen.ESPANA, true, Sexo.HOMBRE, 
-				TipoImportancia.SECUNDARIO, ubicacion);
+				TipoImportancia.SECUNDARIO);
 	}
 
 	public Profesion getProfesion() {

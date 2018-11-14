@@ -17,9 +17,9 @@ public class Max extends Personaje {
 	private Motivacion motivacion;
 	private Profesion profesion;
 	
-	public Max(Lugar ubicacion) {
+	public Max() {
 		super(EstadoCivil.CASADO, EstadoSalud.VIVO, "Milagroso Max", Origen.FLORIN, true, Sexo.HOMBRE, 
-				TipoImportancia.SECUNDARIO, ubicacion);
+				TipoImportancia.SECUNDARIO);
 		this.motivacion = Motivacion.HUMILLAR_PRINCIPE;
 		// TODO Auto-generated constructor stub
 	}

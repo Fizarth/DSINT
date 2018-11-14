@@ -1,7 +1,13 @@
 package com.sample
  
 import com.sample.DroolsTest.Message;
- 
+import animales.*;
+import lugares.*;
+import personajes.*;
+import relaciones.*;
+import utilidades.*;
+
+
 rule "Hello World"
     when
         m : Message( status == Message.HELLO, myMessage : message )

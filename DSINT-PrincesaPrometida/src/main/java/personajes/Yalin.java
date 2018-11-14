@@ -7,9 +7,9 @@ public class Yalin extends Personaje {
 
 	private Motivacion motivacion;
 	
-	public Yalin(Lugar ubicacion) {
+	public Yalin() {
 		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Yalin", Origen.FLORIN, true, Sexo.HOMBRE, 
-				TipoImportancia.SECUNDARIO, ubicacion);
+				TipoImportancia.SECUNDARIO);
 		this.motivacion = Motivacion.SERVIR_PRINCIPE;
 		// TODO Auto-generated constructor stub
 	}

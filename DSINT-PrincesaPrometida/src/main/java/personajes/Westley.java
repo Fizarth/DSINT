@@ -12,9 +12,9 @@ public class Westley extends Personaje {
 	private Motivacion motivacion;
 	private Profesion profesion;
 
-	public Westley(Lugar ubicacion) {
+	public Westley() {
 		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Weasley", Origen.FLORIN, true, Sexo.HOMBRE, 
-				TipoImportancia.PROTAGONISTA, ubicacion);
+				TipoImportancia.PROTAGONISTA);
 		this.motivacion = Motivacion.GANAR_DINERO;
 	}
 

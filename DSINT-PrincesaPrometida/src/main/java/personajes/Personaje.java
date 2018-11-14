@@ -19,7 +19,7 @@ public abstract class Personaje {
 	private Lugar ubicacionActual;
 	
 	public Personaje(EstadoCivil estadoCivil, EstadoSalud salud, String nombre, Origen origen, boolean cuento,
-			Sexo sexo, TipoImportancia importancia, Lugar ubicacion) {
+			Sexo sexo, TipoImportancia importancia) {
 		this.estadoCivil = estadoCivil;
 		this.estadoSalud = salud;
 		this.nombre = nombre;
@@ -27,7 +27,7 @@ public abstract class Personaje {
 		this.perteneceCuento = cuento;
 		this.sexo = sexo;
 		this.tipoImportancia = importancia;
-		this.ubicacionActual = ubicacion; 
+		this.ubicacionActual = null;
 		
 	}
 	

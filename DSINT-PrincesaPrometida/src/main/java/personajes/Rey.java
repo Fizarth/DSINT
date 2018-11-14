@@ -11,9 +11,9 @@ public class Rey extends Personaje{
 	private TituloNobiliario titulo;
 	private Profesion profesion;
 
-	public Rey( Lugar ubicacion) {
+	public Rey() {
 		super(EstadoCivil.CASADO, EstadoSalud.VIVO, "El Rey", Origen.FLORIN, true, Sexo.HOMBRE, 
-				TipoImportancia.SECUNDARIO, ubicacion);
+				TipoImportancia.SECUNDARIO);
 		this.titulo = TituloNobiliario.REY;
 		
 		

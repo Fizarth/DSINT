@@ -12,9 +12,9 @@ public class Obispo extends Personaje{
 
 	private Profesion profesion;
 	
-	public Obispo(Lugar ubicacion) {
+	public Obispo() {
 		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Obispo Gangoso", Origen.FLORIN, true, Sexo.HOMBRE, 
-				TipoImportancia.SECUNDARIO, ubicacion);
+				TipoImportancia.SECUNDARIO);
 	}
 
 	public Profesion getProfesion() {

@@ -1,16 +1,14 @@
 /META-INF/
+/animales/
 /com/
 /dtables/
 /logback-test.xml
 /lugares/
-/ontologia/
 /personajes/
-/process/
-/relaciones/
-<<<<<<< HEAD
-/rules/
-/utilidades/
-=======
 /profesiones/
+/relaciones/
+/utilidades/
+<<<<<<< HEAD
+/test/
+=======
 >>>>>>> branch 'master' of https://github.com/Fizarth/DSINT.git
-/animales/
