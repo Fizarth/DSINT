@@ -10,10 +10,13 @@ import utilidades.*;
 
 rule "Añadir Lugar a Weatley"
     when
-    	p : Personaje(nombre == "Weasley")
+    	p : Personaje(nombre == "Weasley", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
     	l : Lugar(nombre == "Granja")
     then
-        
+        modify(p){
+			setUbicacionActual(l);
+		}
+		System.out.println("Se ha actualizado Ubicacion de: "+ p.getNombre() +" a " + l.getNombre());
 end
 
 rule "GoodBye"
