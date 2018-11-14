@@ -1,11 +1,7 @@
 package personajes;
 
-import lugares.Lugar;
-import utilidades.EstadoCivil;
-import utilidades.EstadoSalud;
-import utilidades.Origen;
-import utilidades.Sexo;
-import utilidades.TipoImportancia;
+import lugares.*;
+import utilidades.*;
 
 public class Anciana extends Personaje {
 

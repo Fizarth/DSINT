@@ -18,7 +18,7 @@ public class TestPersonajes {
 		KieSession kSession = kContainer.newKieSession("ksession-rules-dsi");
 		
 		Personaje p1 = new Nieto();
-		Person p2 = new Person("Alfredo",35,1.80);
+		Personaje p2 = new Abuelo();
 		
 		kSession.insert(p1);
 		kSession.insert(p2);
