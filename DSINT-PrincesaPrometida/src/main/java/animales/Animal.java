@@ -5,9 +5,11 @@ import lugares.*;
 public abstract class Animal {
 
 	private Lugar ubicacionActual;
+	private String nombre;
 
-	public Animal() {
+	public Animal(String tipo) {
 		this.ubicacionActual = null;
+		this.nombre = tipo;
 	}
 
 	public Lugar getUbicacionActual() {
@@ -16,6 +18,10 @@ public abstract class Animal {
 
 	public void setUbicacionActual(Lugar ubicacionActual) {
 		this.ubicacionActual = ubicacionActual;
+	}
+
+	public String getNombre() {
+		return nombre;
 	}
 
 }
