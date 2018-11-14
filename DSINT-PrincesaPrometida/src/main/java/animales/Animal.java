@@ -5,7 +5,7 @@ import lugares.*;
 public abstract class Animal {
 
 	private Lugar ubicacionActual;
-	private String nombre;
+	private final String nombre;
 
 	public Animal(String tipo) {
 		this.ubicacionActual = null;
