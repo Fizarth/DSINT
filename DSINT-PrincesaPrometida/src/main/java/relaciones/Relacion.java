@@ -1,17 +1,16 @@
 package relaciones;
 
-import personajes.Personaje;
+import personajes.*;
 
 public abstract class Relacion {
-	private Personaje productor;
+	
 	private Personaje afectado;
+	private final String nombre;
 	
 	
-	
-	public Relacion(Personaje productor, Personaje afectado) {
-		this.productor = productor;
+	public Relacion(String nombre, Personaje afectado) {
+		this.nombre = nombre;
 		this.afectado = afectado;	
-		
 	}
 	
 	
