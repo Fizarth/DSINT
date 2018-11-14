@@ -12,6 +12,12 @@ public abstract class Relacion {
 		this.nombre = nombre;
 		this.afectado = afectado;	
 	}
+
+
+	@Override
+	public String toString() {
+		return "Relacion [ " + nombre + " " + afectado.getNombre() + " ]";
+	}
 	
 	
 	
