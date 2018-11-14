@@ -6,21 +6,87 @@ import lugares.*;
 import personajes.*;
 import relaciones.*;
 import utilidades.*;
+import java.util.*;
 
 
-rule "Hello World"
+
+rule "Añadir Lugar a Weatley"
     when
-        m : Message( status == Message.HELLO, myMessage : message )
+    	p : Personaje(nombre == "Weasley", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
+    	l : Lugar(nombre == "Granja")
     then
-        System.out.println( myMessage );
-        m.setMessage( "Goodbye cruel world" );
-        m.setStatus( Message.GOODBYE );
-        update( m );
+        modify(p){
+			setUbicacionActual(l);
+		}
+		System.out.println("Se ha actualizado Ubicacion de: "+ p.getNombre() +" a " + l.getNombre());
 end
 
-rule "GoodBye"
+rule "Añadir Lugar a Buttercup"
     when
-        Message( status == Message.GOODBYE, myMessage : message )
+    	p : Personaje(nombre == "Buttercup", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
+    	l : Lugar(nombre == "Granja")
     then
-        System.out.println( myMessage );
+        modify(p){
+			setUbicacionActual(l);
+		}
+		System.out.println("Se ha actualizado Ubicacion de: "+ p.getNombre() +" a " + l.getNombre());
 end
+
+
+rule "Relacion Conocer"
+    when
+        p1 : Personaje(ubicacionActual != null)
+        p2 : Personaje(ubicacionActual == p1.getUbicacionActual(), nombre != p1.getNombre())
+    then
+    	System.out.println("Modifico: "+ p1.getNombre() + " y " + p2.getNombre());
+
+        Relacion r = new ConoceA(p2);
+        Relacion r2 = new ConocidoDe(p1);
+        ArrayList<Relacion> listaR1 = p1.getRelacionesPersonaje();
+        listaR1.add(r);
+        //listaR1.add(r2);
+        modify(p1){
+        	setRelacionesPersonaje(listaR1);
+        }
+        
+        //Relacion r3 = new ConoceA(p1);
+        //Relacion r4 = new ConocidoDe(p1);
+        ArrayList<Relacion> listaR2 = p2.getRelacionesPersonaje();
+        listaR2.add(r2);
+        //listaR2.add(r4);
+        modify(p2){
+        	setRelacionesPersonaje(listaR2);
+        }
+        
+        
+        System.out.println("Relaciones de: " + p1.getNombre() + " = " + p1.getRelacionesPersonaje().toString());
+        System.out.println("Relaciones de: " + p2.getNombre() + " = " + p2.getRelacionesPersonaje().toString());
+     
+end
+
+rule "Weatley se va a hacer fortuna"
+    when
+    	l: Lugar(nombre == "Mar")
+   		lg: Lugar(nombre == "Granja");
+        p1: Westley(nombre == "Weasley", ubicacionActual== lg,motivacion == Motivacion.GANAR_DINERO)
+   		
+    then
+    	modify(p1){
+    		setUbicacionActual(l);
+    	}
+     System.out.println(p1.getNombre() + " se va a " + l.getNombre() + " para " + p1.getMotivacion());
+end
+
+
+rule "Weatley muere"
+    when
+    	lm: Lugar(nombre == "Mar")
+        p: Personaje(nombre == "Weasley",ubicacionActual == lm)
+   		p2: Personaje(nombre== "Robert el Pirata")
+    then
+    	modify(p){
+    		setEstadoSalud(EstadoSalud.MUERTO);
+    	}
+     System.out.println(p.getNombre() + " esta " + p.getEstadoSalud() +" asesinado por " + p2.getNombre());
+end
+

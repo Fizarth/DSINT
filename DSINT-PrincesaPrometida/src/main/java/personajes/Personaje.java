@@ -1,11 +1,9 @@
 package personajes;
 
+import java.util.*;
 import lugares.Lugar;
-import utilidades.EstadoCivil;
-import utilidades.EstadoSalud;
-import utilidades.Origen;
-import utilidades.Sexo;
-import utilidades.TipoImportancia;
+import utilidades.*;
+import relaciones.*;
 
 public abstract class Personaje {
 	
@@ -18,6 +16,8 @@ public abstract class Personaje {
 	private TipoImportancia tipoImportancia;
 	private Lugar ubicacionActual;
 	
+	private ArrayList<Relacion> relacionesPersonaje;
+	
 	public Personaje(EstadoCivil estadoCivil, EstadoSalud salud, String nombre, Origen origen, boolean cuento,
 			Sexo sexo, TipoImportancia importancia) {
 		this.estadoCivil = estadoCivil;
@@ -28,10 +28,22 @@ public abstract class Personaje {
 		this.sexo = sexo;
 		this.tipoImportancia = importancia;
 		this.ubicacionActual = null;
+		this.relacionesPersonaje = new ArrayList<Relacion>();
 		
 	}
 	
-	
+	public ArrayList<Relacion> getRelacionesPersonaje() {
+		return relacionesPersonaje;
+	}
+
+
+
+	public void setRelacionesPersonaje(ArrayList<Relacion> relacionesPersonje) {
+		this.relacionesPersonaje = relacionesPersonje;
+	}
+
+
+
 	public EstadoCivil getEstadoCivil() {
 		return estadoCivil;
 	}
