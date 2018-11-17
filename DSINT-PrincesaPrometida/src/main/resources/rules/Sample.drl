@@ -90,3 +90,58 @@ rule "Weatley muere"
      System.out.println(p.getNombre() + " esta " + p.getEstadoSalud() +" asesinado por " + p2.getNombre());
 end
 
+rule "Nieto es"
+  when
+    $nt: Personaje(nombre == "El Nieto")
+    $ab: Personaje(nombre == "Abuelo")
+    $md: Personaje(nombre == "La Madre") 
+  then
+    Relacion fm1 = new FamiliarDe($ab);
+    Relacion fm2 = new FamiliarDe($md);
+    modify($nt){
+      addRelacion(fm1);
+    }
+    modify($nt){
+      addRelacion(fm2);
+    }
+    System.out.println("El nieto es familiar del abuelo y la madre" );
+end
+
+rule "Abuelo es"
+  when
+    $nt: Personaje(nombre == "El Nieto")
+    $ab: Personaje(nombre == "Abuelo")
+    $md: Personaje(nombre == "La Madre") 
+  then
+    Relacion fm1 = new FamiliarDe($nt);
+    Relacion fm2 = new FamiliarDe($md);
+    
+    modify($ab){
+      addRelacion(fm2);
+    }
+    modify($ab){
+      addRelacion(fm2);
+    }
+    //System.out.println($ab.getNombre() + " es " + $ab.getRelacionesPersonaje().get(0) + " y "+ 
+    //$ab.getRelacionesPersonaje().get(1) );
+    System.out.println("El abuelo es familiar del nieto y la madre" );
+
+end
+rule "Madre es"
+  when
+    $nt: Personaje(nombre == "El Nieto")
+    $ab: Personaje(nombre == "Abuelo")
+    $md: Personaje(nombre == "La Madre") 
+  then
+    Relacion fm1 = new FamiliarDe($ab);
+    Relacion fm2 = new FamiliarDe($nt);
+    modify($md){
+      addRelacion(fm1);
+    }
+    modify($md){
+      addRelacion(fm2);
+    }
+    //System.out.println($md.getNombre() + " es " + $md.getRelacionesPersonaje().get(0) + " y "+ 
+    //$md.getRelacionesPersonaje().get(1) );
+    System.out.println("Madre es familiar del abuelo y nieto" );
+end
