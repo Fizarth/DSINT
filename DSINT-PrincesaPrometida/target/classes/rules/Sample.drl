@@ -46,6 +46,7 @@ rule "Relacion Conocer"
         listaR1.add(r);
         //listaR1.add(r2);
         modify(p1){
+        	//addRelacion(r);
         	setRelacionesPersonaje(listaR1);
         }
         
@@ -55,6 +56,7 @@ rule "Relacion Conocer"
         listaR2.add(r2);
         //listaR2.add(r4);
         modify(p2){
+        	//addRelacion(r2);
         	setRelacionesPersonaje(listaR2);
         }
         
@@ -98,14 +100,18 @@ rule "Nieto es"
   then
     Relacion fm1 = new FamiliarDe($ab);
     Relacion fm2 = new FamiliarDe($md);
+    ArrayList<Relacion> listant = $nt.getRelacionesPersonaje();
+    listant.add(fm1);
+    listant.add(fm2);
     modify($nt){
-      addRelacion(fm1);
+      setRelacionesPersonaje(listant);
     }
-    modify($nt){
-      addRelacion(fm2);
-    }
+//    modify($nt){
+  //    addRelacion(fm2);
+ //   }
     System.out.println("El nieto es familiar del abuelo y la madre" );
 end
+
 
 rule "Abuelo es"
   when
@@ -115,13 +121,18 @@ rule "Abuelo es"
   then
     Relacion fm1 = new FamiliarDe($nt);
     Relacion fm2 = new FamiliarDe($md);
+    ArrayList<Relacion> listaab = $ab.getRelacionesPersonaje();
+    listaab.add(fm1);
+    listaab.add(fm2);
+    
     
     modify($ab){
-      addRelacion(fm2);
+      //addRelacion(fm2);
+      setRelacionesPersonaje(listaab);
     }
-    modify($ab){
-      addRelacion(fm2);
-    }
+   // modify($ab){
+   //   addRelacion(fm2);
+  //  }
     //System.out.println($ab.getNombre() + " es " + $ab.getRelacionesPersonaje().get(0) + " y "+ 
     //$ab.getRelacionesPersonaje().get(1) );
     System.out.println("El abuelo es familiar del nieto y la madre" );
@@ -135,11 +146,16 @@ rule "Madre es"
   then
     Relacion fm1 = new FamiliarDe($ab);
     Relacion fm2 = new FamiliarDe($nt);
+    ArrayList<Relacion> listamd = $md.getRelacionesPersonaje();
+    listamd.add(fm1);
+    listamd.add(fm2);
     modify($md){
-      addRelacion(fm1);
-    }
-    modify($md){
-      addRelacion(fm2);
+          setRelacionesPersonaje(listamd);
+    
+    //  addRelacion(fm1);
+   // }
+  //  modify($md){
+    //  addRelacion(fm2);
     }
     //System.out.println($md.getNombre() + " es " + $md.getRelacionesPersonaje().get(0) + " y "+ 
     //$md.getRelacionesPersonaje().get(1) );
