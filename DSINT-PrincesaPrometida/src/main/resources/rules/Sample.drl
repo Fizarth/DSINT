@@ -8,7 +8,77 @@ import relaciones.*;
 import utilidades.*;
 import java.util.*;
 
+rule "Nieto es"
+  when
+    $nt: Personaje(nombre == "El Nieto")
+    $ab: Personaje(nombre == "Abuelo")
+    $md: Personaje(nombre == "La Madre") 
+  then
+    Relacion fm1 = new FamiliarDe($ab);
+    Relacion fm2 = new FamiliarDe($md);
+    ArrayList<Relacion> listant = $nt.getRelacionesPersonaje();
+    listant.add(fm1);
+    listant.add(fm2);
+    modify($nt){
+      setRelacionesPersonaje(listant);
+    }
+//    modify($nt){
+  //    addRelacion(fm2);
+ //   }
+   // System.out.println("El nieto es familiar del abuelo y la madre" );
+    System.out.println($nt.getNombre() + " es " + $nt.getRelacionesPersonaje().get(0) + " y "+ 
+    $nt.getRelacionesPersonaje().get(1) );
+end
 
+
+rule "Abuelo es"
+  when
+    $nt: Personaje(nombre == "El Nieto")
+    $ab: Personaje(nombre == "Abuelo")
+    $md: Personaje(nombre == "La Madre") 
+  then
+    Relacion fm1 = new FamiliarDe($nt);
+    Relacion fm2 = new FamiliarDe($md);
+    ArrayList<Relacion> listaab = $ab.getRelacionesPersonaje();
+    listaab.add(fm1);
+    listaab.add(fm2);
+    
+    
+    modify($ab){
+      //addRelacion(fm2);
+      setRelacionesPersonaje(listaab);
+    }
+   // modify($ab){
+   //   addRelacion(fm2);
+  //  }
+    System.out.println($ab.getNombre() + " es " + $ab.getRelacionesPersonaje().get(0) + " y "+ 
+    $ab.getRelacionesPersonaje().get(1) );
+
+
+end
+rule "Madre es"
+  when
+    $nt: Personaje(nombre == "El Nieto")
+    $ab: Personaje(nombre == "Abuelo")
+    $md: Personaje(nombre == "La Madre") 
+  then
+    Relacion fm1 = new FamiliarDe($ab);
+    Relacion fm2 = new FamiliarDe($nt);
+    ArrayList<Relacion> listamd = $md.getRelacionesPersonaje();
+    listamd.add(fm1);
+    listamd.add(fm2);
+    modify($md){
+          setRelacionesPersonaje(listamd);
+    
+    //  addRelacion(fm1);
+   // }
+  //  modify($md){
+    //  addRelacion(fm2);
+    }
+    //System.out.println("Madre es familiar del abuelo y nieto" );
+    System.out.println($md.getNombre() + " es " + $md.getRelacionesPersonaje().get(0) + " y "+ 
+    $md.getRelacionesPersonaje().get(1) );
+end
 
 rule "Añadir Lugar a Weatley"
     when
@@ -32,7 +102,7 @@ rule "Añadir Lugar a Buttercup"
 		System.out.println("Se ha actualizado Ubicacion de: "+ p.getNombre() +" a " + l.getNombre());
 end
 
-
+/*
 rule "Relacion Conocer"
     when
         p1 : Personaje(ubicacionActual != null)
@@ -64,7 +134,7 @@ rule "Relacion Conocer"
         System.out.println("Relaciones de: " + p1.getNombre() + " = " + p1.getRelacionesPersonaje().toString());
         System.out.println("Relaciones de: " + p2.getNombre() + " = " + p2.getRelacionesPersonaje().toString());
      
-end
+end*/
 
 rule "Weatley se va a hacer fortuna"
     when
@@ -84,7 +154,7 @@ rule "Weatley muere"
     when
     	lm: Lugar(nombre == "Mar")
         p: Personaje(nombre == "Weasley",ubicacionActual == lm)
-   		p2: Personaje(nombre== "Robert el Pirata")
+   		p2: Personaje(nombre == "Robert el Pirata")
     then
     	modify(p){
     		setEstadoSalud(EstadoSalud.MUERTO);
@@ -92,70 +162,4 @@ rule "Weatley muere"
      System.out.println(p.getNombre() + " esta " + p.getEstadoSalud() +" asesinado por " + p2.getNombre());
 end
 
-rule "Nieto es"
-  when
-    $nt: Personaje(nombre == "El Nieto")
-    $ab: Personaje(nombre == "Abuelo")
-    $md: Personaje(nombre == "La Madre") 
-  then
-    Relacion fm1 = new FamiliarDe($ab);
-    Relacion fm2 = new FamiliarDe($md);
-    ArrayList<Relacion> listant = $nt.getRelacionesPersonaje();
-    listant.add(fm1);
-    listant.add(fm2);
-    modify($nt){
-      setRelacionesPersonaje(listant);
-    }
-//    modify($nt){
-  //    addRelacion(fm2);
- //   }
-    System.out.println("El nieto es familiar del abuelo y la madre" );
-end
 
-
-rule "Abuelo es"
-  when
-    $nt: Personaje(nombre == "El Nieto")
-    $ab: Personaje(nombre == "Abuelo")
-    $md: Personaje(nombre == "La Madre") 
-  then
-    Relacion fm1 = new FamiliarDe($nt);
-    Relacion fm2 = new FamiliarDe($md);
-    ArrayList<Relacion> listaab = $ab.getRelacionesPersonaje();
-    listaab.add(fm1);
-    listaab.add(fm2);
-    
-    
-    modify($ab){
-      //addRelacion(fm2);
-      setRelacionesPersonaje(listaab);
-    }
-   // modify($ab){
-   //   addRelacion(fm2);
-  //  }
-    //System.out.println($ab.getNombre() + " es " + $ab.getRelacionesPersonaje().get(0) + " y "+ 
-    //$ab.getRelacionesPersonaje().get(1) );
-
-
-end
-rule "Madre es"
-  when
-    $nt: Personaje(nombre == "El Nieto")
-    $ab: Personaje(nombre == "Abuelo")
-    $md: Personaje(nombre == "La Madre") 
-  then
-    Relacion fm1 = new FamiliarDe($ab);
-    Relacion fm2 = new FamiliarDe($nt);
-    ArrayList<Relacion> listamd = $md.getRelacionesPersonaje();
-    listamd.add(fm1);
-    listamd.add(fm2);
-    modify($md){
-          setRelacionesPersonaje(listamd);
-    
-    //  addRelacion(fm1);
-   // }
-  //  modify($md){
-    //  addRelacion(fm2);
-    }
-    System.out.println("Madre es familiar del abuelo y nieto" );
-end

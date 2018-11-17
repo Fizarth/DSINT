@@ -14,7 +14,7 @@ public class TestPersonajes {
 
 		KieServices ks = KieServices.Factory.get();
 		KieContainer kContainer = ks.getKieClasspathContainer();
-		System.out.println(kContainer.verify().getMessages().toString());
+		//System.out.println(kContainer.verify().getMessages().toString());
 
 		KieSession kSession = kContainer.newKieSession("ksession-rules");
 		
