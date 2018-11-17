@@ -1,27 +1,22 @@
 package personajes;
 
-import lugares.Lugar;
-import profesiones.Profesion;
-import utilidades.EstadoCivil;
-import utilidades.EstadoSalud;
-import utilidades.Motivacion;
-import utilidades.Origen;
-import utilidades.Sexo;
-import utilidades.TipoImportancia;
+import lugares.*;
+import profesiones.*;
+import utilidades.*;
 
 public class Max extends Personaje {
 
 	//TODO familiar de 
 	//TODO odia a 
 	
-	private Motivacion motivacion;
-	private Profesion profesion;
+	private Motivacion motivacion; //LISTA
+	private Profesion trabajaDe;
 	
-	public Max() {
-		super(EstadoCivil.CASADO, EstadoSalud.VIVO, "Milagroso Max", Origen.FLORIN, true, Sexo.HOMBRE, 
-				TipoImportancia.SECUNDARIO);
+	public Max(Profesion prof, Lugar ubicacionAct) {
+		super("Milagroso Max", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.CASADO, EstadoSalud.VIVO, true,  
+				TipoImportancia.SECUNDARIO, ubicacionAct);
 		this.motivacion = Motivacion.HUMILLAR_PRINCIPE;
-		// TODO Auto-generated constructor stub
+		this.trabajaDe = prof;
 	}
 
 	public Motivacion getMotivacion() {
@@ -33,11 +28,11 @@ public class Max extends Personaje {
 	}
 
 	public Profesion getProfesion() {
-		return profesion;
+		return trabajaDe;
 	}
 
 	public void setProfesion(Profesion profesion) {
-		this.profesion = profesion;
+		this.trabajaDe = profesion;
 	}
 
 	

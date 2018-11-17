@@ -1,21 +1,15 @@
 package personajes;
 
-import lugares.Lugar;
-import utilidades.EstadoCivil;
-import utilidades.EstadoSalud;
-import utilidades.Origen;
-import utilidades.Sexo;
-import utilidades.TipoImportancia;
+import lugares.*;
+import utilidades.*;
 
 public class Abuelo extends Personaje {
 
-	//TODO a√±adir relacion familiar_de
+	// TODO AÒadir relacion familiar_de
 
-	public Abuelo() {
-		super(EstadoCivil.CASADO, EstadoSalud.VIVO, "Abuelo", Origen.CHICAGO,false, Sexo.HOMBRE, TipoImportancia.NARRADOR);
-		
+	public Abuelo(Lugar ubicacionAct) {
+		super("Abuelo", Origen.CHICAGO, Sexo.HOMBRE, EstadoCivil.CASADO, EstadoSalud.VIVO, false,
+				TipoImportancia.NARRADOR, ubicacionAct);
 	}
-	
-	
-	
+
 }

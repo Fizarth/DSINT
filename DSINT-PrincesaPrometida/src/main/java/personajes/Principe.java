@@ -1,25 +1,26 @@
 package personajes;
 
-import lugares.Lugar;
-import profesiones.Profesion;
+import lugares.*;
+import profesiones.*;
 import utilidades.*;
 
 public class Principe extends Personaje {
-	
-	//TODO ENEMigo de 
-	//TODO familiar de
-	//TODO prometido de 
-	//TODO quiere a
-	
-	private Motivacion motivacion;
+
+	// TODO ENEMigo de
+	// TODO familiar de
+	// TODO prometido de
+	// TODO quiere a
+
+	private Motivacion motivacion; // LISTA
 	private TituloNobiliario titulo;
-	private Profesion profesion;
-	
-	public Principe() {
-		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Principe Humperdink", Origen.FLORIN, true, Sexo.HOMBRE, 
-				TipoImportancia.PROTAGONISTA);
+	private Profesion trabajaDe;
+
+	public Principe(Profesion prof, Lugar ubicacionAct) {
+		super("Principe Humperdink", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true,
+				TipoImportancia.PROTAGONISTA, ubicacionAct);
 		this.motivacion = Motivacion.DECLARAR_GUERRA;
 		this.titulo = TituloNobiliario.PRINCIPE;
+		this.trabajaDe = prof;
 	}
 
 	public Motivacion getMotivacion() {
@@ -39,14 +40,11 @@ public class Principe extends Personaje {
 	}
 
 	public Profesion getProfesion() {
-		return profesion;
+		return trabajaDe;
 	}
 
 	public void setProfesion(Profesion profesion) {
-		this.profesion = profesion;
+		this.trabajaDe = profesion;
 	}
-	
-	
 
-	
 }

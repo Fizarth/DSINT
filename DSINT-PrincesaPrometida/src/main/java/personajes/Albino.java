@@ -1,33 +1,26 @@
 package personajes;
 
-import lugares.Lugar;
-import profesiones.Profesion;
-import utilidades.EstadoCivil;
-import utilidades.EstadoSalud;
-import utilidades.Origen;
-import utilidades.Sexo;
-import utilidades.TipoImportancia;
+import lugares.*;
+import profesiones.*;
+import utilidades.*;
 
-public class Albino extends Personaje{
+public class Albino extends Personaje {
 
-	private Profesion trabaja_de;
-	//TODO aaï¿½adir conoce_a
-	
-	public Albino() {
-		super(EstadoCivil.INDEFINIDO, EstadoSalud.VIVO, "Jai", Origen.FLORIN,true, Sexo.HOMBRE,
-				TipoImportancia.SECUNDARIO);
+	private Profesion trabajaDe; //LISTA
+	// TODO Añadir conoce_a
+
+	public Albino(Profesion profesion, Lugar ubicacionAct) {
+		super("Jai", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.INDEFINIDO, EstadoSalud.VIVO, true,
+				TipoImportancia.SECUNDARIO, ubicacionAct);
+		this.trabajaDe = profesion;
 	}
-	
+
 	public Profesion getTrabaja_de() {
-		return trabaja_de;
+		return trabajaDe;
 	}
 
-	public void setTrabaja_de(Profesion trabaja_de) {
-		this.trabaja_de = trabaja_de;
+	public void setTrabaja_de(Profesion trabajaDe) {
+		this.trabajaDe = trabajaDe;
 	}
-	
 
-	
-	
-	
 }

@@ -9,17 +9,18 @@ import utilidades.Origen;
 import utilidades.Sexo;
 import utilidades.TipoImportancia;
 
-public class Fezzik extends Personaje{
-	
-	//TODO amigo de 
+public class Fezzik extends Personaje {
 
-	private Motivacion motivacion;
-	private Profesion profesion;
+	// TODO amigo de
 
-	public Fezzik() {
-		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Fezzik", Origen.TURQUIA, true, Sexo.HOMBRE, TipoImportancia.PROTAGONISTA);
+	private Motivacion motivacion; // LISTA
+	private Profesion trabajaDe; //LISTA
+
+	public Fezzik(Profesion prof, Lugar ubicacionAct) {
+		super("Fezzik", Origen.TURQUIA, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true,
+				TipoImportancia.PROTAGONISTA, ubicacionAct);
 		this.motivacion = Motivacion.TENER_TRABAJO;
-		// TODO Auto-generated constructor stub
+		this.trabajaDe = prof;
 	}
 
 	public Motivacion getMotivacion() {
@@ -31,12 +32,11 @@ public class Fezzik extends Personaje{
 	}
 
 	public Profesion getProfesion() {
-		return profesion;
+		return trabajaDe;
 	}
 
 	public void setProfesion(Profesion profesion) {
-		this.profesion = profesion;
+		this.trabajaDe = profesion;
 	}
 
-	
 }

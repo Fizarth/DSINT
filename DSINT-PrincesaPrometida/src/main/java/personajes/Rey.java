@@ -1,22 +1,22 @@
 package personajes;
 
-import lugares.Lugar;
-import profesiones.Profesion;
+import lugares.*;
+import profesiones.*;
 import utilidades.*;
 
-public class Rey extends Personaje{
-	
-	//TODO familiar de 
-	
-	private TituloNobiliario titulo;
-	private Profesion profesion;
+public class Rey extends Personaje {
 
-	public Rey() {
-		super(EstadoCivil.CASADO, EstadoSalud.VIVO, "El Rey", Origen.FLORIN, true, Sexo.HOMBRE, 
-				TipoImportancia.SECUNDARIO);
+	// TODO familiar de
+
+	private TituloNobiliario titulo;
+	private Profesion trabajaDe;
+
+	public Rey(Profesion prof, Lugar ubicacionAct) {
+		super("El Rey", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.CASADO, EstadoSalud.VIVO, true,
+				TipoImportancia.SECUNDARIO, ubicacionAct);
 		this.titulo = TituloNobiliario.REY;
-		
-		
+		this.trabajaDe = prof;
+
 	}
 
 	public TituloNobiliario getTitulo() {
@@ -28,15 +28,11 @@ public class Rey extends Personaje{
 	}
 
 	public Profesion getProfesion() {
-		return profesion;
+		return trabajaDe;
 	}
 
 	public void setProfesion(Profesion profesion) {
-		this.profesion = profesion;
+		this.trabajaDe = profesion;
 	}
-	
-	
-	
-	
 
 }

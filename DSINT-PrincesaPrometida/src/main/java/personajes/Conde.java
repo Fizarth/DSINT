@@ -1,32 +1,25 @@
 package personajes;
 
 import lugares.Lugar;
-import profesiones.Profesion;
-import utilidades.EstadoCivil;
-import utilidades.EstadoSalud;
-import utilidades.Motivacion;
-import utilidades.Origen;
-import utilidades.Sexo;
-import utilidades.TipoImportancia;
-import utilidades.TituloNobiliario;
+import profesiones.*;
+import utilidades.*;
 
-public class Conde extends Personaje{
+public class Conde extends Personaje {
 
-	//TODO añadir amigo de
-	//TODO añadir conoce_a
-	//TODO añadir enemigo de
-	
-	private Motivacion motivacion;
+	// TODO añadir amigo de
+	// TODO añadir conoce_a
+	// TODO añadir enemigo de
+
+	private Motivacion motivacion; // hacerlo lista
 	private TituloNobiliario titulo;
-	private Profesion profesion;
-	
-	public Conde() {
-		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Tyrone Rugen", Origen.FLORIN, true, Sexo.HOMBRE,
-				TipoImportancia.SECUNDARIO);
+	private Profesion trabajaDe; //LISTA
+
+	public Conde(Profesion prof, Lugar ubicacionAct) {
+		super("Tyrone Rugen", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true,
+				TipoImportancia.SECUNDARIO, ubicacionAct);
 		this.motivacion = Motivacion.SERVIR_PRINCIPE;
 		this.titulo = TituloNobiliario.CONDE;
-		//TODO hay qe ver como cambia para estudiar dolor. en que momento y eso. o si ponerlo ocmo lista para que 
-			//pueda tener varias.
+		this.trabajaDe = prof;
 	}
 
 	public Motivacion getMotivacion() {
@@ -46,16 +39,11 @@ public class Conde extends Personaje{
 	}
 
 	public Profesion getProfesion() {
-		return profesion;
+		return trabajaDe;
 	}
 
 	public void setProfesion(Profesion profesion) {
-		this.profesion = profesion;
+		this.trabajaDe = profesion;
 	}
-	
-	
-	
-	
-	
 
 }

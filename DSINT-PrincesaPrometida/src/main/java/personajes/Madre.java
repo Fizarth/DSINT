@@ -1,20 +1,14 @@
 package personajes;
 
-import lugares.Lugar;
-import utilidades.EstadoCivil;
-import utilidades.EstadoSalud;
-import utilidades.Origen;
-import utilidades.Sexo;
-import utilidades.TipoImportancia;
+import lugares.*;
+import utilidades.*;
 
-public class Madre extends Personaje{
-	
-	//TODO familiar de 
+public class Madre extends Personaje {
 
-	public Madre() {
-		super(EstadoCivil.CASADO, EstadoSalud.VIVO, "La Madre", Origen.CHICAGO, false, Sexo.MUJER, 
-				TipoImportancia.SECUNDARIO);
+	// TODO familiar de
+
+	public Madre(Lugar ubicacionAct) {
+		super("La Madre", Origen.CHICAGO, Sexo.MUJER, EstadoCivil.CASADO, EstadoSalud.VIVO, false,
+				TipoImportancia.SECUNDARIO, ubicacionAct);
 	}
-
-	
 }

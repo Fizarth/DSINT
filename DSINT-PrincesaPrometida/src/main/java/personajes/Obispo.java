@@ -1,28 +1,25 @@
 package personajes;
 
-import lugares.Lugar;
-import profesiones.Profesion;
-import utilidades.EstadoCivil;
-import utilidades.EstadoSalud;
-import utilidades.Origen;
-import utilidades.Sexo;
-import utilidades.TipoImportancia;
+import lugares.*;
+import profesiones.*;
+import utilidades.*;
 
 public class Obispo extends Personaje{
 
-	private Profesion profesion;
+	private Profesion trabajaDe;
 	
-	public Obispo() {
-		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Obispo Gangoso", Origen.FLORIN, true, Sexo.HOMBRE, 
-				TipoImportancia.SECUNDARIO);
+	public Obispo(Profesion prof, Lugar ubicacionAct) {
+		super("Obispo Gangoso", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true,  
+				TipoImportancia.SECUNDARIO, ubicacionAct);
+		this.trabajaDe = prof;
 	}
 
 	public Profesion getProfesion() {
-		return profesion;
+		return trabajaDe;
 	}
 
 	public void setProfesion(Profesion profesion) {
-		this.profesion = profesion;
+		this.trabajaDe = profesion;
 	}
 
 	

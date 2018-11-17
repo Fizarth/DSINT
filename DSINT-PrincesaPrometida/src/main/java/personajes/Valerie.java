@@ -1,17 +1,15 @@
 package personajes;
 
-import lugares.Lugar;
+import lugares.*;
 import utilidades.*;
 
-public class Valerie extends Personaje{
-	
-	//TODO familiar de 
+public class Valerie extends Personaje {
 
-	public Valerie() {
-		super(EstadoCivil.CASADO, EstadoSalud.VIVO, "Valerie", Origen.FLORIN, true, Sexo.MUJER, 
-				TipoImportancia.SECUNDARIO);
+	// TODO familiar de
+
+	public Valerie(Lugar ubicacionAct) {
+		super("Valerie", Origen.FLORIN, Sexo.MUJER, EstadoCivil.CASADO, EstadoSalud.VIVO, true,
+				TipoImportancia.SECUNDARIO, ubicacionAct);
 	}
 
-	
-	
 }

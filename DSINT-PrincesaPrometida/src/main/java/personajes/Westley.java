@@ -1,7 +1,7 @@
 package personajes;
 
-import lugares.Lugar;
-import profesiones.Profesion;
+import lugares.*;
+import profesiones.*;
 import utilidades.*;
 
 public class Westley extends Personaje {
@@ -9,13 +9,14 @@ public class Westley extends Personaje {
 	//TODO enemigo de
 	//TODO quiere a 
 	
-	private Motivacion motivacion;
-	private Profesion profesion;
+	private Motivacion motivacion;//LISTA
+	private Profesion trabajaDe;
 
-	public Westley() {
-		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Weasley", Origen.FLORIN, true, Sexo.HOMBRE, 
-				TipoImportancia.PROTAGONISTA);
+	public Westley(Profesion prof, Lugar ubicacionAct) {
+		super("Weasley", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true, 
+				TipoImportancia.PROTAGONISTA, ubicacionAct);
 		this.motivacion = Motivacion.GANAR_DINERO;
+		this.trabajaDe = prof;
 	}
 
 	public Motivacion getMotivacion() {
@@ -27,11 +28,11 @@ public class Westley extends Personaje {
 	}
 
 	public Profesion getProfesion() {
-		return profesion;
+		return trabajaDe;
 	}
 
 	public void setProfesion(Profesion profesion) {
-		this.profesion = profesion;
+		this.trabajaDe = profesion;
 	}
 	
 	

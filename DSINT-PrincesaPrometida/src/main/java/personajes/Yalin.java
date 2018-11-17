@@ -1,17 +1,35 @@
 package personajes;
 
-import lugares.Lugar;
+import lugares.*;
+import profesiones.*;
 import utilidades.*;
 
 public class Yalin extends Personaje {
 
-	private Motivacion motivacion;
+	private Profesion trabajaDe; //LISTA
+	private Motivacion motivacion;//LISTA
 	
-	public Yalin() {
-		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Yalin", Origen.FLORIN, true, Sexo.HOMBRE, 
-				TipoImportancia.SECUNDARIO);
+	public Yalin(Profesion prof, Lugar ubicacionAct) {
+		super("Yalin", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true,
+				TipoImportancia.SECUNDARIO, ubicacionAct);
 		this.motivacion = Motivacion.SERVIR_PRINCIPE;
-		// TODO Auto-generated constructor stub
+		this.trabajaDe = prof;
+	}
+	
+	public Profesion getTrabajaDe() {
+		return trabajaDe;
+	}
+
+	public void setTrabajaDe(Profesion trabajaDe) {
+		this.trabajaDe = trabajaDe;
+	}
+
+	public Motivacion getMotivacion() {
+		return motivacion;
+	}
+
+	public void setMotivacion(Motivacion motivacion) {
+		this.motivacion = motivacion;
 	}
 
 	

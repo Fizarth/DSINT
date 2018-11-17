@@ -1,18 +1,19 @@
 package personajes;
 
 import lugares.*;
-import profesiones.Profesion;
+import profesiones.*;
 import utilidades.*;
 
 public class Pirata extends Personaje {
 
-	private Motivacion motivacion;
-	private Profesion profesion;
+	private Motivacion motivacion; //LISTA
+	private Profesion trabajaDe; //LIISTA
 	
-	public Pirata() {
-		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Robert el Pirata", Origen.INGLATERRA, true, Sexo.HOMBRE,
-				TipoImportancia.SECUNDARIO);
+	public Pirata(Profesion prof, Lugar ubicacionAct) {
+		super("Robert el Pirata", Origen.INGLATERRA, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true, 
+				TipoImportancia.SECUNDARIO, ubicacionAct);
 		this.motivacion = Motivacion.SECUESTRAR_PRINCESA;
+		this.trabajaDe = prof;
 	}
 
 	public Motivacion getMotivacion() {
@@ -24,11 +25,11 @@ public class Pirata extends Personaje {
 	}
 
 	public Profesion getProfesion() {
-		return profesion;
+		return trabajaDe;
 	}
 
 	public void setProfesion(Profesion profesion) {
-		this.profesion = profesion;
+		this.trabajaDe = profesion;
 	}
 	
 	

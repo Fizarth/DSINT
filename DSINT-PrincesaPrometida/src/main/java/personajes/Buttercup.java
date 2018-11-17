@@ -1,28 +1,23 @@
 package personajes;
 
 import lugares.Lugar;
-import profesiones.Profesion;
-import utilidades.EstadoCivil;
-import utilidades.EstadoSalud;
-import utilidades.Motivacion;
-import utilidades.Origen;
-import utilidades.Sexo;
-import utilidades.TipoImportancia;
+import profesiones.*;
+import utilidades.*;
 
-public class Buttercup extends Personaje{
-	//TODO a�adir Amigo de
-	//TODO a�adir odia_a
-	//TODO a�adir quiere_a
-	//TODO como poner posteriormente que etsta prometida
-	
-	
-	private Motivacion motivacion;
-	private Profesion profesion;
-	
-	public Buttercup() {
-		super(EstadoCivil.SOLTERO, EstadoSalud.VIVO, "Buttercup", Origen.FLORIN,true, Sexo.MUJER, TipoImportancia.PROTAGONISTA);
-		//TODO no se si esto cambia a lo largo de la historia y ponerlo como posible valor o dejarlo preestablecido.
-		this.motivacion =  Motivacion.ESTAR_CON_WEASLEY;
+public class Buttercup extends Personaje {
+	// TODO a�adir Amigo de
+	// TODO a�adir odia_a
+	// TODO a�adir quiere_a
+	// TODO como poner posteriormente que etsta prometida
+
+	private Motivacion motivacion; // Motivaciones tiene que ser lista
+	private Profesion trabajaDe; //LISTA
+ 
+	public Buttercup(Profesion prof, Lugar ubicacionAct) {
+		super("Buttercup", Origen.FLORIN, Sexo.MUJER, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true,
+				TipoImportancia.PROTAGONISTA, ubicacionAct);
+		this.motivacion = Motivacion.ESTAR_CON_WEASLEY;
+		this.trabajaDe = prof;
 	}
 
 	public Motivacion getMotivacion() {
@@ -34,12 +29,11 @@ public class Buttercup extends Personaje{
 	}
 
 	public Profesion getProfesion() {
-		return profesion;
+		return trabajaDe;
 	}
 
 	public void setProfesion(Profesion profesion) {
-		this.profesion = profesion;
+		this.trabajaDe = profesion;
 	}
-	
-	
+
 }

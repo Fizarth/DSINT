@@ -1,15 +1,5 @@
-/utilidades/
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-/test/
-=======
->>>>>>> branch 'master' of https://github.com/Fizarth/DSINT.git
-/rules/
->>>>>>> branch 'master' of https://github.com/Fizarth/DSINT.git
-/personajes/
-/relaciones/
-/animales/
-/com/
-/lugares/
 /profesiones/
+/relaciones/
+/test/
+/utilidades/
+/personajes/
