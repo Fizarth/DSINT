@@ -15,17 +15,10 @@ public class Main {
 	private static KieContainer kContainer = ks.getKieClasspathContainer();
 	private static KieSession kSession = kContainer.newKieSession("ksession-rules");
 
-
 	public static void main(String[] args) throws IOException {
 		ArrayList<Consulta> c = new ArrayList<Consulta>();
-		
-		try {
-			c = (ArrayList<Consulta>) Parser.parsear("C:\\Users\\fires\\Desktop\\Nueva\\input1.txt");
-	
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		c = (ArrayList<Consulta>) Parser.parsear("C:\\Users\\fires\\Desktop\\Nueva\\input1.txt");
 
 		System.out.println(kContainer.verify().getMessages().toString());
 
