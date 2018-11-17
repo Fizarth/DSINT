@@ -4,8 +4,8 @@ import personajes.*;
 
 public class ConocidoDe extends Relacion{
 
-	public ConocidoDe(Personaje conoc) {
-		super("conocido de", conoc);
+	public ConocidoDe(Personaje emisor) {
+		super("conocido de", emisor);
 	}
 
 }
