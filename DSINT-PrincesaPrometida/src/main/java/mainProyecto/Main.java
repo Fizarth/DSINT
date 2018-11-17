@@ -6,11 +6,6 @@ import java.util.ArrayList;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-
 import utilidades.*;
 import utilidades.Parser;
 
@@ -23,9 +18,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		ArrayList<Consulta> c = new ArrayList<Consulta>();
-		FileWriter flwriter = null;
-		flwriter = new FileWriter( "C:\\\\Users\\\\fires\\\\Desktop\\\\Nueva\\\\out.txt");
-		BufferedWriter bfwriter = new BufferedWriter(flwriter);
+		
 		try {
 			c = (ArrayList<Consulta>) Parser.parsear("C:\\Users\\fires\\Desktop\\Nueva\\input1.txt");
 	
@@ -37,6 +30,7 @@ public class Main {
 		System.out.println(kContainer.verify().getMessages().toString());
 
 		while (!c.isEmpty()) {
+			Archivo.getUnicaInstancia().escribir("Buenos dias, las respuestas a sus preguntas son:\n");
 			switch (c.get(0).getTipo()) {
 
 			case "ConsultaQuien":
@@ -52,12 +46,13 @@ public class Main {
 				EjecutarHastaActo(cque.getActo());
 				break;
 			default:
-				bfwriter.write("La consulta que ha realizado no tiene un formato valido\n");
+				Archivo.getUnicaInstancia().escribir("La consulta que ha realizado no tiene un formato valido\n");
+				break;
 			}
 			c.remove(0);
 
 		}
-		bfwriter.close();
+		Archivo.getUnicaInstancia().cerrarArchivo();
 	}
 
 	private static void EjecutarHastaActo(Acto a) {
