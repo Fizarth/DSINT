@@ -157,6 +157,7 @@ rule "Principe quiere a Buttercup"
 end
 
 rule "Añadir Lugar a Westley"
+
     when
     	p : Personaje(nombre == "Westley", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
     	l : Lugar(nombre == "Granja")
