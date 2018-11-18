@@ -12,15 +12,9 @@ public class Westley extends Personaje {
 	private Motivacion motivacion;//LISTA
 	private Profesion trabajaDe;
 
-<<<<<<< HEAD
 	public Westley() {
-		super("Wesley", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true, 
-				TipoImportancia.PROTAGONISTA);
-=======
-	public Westley(Profesion prof, Lugar ubicacionAct) {
 		super("Westley", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true, 
-				TipoImportancia.PROTAGONISTA, ubicacionAct);
->>>>>>> branch 'master' of https://github.com/Fizarth/DSINT.git
+				TipoImportancia.PROTAGONISTA);
 		this.motivacion = Motivacion.GANAR_DINERO;
 		//this.trabajaDe = prof;
 		//Profesion prof, Lugar ubicacionAct
