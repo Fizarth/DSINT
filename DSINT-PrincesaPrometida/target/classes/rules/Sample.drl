@@ -39,8 +39,7 @@ rule "Abuelo es"
     ArrayList<Relacion> listaab = $ab.getRelacionesPersonaje();
     listaab.add(fm1);
     listaab.add(fm2);
-    
-    
+
     modify($ab){
       setRelacionesPersonaje(listaab);
     }
@@ -94,6 +93,21 @@ rule "Buttercup quiere a Westley"
           setRelacionesPersonaje(listaR);
     }
     System.out.println("Relaciones de Buttercup: "+$bt.getRelacionesPersonaje());
+end
+
+rule "Principe quiere a Buttercup"
+  when
+    $pr: Personaje(nombre == "Principe")
+    $bt: Personaje(nombre == "Buttercup")
+    
+  then
+    Relacion q1 = new QuiereA($bt);
+    ArrayList<Relacion> listaR = $pr.getRelacionesPersonaje();
+    listaR.add(q1);
+    modify($pr){
+          setRelacionesPersonaje(listaR);
+    }
+    System.out.println("Relaciones de Principe: "+$pr.getRelacionesPersonaje());
 end
 
 rule "Añadir Lugar a Westley"
