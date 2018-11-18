@@ -9,7 +9,7 @@ import utilidades.*;
 import java.util.*;
 import profesiones.*;
 
-
+//Creación de la base
 rule "Creacion Profesiones"
 	//agenda-group "Acto0"
 	then 
@@ -66,6 +66,24 @@ rule "Creacion Personajes Acto 0"
 		System.out.println("Acto 0: Creo los personajes");
 end
 
+//Consultas
+rule "Consulta Quien" 
+	when 
+		con: ConsultaQuien()
+		p: Personaje (nombre == con.getNombre)
+	then
+		System.out.println("ENTRO REGLA CONSULTA QUIEN");
+		System.out.println(p.toString());
+end 
+
+rule "Consulta Que"
+	when
+		con: ConsultaQue()
+	then
+		System.out.println("CONSULTA QUIEN");
+end
+
+//Inicio Acto0
 rule "Nieto es"
   when
     nt: Personaje(nombre == "El Nieto")
@@ -154,7 +172,7 @@ end
 
 /* Si sobra se borra
 
-rule "A�adir Lugar a Westley"
+rule "Añadir Lugar a Westley"
 
     when
     	p : Personaje(nombre == "Westley", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
@@ -166,7 +184,7 @@ rule "A�adir Lugar a Westley"
 		System.out.println("Se ha actualizado Ubicacion de: "+ p.getNombre() +" a " + l.getNombre());
 end
 
-rule "A�adir Lugar a Buttercup"
+rule "Añadir Lugar a Buttercup"
     when
     	p : Personaje(nombre == "Buttercup", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
     	l : Lugar(nombre == "Granja")
@@ -309,20 +327,4 @@ rule "Principe y Conde amigos"
     modify(pr){
       setRelacionesPersonaje(listaR2);
     }
-end
-
-rule "Consulta Quien" 
-	when 
-		con: ConsultaQuien()
-		p: Personaje (nombre == con.getNombre)
-	then
-		System.out.println("ENTRO REGLA CONSULTA QUIEN");
-		System.out.println(p.toString());
-end 
-
-rule "Consulta Que"
-	when
-		con: ConsultaQue()
-	then
-		System.out.println("CONSULTA QUIEN");
 end

@@ -4,13 +4,13 @@ import lugares.*;
 import profesiones.*;
 import utilidades.*;
 
-public class PadreIñigo extends Personaje{
+public class PadreInigo extends Personaje{
 	
 	//TODO familiar de 
 	
 	private Profesion trabajaDe;
 
-	public PadreIñigo(Profesion prof, Lugar ubicacionAct) {
+	public PadreInigo(Profesion prof, Lugar ubicacionAct) {
 		super("Domingo Montoya", Origen.ESPANA, Sexo.HOMBRE, EstadoCivil.INDEFINIDO, EstadoSalud.MUERTO, true,  
 				TipoImportancia.SECUNDARIO,ubicacionAct);
 		this.trabajaDe = prof;
