@@ -20,7 +20,7 @@ public abstract class Personaje {
 	private ArrayList<Relacion> relacionesPersonaje;
 
 	public Personaje(String nombre, Origen origen, Sexo sexo, EstadoCivil estadoCivil, EstadoSalud salud,
-			boolean cuento, TipoImportancia importancia, Lugar ubicacionAct) {
+			boolean cuento, TipoImportancia importancia) {
 		this.estadoCivil = estadoCivil;
 		this.estadoSalud = salud;
 		this.nombre = nombre;
@@ -28,7 +28,7 @@ public abstract class Personaje {
 		this.perteneceCuento = cuento;
 		this.sexo = sexo;
 		this.tipoImportancia = importancia;
-		this.ubicacionActual = ubicacionAct;
+		//this.ubicacionActual = ubicacionAct;  , Lugar ubicacionAct
 		this.relacionesPersonaje = new ArrayList<Relacion>();
 
 	}
@@ -113,4 +113,20 @@ public abstract class Personaje {
 		this.ubicacionActual = ubicacionActual;
 	}
 
+	@Override
+	public String toString() {
+		String cadena =  estadoSalud + " y " + estadoCivil + " es de "+ origen + " es un "
+				+ sexo + "." +nombre + " es un personaje " + tipoImportancia 
+				+ " actualmente se encuentra en " + ubicacionActual + "." + nombre 
+				+ relacionesPersonaje;
+		if (perteneceCuento)
+			cadena = nombre + " pertenece al cuento y esta " + cadena;
+		else 
+			cadena = nombre + " no pertenece al cuento y esta " + cadena;
+		return cadena;
+				
+	
+	}
+
+	
 }

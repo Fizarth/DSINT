@@ -33,14 +33,14 @@ public class Parser {
 		  
 		Matcher m;
 		String line; 
-		System.out.println("Iniciando el Parser");
+		//System.out.println("Iniciando el Parser");
 		while ((line = br.readLine()) != null) {
 			System.out.println("Linea a tratar: " + line);
 			
 			
 			m = quienPattern.matcher(line);
 			if (m.matches()) {
-				System.out.println("Consulta tipo Quien encontrada");
+				//System.out.println("Consulta tipo Quien encontrada");
 				String[] palabras = line.split(" ");
 			
 				
@@ -67,18 +67,18 @@ public class Parser {
 				
 				
 				consultas.add(new ConsultaQuien(nombre, Acto.get(palabras[palabras.length-1])));
-				System.out.println("Consulta tipo Quien añadida");
+				//System.out.println("Consulta tipo Quien añadida");
 				continue;
 			}
 			
 			m = quePattern.matcher(line);
 			if (m.matches()) {
-				System.out.println("Consulta tipo Que encontrada");
+				//System.out.println("Consulta tipo Que encontrada");
 				String[] palabras = line.split(" ");
 				
 			
 				consultas.add(new ConsultaQue(Acto.get(palabras[palabras.length-1])));
-				System.out.println("Consulta tipo Que añadida");
+				//System.out.println("Consulta tipo Que añadida");
 				continue;
 			}
 			
