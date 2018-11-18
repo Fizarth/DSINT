@@ -92,9 +92,8 @@ rule "Abuelo es"
     }
     System.out.println($ab.getNombre() + " es " + $ab.getRelacionesPersonaje().get(0) + " y "+ 
     $ab.getRelacionesPersonaje().get(1) );
-
-
 end
+
 rule "Madre es"
   when
     $nt: Personaje(nombre == "El Nieto")
@@ -225,7 +224,6 @@ rule "Westley se va a hacer fortuna"
     	}
      System.out.println(p1.getNombre() + " se va a " + l.getNombre() + " para " + p1.getMotivacion());
 end
-
 
 rule "Westley muere"
     when
