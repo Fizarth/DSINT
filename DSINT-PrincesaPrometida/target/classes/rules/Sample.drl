@@ -80,7 +80,20 @@ rule "Westley quiere a Buttercup"
           setRelacionesPersonaje(listaR);
     }
     System.out.println("Relaciones de westley: "+$wt.getRelacionesPersonaje());
+end
 
+rule "Buttercup quiere a Westley"
+  when
+    $wt: Personaje(nombre == "Westley")
+    $bt: Personaje(nombre == "Buttercup")
+  then
+    Relacion q1 = new QuiereA($wt);
+    ArrayList<Relacion> listaR = $bt.getRelacionesPersonaje();
+    listaR.add(q1);
+    modify($bt){
+          setRelacionesPersonaje(listaR);
+    }
+    System.out.println("Relaciones de Buttercup: "+$bt.getRelacionesPersonaje());
 end
 
 rule "Añadir Lugar a Weatley"

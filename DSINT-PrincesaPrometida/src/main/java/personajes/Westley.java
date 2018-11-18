@@ -13,7 +13,7 @@ public class Westley extends Personaje {
 	private Profesion trabajaDe;
 
 	public Westley(Profesion prof, Lugar ubicacionAct) {
-		super("Weasley", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true, 
+		super("Westley", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true, 
 				TipoImportancia.PROTAGONISTA, ubicacionAct);
 		this.motivacion = Motivacion.GANAR_DINERO;
 		this.trabajaDe = prof;
