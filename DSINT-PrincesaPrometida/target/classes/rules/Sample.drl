@@ -273,6 +273,44 @@ rule "Principe quiere a Buttercup"
     System.out.println("Relaciones de Principe: "+pr.getRelacionesPersonaje());
 end
 
+rule "Rey y Principe son familia"
+  when
+    pr: Personaje(nombre == "Principe Humperdink")
+    ry: Personaje(nombre == "El Rey")
+  then
+    Relacion fm1 = new FamiliarDe(ry);
+    Relacion fm2 = new FamiliarDe(pr);
+    ArrayList<Relacion> listaR = pr.getRelacionesPersonaje();
+    listaR.add(fm1);
+    modify(pr){
+      setRelacionesPersonaje(listaR);
+    }
+    ArrayList<Relacion> listaR2 = ry.getRelacionesPersonaje();
+    listaR2.add(fm2);
+    modify(pr){
+      setRelacionesPersonaje(listaR2);
+    }
+end
+
+rule "Principe y Conde amigos"
+  when
+    pr: Personaje(nombre == "Principe Humperdink")
+    cd: Personaje(nombre == "Tyrone Rugen")
+  then
+    Relacion am1 = new AmigoDe(cd);
+    Relacion am2 = new AmigoDe(pr);
+    ArrayList<Relacion> listaR = pr.getRelacionesPersonaje();
+    listaR.add(am1);
+    modify(pr){
+      setRelacionesPersonaje(listaR);
+    }
+    ArrayList<Relacion> listaR2 = cd.getRelacionesPersonaje();
+    listaR2.add(am2);
+    modify(pr){
+      setRelacionesPersonaje(listaR2);
+    }
+end
+
 rule "Consulta Quien" 
 	when 
 		con: ConsultaQuien()
