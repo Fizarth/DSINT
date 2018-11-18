@@ -235,7 +235,7 @@ rule "Westley muere"
      System.out.println(p.getNombre() + " esta " + p.getEstadoSalud() +" asesinado por " + p2.getNombre());
 end
 
-rule "Buttercup odia "
+rule "Buttercup odia al pirata"
     when
     	exists (Westley (estadoSalud == EstadoSalud.MUERTO))
     	bt: Personaje(nombre == "Buttercup")
