@@ -50,9 +50,9 @@ end
 rule "Creacion Personajes Acto 0"
 	agenda-group "Acto0"
 	when 
-		granja: Lugar(nombre == "Granja")
+		granja: Granja()
 		granjero: Granjero()
-		hab: Lugar(nombre == "Habitación del Niño")
+		hab: HabitacionN()
 		pir: Pirateria()
 		mar: Mar()
 		
@@ -153,6 +153,7 @@ rule "Buttercup quiere a Westley"
 end
 
 /* Si sobra se borra
+
 rule "A�adir Lugar a Westley"
 
     when
@@ -182,7 +183,6 @@ rule "Relacion Conocer"
         p1 : Personaje(ubicacionActual != null)
         p2 : Personaje(ubicacionActual == p1.getUbicacionActual(), nombre != p1.getNombre())
     then
-    	System.out.println("Modifico: "+ p1.getNombre() + " y " + p2.getNombre());
 
         Relacion r = new ConoceA(p2);
         Relacion r2 = new ConocidoDe(p1);
@@ -282,3 +282,9 @@ rule "Consulta Quien"
 		System.out.println(p.toString());
 end 
 
+rule "Consulta Que"
+	when
+		con: ConsultaQue()
+	then
+		System.out.println("CONSULTA QUIEN");
+end
