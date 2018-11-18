@@ -4,7 +4,7 @@ import lugares.*;
 import profesiones.*;
 import utilidades.*;
 
-public class Iñigo extends Personaje {
+public class IÃ±igo extends Personaje {
 
 	// TODO amigo de
 	// TODO enemigo de
@@ -14,8 +14,8 @@ public class Iñigo extends Personaje {
 	private Motivacion motivacion; // LISTA
 	private Profesion trabajaDe; // LISTA
 
-	public Iñigo(Profesion prof, Lugar ubicacionAct) {
-		super("Iñigo Montoya", Origen.ESPANA, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true,
+	public IÃ±igo(Profesion prof, Lugar ubicacionAct) {
+		super("IÃ±igo Montoya", Origen.ESPANA, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true,
 				TipoImportancia.PROTAGONISTA, ubicacionAct);
 		this.motivacion = Motivacion.VENGAR_PADRE;
 		trabajaDe = prof;
