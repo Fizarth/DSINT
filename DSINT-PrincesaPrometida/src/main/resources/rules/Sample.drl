@@ -69,9 +69,6 @@ rule "Nieto es"
     modify($nt){
       setRelacionesPersonaje(listant);
     }
-//    modify($nt){
-  //    addRelacion(fm2);
- //   }
    // System.out.println("El nieto es familiar del abuelo y la madre" );
     System.out.println($nt.getNombre() + " es " + $nt.getRelacionesPersonaje().get(0) + " y "+ 
     $nt.getRelacionesPersonaje().get(1) );
@@ -91,12 +88,8 @@ rule "Abuelo es"
     listaab.add(fm2);
 
     modify($ab){
-      //addRelacion(fm2);
       setRelacionesPersonaje(listaab);
     }
-   // modify($ab){
-   //   addRelacion(fm2);
-  //  }
     System.out.println($ab.getNombre() + " es " + $ab.getRelacionesPersonaje().get(0) + " y "+ 
     $ab.getRelacionesPersonaje().get(1) );
 
@@ -115,11 +108,6 @@ rule "Madre es"
     listamd.add(fm2);
     modify($md){
           setRelacionesPersonaje(listamd);
-    
-    //  addRelacion(fm1);
-   // }
-  //  modify($md){
-    //  addRelacion(fm2);
     }
     //System.out.println("Madre es familiar del abuelo y nieto" );
     System.out.println($md.getNombre() + " es " + $md.getRelacionesPersonaje().get(0) + " y "+ 
@@ -139,9 +127,6 @@ rule "Westley quiere a Buttercup"
     System.out.println("Relaciones de westley: "+$wt.getRelacionesPersonaje());
 end
 
-<<<<<<< HEAD
-rule "Añadir Lugar a Weatley"
-=======
 rule "Buttercup quiere a Westley"
   when
     $wt: Personaje(nombre == "Westley")
@@ -172,7 +157,6 @@ rule "Principe quiere a Buttercup"
 end
 
 rule "Añadir Lugar a Westley"
->>>>>>> branch 'master' of https://github.com/Fizarth/DSINT.git
     when
     	p : Personaje(nombre == "Westley", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
     	l : Lugar(nombre == "Granja")
