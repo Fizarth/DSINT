@@ -140,9 +140,27 @@ rule "Westley quiere a Buttercup"
     System.out.println("Relaciones de westley: "+$wt.getRelacionesPersonaje());
 end
 
+<<<<<<< HEAD
 rule "Añadir Lugar a Weatley"
+=======
+rule "Buttercup quiere a Westley"
+  when
+    $wt: Personaje(nombre == "Westley")
+    $bt: Personaje(nombre == "Buttercup")
+  then
+    Relacion q1 = new QuiereA($wt);
+    ArrayList<Relacion> listaR = $bt.getRelacionesPersonaje();
+    listaR.add(q1);
+    modify($bt){
+          setRelacionesPersonaje(listaR);
+    }
+    System.out.println("Relaciones de Buttercup: "+$bt.getRelacionesPersonaje());
+end
+
+rule "Añadir Lugar a Westley"
+>>>>>>> branch 'master' of https://github.com/Fizarth/DSINT.git
     when
-    	p : Personaje(nombre == "Weasley", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
+    	p : Personaje(nombre == "Westley", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
     	l : Lugar(nombre == "Granja")
     then
         modify(p){
@@ -196,11 +214,11 @@ rule "Relacion Conocer"
      
 end
 
-rule "Weatley se va a hacer fortuna"
+rule "Westley se va a hacer fortuna"
     when
     	l: Lugar(nombre == "Mar")
    		lg: Lugar(nombre == "Granja");
-        p1: Westley(nombre == "Weasley", ubicacionActual== lg,motivacion == Motivacion.GANAR_DINERO)
+        p1: Westley(nombre == "Westley", ubicacionActual== lg,motivacion == Motivacion.GANAR_DINERO)
    		
     then
     	modify(p1){
@@ -210,10 +228,10 @@ rule "Weatley se va a hacer fortuna"
 end
 
 
-rule "Weatley muere"
+rule "Westley muere"
     when
     	lm: Lugar(nombre == "Mar")
-        p: Personaje(nombre == "Weasley",ubicacionActual == lm)
+        p: Personaje(nombre == "Westley",ubicacionActual == lm)
    		p2: Personaje(nombre == "Robert el Pirata")
     then
     	modify(p){
