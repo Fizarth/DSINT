@@ -140,9 +140,7 @@ rule "Westley quiere a Buttercup"
     System.out.println("Relaciones de westley: "+$wt.getRelacionesPersonaje());
 end
 
-<<<<<<< HEAD
-rule "Añadir Lugar a Weatley"
-=======
+
 rule "Buttercup quiere a Westley"
   when
     $wt: Personaje(nombre == "Westley")
@@ -158,7 +156,7 @@ rule "Buttercup quiere a Westley"
 end
 
 rule "Añadir Lugar a Westley"
->>>>>>> branch 'master' of https://github.com/Fizarth/DSINT.git
+
     when
     	p : Personaje(nombre == "Westley", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
     	l : Lugar(nombre == "Granja")
