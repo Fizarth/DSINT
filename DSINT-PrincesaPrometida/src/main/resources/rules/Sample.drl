@@ -96,9 +96,9 @@ end
 
 rule "Madre es"
   when
-    $nt: Personaje(nombre == "El Nieto")
-    $ab: Personaje(nombre == "Abuelo")
-    $md: Personaje(nombre == "La Madre") 
+    nt: Personaje(nombre == "El Nieto")
+    ab: Personaje(nombre == "Abuelo")
+    md: Personaje(nombre == "La Madre") 
   then
     Relacion fm1 = new FamiliarDe(ab);
     Relacion fm2 = new FamiliarDe(nt);
@@ -112,10 +112,11 @@ rule "Madre es"
     System.out.println(md.getNombre() + " es " + md.getRelacionesPersonaje().get(0) + " y "+ 
     md.getRelacionesPersonaje().get(1) );
 end
+
 rule "Westley quiere a Buttercup"
   when
-    $wt: Personaje(nombre == "Westley")
-    $bt: Personaje(nombre == "Buttercup")
+    wt: Personaje(nombre == "Westley")
+    bt: Personaje(nombre == "Buttercup")
   then
     Relacion q1 = new QuiereA(bt);
     ArrayList<Relacion> listaR = wt.getRelacionesPersonaje();
