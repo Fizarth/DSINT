@@ -49,9 +49,20 @@ end
 
 rule "Creacion Personajes Acto 0"
 	agenda-group "Acto0"
+	when 
+		granja: Granja()
+		granjero: Granjero()
+		hab: HabitacionNino()
+		pir: Pirateria()
+		mar: Mar()
+		
 	then
-		insert(new Westley());
-		insert(new Buttercup());
+		insert(new Westley(granjero, granja));
+		insert(new Buttercup(granjero,granja));
+		insert(new Abuelo(hab));
+		insert(new Madre(hab));
+		insert(new Nieto(hab));
+		insert(new Pirata(pir,mar));
 		System.out.println("Acto 0: Creo los personajes");
 end
 

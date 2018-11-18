@@ -12,13 +12,13 @@ public class Westley extends Personaje {
 	private Motivacion motivacion;//LISTA
 	private Profesion trabajaDe;
 
-	public Westley() {
+	public Westley(Profesion prof, Lugar ubicacionAct) {
 		super("Westley", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true, 
-				TipoImportancia.PROTAGONISTA);
+				TipoImportancia.PROTAGONISTA,	ubicacionAct);
 		this.motivacion = Motivacion.GANAR_DINERO;
-		//this.trabajaDe = prof;
-		//Profesion prof, Lugar ubicacionAct
-		//ubicacionAct
+		this.trabajaDe = prof;
+		
+	
 	}
 
 	public Motivacion getMotivacion() {
