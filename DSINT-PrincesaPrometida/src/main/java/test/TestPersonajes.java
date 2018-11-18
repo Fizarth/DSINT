@@ -26,7 +26,7 @@ public class TestPersonajes {
 		 Lugar l6 = new Castillo();
 		// Lugar l7 = new Espana();
 		Lugar l8 = new Granja();
-		Lugar l9 = new HabitacionNino();
+		Lugar l9 = new HabitacionNiño();
 		Lugar l10 = new Mar();
 		// Lugar l11 = new PantanoFuego();
 		// Lugar l12 = new PozoDesesperacion();
