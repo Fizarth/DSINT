@@ -40,7 +40,7 @@ rule "Creacion Lugares"
 		insert(new Castillo());
 		insert(new Espana());
 		insert(new Granja());
-		insert(new HabitacionNino());
+		insert(new HabitacionNiÃ±o());
 		insert(new Mar());
 		insert(new PantanoFuego());
 		insert(new PozoDesesperacion());	
@@ -52,7 +52,7 @@ rule "Creacion Personajes Acto 0"
 	when 
 		granja: Granja()
 		granjero: Granjero()
-		hab: HabitacionNino()
+		hab: HabitacionNiÃ±o()
 		pir: Pirateria()
 		mar: Mar()
 		
@@ -167,7 +167,7 @@ rule "Principe quiere a Buttercup"
     System.out.println("Relaciones de Principe: "+pr.getRelacionesPersonaje());
 end
 
-rule "Añadir Lugar a Westley"
+rule "Aï¿½adir Lugar a Westley"
 
     when
     	p : Personaje(nombre == "Westley", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
@@ -179,7 +179,7 @@ rule "Añadir Lugar a Westley"
 		System.out.println("Se ha actualizado Ubicacion de: "+ p.getNombre() +" a " + l.getNombre());
 end
 
-rule "Añadir Lugar a Buttercup"
+rule "Aï¿½adir Lugar a Buttercup"
     when
     	p : Personaje(nombre == "Buttercup", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
     	l : Lugar(nombre == "Granja")
@@ -258,3 +258,9 @@ rule "Consulta Quien"
 		System.out.println(p.toString());
 end 
 
+rule "Consulta Que"
+	when
+		con: ConsultaQue()
+	then
+		System.out.println("CONSULTA QUIEN");
+end
