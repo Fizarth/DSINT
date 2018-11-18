@@ -244,6 +244,6 @@ rule "Consulta Quien"
 		p : Personaje (nombre == con.getNombre)
 	then
 		System.out.println("ENTRO REGLA CONSULTA QUIEN");
-		p.toString();
+		System.out.println(p.toString());
 end 
 

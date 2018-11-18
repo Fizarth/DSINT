@@ -36,6 +36,12 @@ public class Westley extends Personaje {
 	public void setProfesion(Profesion profesion) {
 		this.trabajaDe = profesion;
 	}
+
+	@Override
+	public String toString() {
+		String cadena = super.toString();
+		return cadena + ".Westley se ve motivado por: "+motivacion+ "y  trabaja de=" + trabajaDe ;
+	}
 	
 	
 	
