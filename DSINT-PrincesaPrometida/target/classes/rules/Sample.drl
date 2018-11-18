@@ -251,8 +251,8 @@ end
 
 rule "Consulta Quien" 
 	when 
-		con : ConsultaQuien()
-		p : Personaje (nombre == con.getNombre)
+		con: ConsultaQuien()
+		p: Personaje (nombre == con.getNombre)
 	then
 		System.out.println("ENTRO REGLA CONSULTA QUIEN");
 		System.out.println(p.toString());
