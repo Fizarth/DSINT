@@ -40,7 +40,7 @@ rule "Creacion Lugares"
 		insert(new Castillo());
 		insert(new Espana());
 		insert(new Granja());
-		insert(new HabitacionNino());
+		insert(new HabitacionN());
 		insert(new Mar());
 		insert(new PantanoFuego());
 		insert(new PozoDesesperacion());	
@@ -50,9 +50,9 @@ end
 rule "Creacion Personajes Acto 0"
 	agenda-group "Acto0"
 	when 
-		granja: Granja()
+		granja: Lugar(nombre == "Granja")
 		granjero: Granjero()
-		hab: HabitacionNino()
+		hab: Lugar(nombre == "HabitaciÃ³n del NiÃ±o")
 		pir: Pirateria()
 		mar: Mar()
 		
@@ -152,22 +152,8 @@ rule "Buttercup quiere a Westley"
     System.out.println("Relaciones de Buttercup: "+bt.getRelacionesPersonaje());
 end
 
-rule "Principe quiere a Buttercup"
-  when
-    pr: Personaje(nombre == "Principe")
-    bt: Personaje(nombre == "Buttercup")
-    
-  then
-    Relacion q1 = new QuiereA(bt);
-    ArrayList<Relacion> listaR = pr.getRelacionesPersonaje();
-    listaR.add(q1);
-    modify(pr){
-          setRelacionesPersonaje(listaR);
-    }
-    System.out.println("Relaciones de Principe: "+pr.getRelacionesPersonaje());
-end
-
-rule "Añadir Lugar a Westley"
+/* Si sobra se borra
+rule "Aï¿½adir Lugar a Westley"
 
     when
     	p : Personaje(nombre == "Westley", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
@@ -179,7 +165,7 @@ rule "Añadir Lugar a Westley"
 		System.out.println("Se ha actualizado Ubicacion de: "+ p.getNombre() +" a " + l.getNombre());
 end
 
-rule "Añadir Lugar a Buttercup"
+rule "Aï¿½adir Lugar a Buttercup"
     when
     	p : Personaje(nombre == "Buttercup", ubicacionActual == null, estadoSalud == EstadoSalud.VIVO)
     	l : Lugar(nombre == "Granja")
@@ -189,7 +175,7 @@ rule "Añadir Lugar a Buttercup"
 		}
 		System.out.println("Se ha actualizado Ubicacion de: "+ p.getNombre() +" a " + l.getNombre());
 end
-
+*/
 
 rule "Relacion Conocer"
     when
@@ -247,6 +233,44 @@ rule "Westley muere"
     		setEstadoSalud(EstadoSalud.MUERTO);
     	}
      System.out.println(p.getNombre() + " esta " + p.getEstadoSalud() +" asesinado por " + p2.getNombre());
+end
+
+rule "Buttercup odia "
+    when
+    	exists (Westley (estadoSalud == EstadoSalud.MUERTO))
+    	bt: Personaje(nombre == "Buttercup")
+    	pr: Personaje(nombre == "Robert el Pirata")
+    then
+    	Relacion od1 = new OdiaA(pr);
+    	Relacion od2 = new OdiadoPor(bt);
+    	
+    	ArrayList<Relacion> listaR1 = bt.getRelacionesPersonaje();
+   		listaR1.add(od1);
+	    modify(bt){
+	          setRelacionesPersonaje(listaR1);
+	    }
+	 
+    	ArrayList<Relacion> listaR2 = pr.getRelacionesPersonaje();
+   		listaR2.add(od2);
+	    modify(pr){
+	          setRelacionesPersonaje(listaR2);
+	    }
+end
+//Fin acto0
+// Inicio Acto1
+rule "Principe quiere a Buttercup"
+  when
+    pr: Personaje(nombre == "Principe")
+    bt: Personaje(nombre == "Buttercup")
+    
+  then
+    Relacion q1 = new QuiereA(bt);
+    ArrayList<Relacion> listaR = pr.getRelacionesPersonaje();
+    listaR.add(q1);
+    modify(pr){
+          setRelacionesPersonaje(listaR);
+    }
+    System.out.println("Relaciones de Principe: "+pr.getRelacionesPersonaje());
 end
 
 rule "Consulta Quien" 

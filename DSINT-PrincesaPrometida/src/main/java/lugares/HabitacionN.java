@@ -1,8 +1,8 @@
 package lugares;
 
-public class HabitacionNiño extends Lugar{
+public class HabitacionN extends Lugar{
 
-	public HabitacionNiño() {
+	public HabitacionN() {
 		super("Habitación del Niño");
 		// TODO Auto-generated constructor stub
 	}

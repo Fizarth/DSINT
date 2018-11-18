@@ -17,7 +17,7 @@ public class TestRelacion {
 
 		KieSession kSession = kContainer.newKieSession("ksession-rules");
 		
-		Lugar hab = new HabitacionNiño();
+		Lugar hab = new HabitacionN();
 		
 		kSession.insert(hab);	
 		
