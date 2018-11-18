@@ -22,9 +22,6 @@ rule "Nieto es"
     modify($nt){
       setRelacionesPersonaje(listant);
     }
-//    modify($nt){
-  //    addRelacion(fm2);
- //   }
    // System.out.println("El nieto es familiar del abuelo y la madre" );
     System.out.println($nt.getNombre() + " es " + $nt.getRelacionesPersonaje().get(0) + " y "+ 
     $nt.getRelacionesPersonaje().get(1) );
@@ -45,12 +42,8 @@ rule "Abuelo es"
     
     
     modify($ab){
-      //addRelacion(fm2);
       setRelacionesPersonaje(listaab);
     }
-   // modify($ab){
-   //   addRelacion(fm2);
-  //  }
     System.out.println($ab.getNombre() + " es " + $ab.getRelacionesPersonaje().get(0) + " y "+ 
     $ab.getRelacionesPersonaje().get(1) );
 
@@ -69,15 +62,25 @@ rule "Madre es"
     listamd.add(fm2);
     modify($md){
           setRelacionesPersonaje(listamd);
-    
-    //  addRelacion(fm1);
-   // }
-  //  modify($md){
-    //  addRelacion(fm2);
     }
     //System.out.println("Madre es familiar del abuelo y nieto" );
     System.out.println($md.getNombre() + " es " + $md.getRelacionesPersonaje().get(0) + " y "+ 
     $md.getRelacionesPersonaje().get(1) );
+end
+
+rule "Westley quiere a Buttercup"
+  when
+    $wt: Personaje(nombre == "Westley")
+    $bt: Personaje(nombre == "Buttercup")
+  then
+    Relacion q1 = new QuiereA($bt);
+    ArrayList<Relacion> listaR = $wt.getRelacionesPersonaje();
+    listaR.add(q1);
+    modify($wt){
+          setRelacionesPersonaje(listaR);
+    }
+    System.out.println("Relaciones de westley: "+$wt.getRelacionesPersonaje());
+
 end
 
 rule "Añadir Lugar a Weatley"
@@ -102,7 +105,6 @@ rule "Añadir Lugar a Buttercup"
 		System.out.println("Se ha actualizado Ubicacion de: "+ p.getNombre() +" a " + l.getNombre());
 end
 
-/*
 rule "Relacion Conocer"
     when
         p1 : Personaje(ubicacionActual != null)
@@ -134,7 +136,7 @@ rule "Relacion Conocer"
         System.out.println("Relaciones de: " + p1.getNombre() + " = " + p1.getRelacionesPersonaje().toString());
         System.out.println("Relaciones de: " + p2.getNombre() + " = " + p2.getRelacionesPersonaje().toString());
      
-end*/
+end
 
 rule "Weatley se va a hacer fortuna"
     when

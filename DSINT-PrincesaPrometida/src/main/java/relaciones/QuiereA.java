@@ -4,7 +4,7 @@ import personajes.*;
 
 public class QuiereA extends Relacion {
 
-	public QuiereA(String nombre, Personaje afectado) {
+	public QuiereA(Personaje afectado) {
 		super("quiere a", afectado);
 	}
 
