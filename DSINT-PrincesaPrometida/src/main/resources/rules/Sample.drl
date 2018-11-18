@@ -7,6 +7,53 @@ import personajes.*;
 import relaciones.*;
 import utilidades.*;
 import java.util.*;
+import profesiones.*;
+
+
+rule "Creacion Profesiones"
+	//agenda-group "Acto0"
+	then 
+		insert(new BrigadaBrutal());
+		insert(new Curandero());
+		insert(new Desempleado());
+		insert(new Espadachin());
+		insert(new Gobernante());
+		insert(new Granjero());
+		insert(new Guardia());
+		insert(new Herrero());
+		insert(new Indefinido());
+		insert(new Mercenario());
+		insert(new Pirateria());
+		insert(new Sacerdote());
+		insert(new Sirviente());
+		insert(new Visir());
+		System.out.println("Creo las profesiones");
+end 
+
+rule "Creacion Lugares"
+	then
+		insert(new AcantiladosLocura());
+		insert(new Bosque());
+		insert(new BosqueLadrones());
+		insert(new CaminoMontana());
+		insert(new CasaMilagrosoMax());
+		insert(new Castillo());
+		insert(new Espana());
+		insert(new Granja());
+		insert(new HabitacionNino());
+		insert(new Mar());
+		insert(new PantanoFuego());
+		insert(new PozoDesesperacion());	
+		System.out.println("Creo los lugares");	
+end 
+
+rule "Creacion Personajes Acto 0"
+	agenda-group "Acto0"
+	then
+		insert(new Westley());
+		insert(new Buttercup());
+		System.out.println("Acto 0: Creo los personajes");
+end
 
 rule "Nieto es"
   when
@@ -102,7 +149,7 @@ rule "Añadir Lugar a Buttercup"
 		System.out.println("Se ha actualizado Ubicacion de: "+ p.getNombre() +" a " + l.getNombre());
 end
 
-/*
+
 rule "Relacion Conocer"
     when
         p1 : Personaje(ubicacionActual != null)
@@ -134,7 +181,7 @@ rule "Relacion Conocer"
         System.out.println("Relaciones de: " + p1.getNombre() + " = " + p1.getRelacionesPersonaje().toString());
         System.out.println("Relaciones de: " + p2.getNombre() + " = " + p2.getRelacionesPersonaje().toString());
      
-end*/
+end
 
 rule "Weatley se va a hacer fortuna"
     when
@@ -162,4 +209,12 @@ rule "Weatley muere"
      System.out.println(p.getNombre() + " esta " + p.getEstadoSalud() +" asesinado por " + p2.getNombre());
 end
 
+rule "Consulta Quien" 
+	when 
+		con : ConsultaQuien()
+		p : Personaje (nombre == con.getNombre)
+	then
+		System.out.println("ENTRO REGLA CONSULTA QUIEN");
+		p.toString();
+end 
 

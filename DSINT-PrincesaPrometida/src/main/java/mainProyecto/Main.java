@@ -29,7 +29,8 @@ public class Main {
 			case "ConsultaQuien":
 				System.out.println("CONSULTA QUIEN");
 				ConsultaQuien cquien = ((ConsultaQuien) c.get(0));
-				System.out.println(cquien.getNombre() + " " + cquien.getActo());
+				//System.out.println(cquien.getNombre() + " " + cquien.getActo());
+				kSession.insert(cquien);
 				EjecutarHastaActo(cquien.getActo());
 				break;
 			case "ConsultaQue":

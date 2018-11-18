@@ -13,11 +13,11 @@ public class Buttercup extends Personaje {
 	private Motivacion motivacion; // Motivaciones tiene que ser lista
 	private Profesion trabajaDe; //LISTA
  
-	public Buttercup(Profesion prof, Lugar ubicacionAct) {
+	public Buttercup() {
 		super("Buttercup", Origen.FLORIN, Sexo.MUJER, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true,
-				TipoImportancia.PROTAGONISTA, ubicacionAct);
+				TipoImportancia.PROTAGONISTA);
 		this.motivacion = Motivacion.ESTAR_CON_WEASLEY;
-		this.trabajaDe = prof;
+		//this.trabajaDe = prof; Profesion prof, Lugar ubicacionAct  , ubicacionAct
 	}
 
 	public Motivacion getMotivacion() {
