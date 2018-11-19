@@ -3,7 +3,7 @@ package profesiones;
 public class Pirateria extends Profesion {
 
 	public Pirateria() {
-		super("Pirateria");
+		super("pirateria");
 	}
 
 }

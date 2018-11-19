@@ -561,6 +561,7 @@ rule "Principe llega a los acantilados"
 	when
 		ac: AcantiladosLocura()
 		cm: CaminoMontana()
+		e: Espadachin()
 		p: Pirata(ubicacionActual == cm)
 		f: Fezzik(estadoSalud == EstadoSalud.INCONSCIENTE)
 		i: Inigo(ubicacionActual == ac)
@@ -569,6 +570,10 @@ rule "Principe llega a los acantilados"
 	then
 		modify(i){
 			setUbicacionActual(null)
+		}
+		
+		modify(i){
+			setTrabajaDe(e);
 		}
 		modify(pr){
 			setUbicacionActual(ac)
@@ -582,24 +587,16 @@ rule "Principe llega a los acantilados"
 		System.out.println("Principe llega a los acantilados para salvar a Buttercup");
 end 
 
+//Fezzik será actualizado en el siguiente acto
 rule "Muere Vizzini"
 	when 
 		cm : CaminoMontana()
 		p: Pirata(ubicacionActual == cm)
-		f: Fezzik(estadoSalud == EstadoSalud.INCONSCIENTE)
 		i: Inigo(ubicacionActual == null)
 		v: Vizzini(ubicacionActual == cm)
-		e: Espadachin()
-		d: Desempleado()
 	then 
 		modify(v){
 			setEstadoSalud(EstadoSalud.MUERTO);
-		}
-		modify(i){
-			setTrabajaDe(e);
-		}
-		modify(f){
-			setProfesion(d);
 		}
 		System.out.println("Vizzini esta " + v.getEstadoSalud() + " por " + p.getNombre());
 end
