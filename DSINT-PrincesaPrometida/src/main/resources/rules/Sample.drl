@@ -11,7 +11,6 @@ import profesiones.*;
 
 //Creación de la base
 rule "Creacion Profesiones"
-	//agenda-group "Acto0"
 	then 
 		insert(new BrigadaBrutal());
 		insert(new Curandero());
@@ -98,7 +97,6 @@ rule "Creacion de Personajes Acto1"
 		insert(new Rey(Gobernante, castillo));
 		insert(new Principe(Gobernante, castillo));
 		System.out.println("Acto1: Se crean los personajes");
-		
 end
 
 //Consultas
