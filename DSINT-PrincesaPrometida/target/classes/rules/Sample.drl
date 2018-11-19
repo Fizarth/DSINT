@@ -114,11 +114,8 @@ end
 rule "Consulta Que"
 	when
 		con: ConsultaQue()
-		
 	then
-	
-	
-		System.out.println("CONSULTA QUIEN");
+		System.out.println("CONSULTA QUE");
 end
 
 //Inicio Acto0
@@ -136,7 +133,7 @@ rule "Nieto es"
     modify(nt){
       setRelacionesPersonaje(listant);
     }
-   // System.out.println("El nieto es familiar del abuelo y la madre" );
+   System.out.println("El nieto es familiar del abuelo y la madre" );
    // System.out.println(nt.getNombre() + " es " + nt.getRelacionesPersonaje().get(0) + " y "+ 
    // nt.getRelacionesPersonaje().get(1) );
 end
@@ -157,8 +154,8 @@ rule "Abuelo es"
     modify(ab){
       setRelacionesPersonaje(listaab);
     }
-  //  System.out.println(ab.getNombre() + " es " + ab.getRelacionesPersonaje().get(0) + " y "+ 
-  //  ab.getRelacionesPersonaje().get(1) );
+  System.out.println(ab.getNombre() + " es " + ab.getRelacionesPersonaje().get(0) + " y "+ 
+    ab.getRelacionesPersonaje().get(1) );
 end
 
 rule "Madre es"
@@ -175,7 +172,7 @@ rule "Madre es"
     modify(md){
           setRelacionesPersonaje(listamd);
     }
-    //System.out.println("Madre es familiar del abuelo y nieto" );
+    System.out.println("Madre es familiar del abuelo y nieto" );
     //System.out.println(md.getNombre() + " es " + md.getRelacionesPersonaje().get(0) + " y "+ 
   //  md.getRelacionesPersonaje().get(1) );
 end
