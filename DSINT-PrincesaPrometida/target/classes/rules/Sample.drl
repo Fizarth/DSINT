@@ -107,7 +107,16 @@ rule "Consulta Quien"
 	then
 		System.out.println("ENTRO REGLA CONSULTA QUIEN");
 		System.out.println(p.toString());
-end 
+end
+
+rule "Consulta Quien No Existe"
+	when 
+		con: ConsultaQuien()
+		not Personaje (nombre == con.getNombre)
+	then
+		System.out.println("ENTRO REGLA CONSULTA QUIEN NO EXISTE");
+
+end
 
 rule "Consulta Que"
 	when
@@ -559,4 +568,5 @@ rule "Muere Vizzini"
 			setProfesion(d);
 		}
 		System.out.println("Vizzini esta " + v.getEstadoSalud() + " por " + p.getNombre());
-end 
+end
+

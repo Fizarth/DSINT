@@ -37,5 +37,9 @@ public enum Acto {
 		return lookup.get(actoS);
 	}
 	
+	public int getNumActo() {
+		return acto.charAt(4);
+	}
+	
 	
 }
