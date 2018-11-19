@@ -9,6 +9,8 @@ import utilidades.*;
 import java.util.*;
 import profesiones.*;
 
+
+
 //Creación de la base
 rule "Creacion Profesiones"
 	then 
@@ -78,7 +80,10 @@ rule "Creacion Personajes Acto 0"
 		insert(new Abuelo(hab));
 		insert(new Madre(hab));
 		insert(new Nieto(hab));
-		insert(new Pirata(pir,mar));
+		insert (new Pirata(pir,mar));
+		
+	
+		
 		System.out.println("Acto0: Se crean los personajes");
 end
 
