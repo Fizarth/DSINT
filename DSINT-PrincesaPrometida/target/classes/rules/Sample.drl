@@ -63,7 +63,6 @@ rule "Creacion Animales"
 		System.out.println("Se han añadido los animales");
 end
 
-
 rule "Creacion Personajes Acto 0"
 	agenda-group "Acto0"
 	when 
@@ -144,8 +143,6 @@ rule "Consulta Que"
 		}
 		Archivo.getUnicaInstancia().escribir("\n");
 		System.out.println("");
-		
-		
 end
 
 //Inicio Acto0
