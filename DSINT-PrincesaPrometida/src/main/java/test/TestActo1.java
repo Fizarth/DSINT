@@ -19,17 +19,17 @@ public class TestActo1 {
 		KieSession kSession = kContainer.newKieSession("ksession-rules");
 		
 		kSession.fireAllRules();
-		/*kSession.getAgenda().getAgendaGroup("Acto0").setFocus();
+		kSession.getAgenda().getAgendaGroup("Acto0").setFocus();
 		kSession.fireAllRules();
 		kSession.getAgenda().getAgendaGroup("Acto1").setFocus();
-		kSession.fireAllRules();*/
-		Acto ac = Acto.Acto1;
+		kSession.fireAllRules();
+		/*Acto ac = Acto.Acto1;
 		ConsultaQuien cq = new ConsultaQuien("La Madre", ac);
 		for(int i = 0; i < ac.getNumActo(); i++){
 			kSession.getAgenda().getAgendaGroup("Acto"+i).setFocus();
 			kSession.fireAllRules();
 		}
 		kSession.insert(cq);
-		kSession.fireAllRules();
+		kSession.fireAllRules();*/
 	}
 }

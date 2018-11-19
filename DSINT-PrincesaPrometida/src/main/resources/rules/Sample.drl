@@ -375,7 +375,7 @@ rule "Anunciamiento boda"
 		// ni idea pork ya esta lo de prometida pero como en los apuntes pone algo del anunciamiento de la boda
 end 
 */
-rule "Princesa Sale a pasear"
+rule "Buttercup sale a pasear"
 	when
 		b: Lugar(nombre=="Bosque")
 		c: Lugar(nombre =="Castillo")
@@ -387,7 +387,7 @@ rule "Princesa Sale a pasear"
 		System.out.println("La Buttercup sale a pasear al bosque");
 end			
 
-rule "Secuestro Princesa"
+rule "Secuestro Buttercup"
 	when
 		b: Bosque();
 		princesa: Buttercup(ubicacionActual == b)
@@ -441,8 +441,7 @@ rule "Fezzik salva a Buttercup"
 		System.out.println(fz.getNombre()+" salva a " + bt.getNombre());		
 end
 
-//esta regla no me convence mucho pero no se como hacerlo sino para decir que llegan ahi
-rule "Pirata persigue a Buttercup"
+rule "Llegada a los acantilados"
 	when
 		m: Lugar(nombre == "Mar")
 		an: Animal(ubicacionActual == m , estadoSalud == EstadoSalud.MUERTO)
@@ -450,7 +449,6 @@ rule "Pirata persigue a Buttercup"
 		bt: Buttercup(ubicacionActual == m)
 		f: Fezzik(ubicacionActual == m)
 		i: Inigo(ubicacionActual == m)
-		p: Pirata(ubicacionActual == m)
 		acantilados: Lugar(nombre == "Acantilados de la Locura")
 	then
 		modify(i){
@@ -465,13 +463,53 @@ rule "Pirata persigue a Buttercup"
 		modify(v){
 			setUbicacionActual(acantilados)		
 		}
-		modify(p){
-			setUbicacionActual(acantilados)
-		}
-		System.out.println(v.getNombre()+ "," + f.getNombre() + "," + i.getNombre() + "," + bt.getNombre()+" y " + p.getNombre()+ " llegan a " + acantilados.getNombre());
+		System.out.println(v.getNombre()+ "," + f.getNombre() + "," + i.getNombre() + "y" + bt.getNombre() + " llegan a " + acantilados.getNombre());
 end
 
 //Regla pirata llega a los acantilados
+
+rule "Pirata llega a los acantilados"
+	when
+		m:Mar()
+		ac: AcantiladosLocura()
+		p: Pirata( ubicacionActual == m )
+		i: Inigo( ubicacionActual == ac )
+	then
+		modify(p){
+			setUbicacionActual(ac)
+		}
+		System.out.println( p.getNombre() + " llega a " + ac.getNombre());
+end
+
+rule "Historia Domingo Montoya"
+	when
+		ac: AcantiladosLocura()
+		p: Pirata( ubicacionActual == ac )
+		i: Inigo( ubicacionActual == ac )
+		pi: PadreInigo()
+	then
+		Relacion fm1 = new FamiliarDe(pi);
+	    Relacion fm2 = new FamiliarDe(i);
+	    ArrayList<Relacion> listaR = i.getRelacionesPersonaje();
+	    listaR.add(fm1);
+	    
+	    modify(i){
+	      setRelacionesPersonaje(listaR);
+	    }
+	    ArrayList<Relacion> listaR2 = pi.getRelacionesPersonaje();
+	    listaR2.add(fm2);
+	    modify(pi){
+	      setRelacionesPersonaje(listaR2);
+	    }
+	    
+		modify(pi){
+			setEstadoSalud(EstadoSalud.MUERTO);
+		}
+		modify(i){
+			setMotivacion(Motivacion.VENGAR_PADRE);
+		}
+		System.out.println("Domingo Montoya está muerto y su hijo busca venganza");
+end
 
 rule "Pirata vence a Iñigo"
 	when
@@ -538,4 +576,3 @@ rule "Muere Vizzini"
 		}
 		System.out.println("Vizzini esta " + v.getEstadoSalud() + " por " + p.getNombre());
 end
-
