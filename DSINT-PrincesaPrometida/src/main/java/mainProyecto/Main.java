@@ -52,7 +52,7 @@ public class Main {
 	private static void EjecutarHastaActo(Acto a) {
 
 		switch (a) {
-
+		
 		case Acto0:
 			System.out.println("Ejecuto hasta el acto0");
 			kSession.getAgenda().getAgendaGroup("Acto0").setFocus();

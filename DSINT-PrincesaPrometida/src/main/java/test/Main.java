@@ -7,17 +7,24 @@ import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
+import utilidades.Acto;
 import utilidades.Consulta;
+import utilidades.ConsultaQue;
+import utilidades.ConsultaQuien;
 import utilidades.Parser;
 
 public class Main {
+	
+	private static final KieServices ks = KieServices.Factory.get();
+	private static final KieContainer kContainer = ks.getKieClasspathContainer();
+	private static final KieSession kSession = kContainer.newKieSession("ksession-rules");
+	
 
 	public static void main(String[] args) {
-		KieServices ks = KieServices.Factory.get();
-		KieContainer kContainer = ks.getKieClasspathContainer();
+		
 		//System.out.println(kContainer.verify().getMessages().toString());
 	
-		KieSession kSession = kContainer.newKieSession("ksession-rules");
+		
 		
 		String filePath = args[0];
 		
@@ -31,11 +38,28 @@ public class Main {
 		}
 		
 		for (Consulta consulta : consultas) {
-			consulta.getTipo();
+			switch (consulta.getTipo()) {
+				case "ConsultaQue":
+					ConsultaQue consultaQue = (ConsultaQue) consulta;
+					ejecutarHastaActo(consultaQue.getActo());
+					kSession.insert(consultaQue);
+					
+					break;
+				case "ConsultaQuien":
+					ConsultaQuien consultaQuien = (ConsultaQuien) consulta;
+					ejecutarHastaActo(consultaQuien.getActo());
+					kSession.insert(consultaQuien);
+					
+					break;
+	
+				default:
+					break;
+			}
 			
 			
 			
 			kSession.fireAllRules();
+			
 			
 		}
 		
@@ -43,5 +67,17 @@ public class Main {
 	
 	}
 	
+
+	
+	private static void ejecutarHastaActo(Acto acto) {
+		for(int i = 0; i < acto.getNumActo(); i++){
+			kSession.getAgenda().getAgendaGroup("Acto"+i).setFocus();
+			kSession.fireAllRules();
+		}
+	}
+	
 	
 }
+
+
+

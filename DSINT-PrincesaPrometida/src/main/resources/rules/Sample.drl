@@ -561,4 +561,5 @@ rule "Muere Vizzini"
 			setProfesion(d);
 		}
 		System.out.println("Vizzini esta " + v.getEstadoSalud() + " por " + p.getNombre());
-end 
+end
+
