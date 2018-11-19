@@ -549,8 +549,8 @@ rule "Muere Vizzini"
 	when 
 		cm : CaminoMontana()
 		p: Pirata(ubicacionActual == cm)
-		f: Fezzik(estadoSalud == EstadoSalud.INSCONSCIENTE)
-		i: Inigo(estadoSalud == EstadoSalud.INSCONSCIENTE)
+		f: Fezzik(estadoSalud == EstadoSalud.INSCONCIENTE)
+		i: Inigo(estadoSalud == EstadoSalud.INSCONCIENTE)
 		v: Vizzini(ubicacionActual == cm)
 		e: Espadachin()
 		d: Desempleado()
