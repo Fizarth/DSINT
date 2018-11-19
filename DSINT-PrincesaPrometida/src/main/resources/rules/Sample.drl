@@ -415,13 +415,13 @@ end
 rule "Anguila ataca a buttercup"
 	when 
 		m: Mar();
-		p: Buttercup( ubicacionActual==m )
+		bt: Buttercup( ubicacionActual==m )
 		a: AnguilaElectrica(ubicacionActual== m)
 	then 
-		modify(p){
+		modify(bt){
 			setEstadoSalud(EstadoSalud.EN_PELIGRO);
 		}
-		System.out.println(a.getNombre() + " ataca a " + p.getNombre() + " esta " + p.getEstadoSalud());
+		System.out.println(a.getNombre() + " ataca a " + bt.getNombre() + " esta " + bt.getEstadoSalud());
 end
 
 rule "Fezzik salva a Buttercup"
@@ -443,13 +443,14 @@ end
 
 rule "Llegada a los acantilados"
 	when
-		m: Lugar(nombre == "Mar")
+		m: Mar( )
+		acantilados: AcantiladosLocura(  )
 		an: Animal(ubicacionActual == m , estadoSalud == EstadoSalud.MUERTO)
 		v: Vizzini (ubicacionActual == m)
 		bt: Buttercup(ubicacionActual == m)
 		f: Fezzik(ubicacionActual == m)
 		i: Inigo(ubicacionActual == m)
-		acantilados: Lugar(nombre == "Acantilados de la Locura")
+		p: Pirata( ubicacionActual == m )
 	then
 		modify(i){
 			setUbicacionActual(acantilados)
@@ -463,10 +464,12 @@ rule "Llegada a los acantilados"
 		modify(v){
 			setUbicacionActual(acantilados)		
 		}
-		System.out.println(v.getNombre()+ "," + f.getNombre() + "," + i.getNombre() + "y" + bt.getNombre() + " llegan a " + acantilados.getNombre());
+		modify(p){
+			setMotivacion(Motivacion.SECUESTRAR_PRINCESA)
+		}
+		System.out.println(v.getNombre() + "," + f.getNombre() + "," + i.getNombre() + "y" + bt.getNombre() + " llegan a " + acantilados.getNombre());
+		System.out.println(p.getNombre() + " quiere " + p.getMotivacion());
 end
-
-//Regla pirata llega a los acantilados
 
 rule "Pirata llega a los acantilados"
 	when
@@ -584,7 +587,7 @@ rule "Muere Vizzini"
 		cm : CaminoMontana()
 		p: Pirata(ubicacionActual == cm)
 		f: Fezzik(estadoSalud == EstadoSalud.INCONSCIENTE)
-		i: Inigo(estadoSalud == EstadoSalud.INCONSCIENTE)
+		i: Inigo(ubicacionActual == null)
 		v: Vizzini(ubicacionActual == cm)
 		e: Espadachin()
 		d: Desempleado()
