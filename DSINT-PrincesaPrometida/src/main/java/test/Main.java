@@ -17,7 +17,7 @@ public class Main {
 	
 	private static final KieServices ks = KieServices.Factory.get();
 	private static final KieContainer kContainer = ks.getKieClasspathContainer();
-	private static final KieSession kSession = kContainer.newKieSession("ksession-rules");
+	private static KieSession kSession = kContainer.newKieSession("ksession-rules");
 	
 
 	public static void main(String[] args) {
@@ -37,8 +37,10 @@ public class Main {
 			System.exit(-1);
 		}
 		
-		kSession.fireAllRules();
+		
 		for (Consulta consulta : consultas) {
+			// Init Session 
+			kSession.fireAllRules();
 			switch (consulta.getTipo()) {
 				case "ConsultaQue":
 					ConsultaQue consultaQue = (ConsultaQue) consulta;
@@ -58,6 +60,7 @@ public class Main {
 			}
 			
 			kSession.fireAllRules();
+			resetSession();
 				
 		}
 		
@@ -68,6 +71,12 @@ public class Main {
 			kSession.getAgenda().getAgendaGroup("Acto"+i).setFocus();
 			kSession.fireAllRules();
 		}
+	}
+	
+	
+	private static void resetSession() {
+		kSession.destroy();
+		kSession = kContainer.newKieSession("ksession-rules");
 	}
 	
 	
