@@ -531,7 +531,6 @@ rule "Pirata vence a Iñigo"
 		
 		System.out.println(p.getNombre() + " vence a " + i.getNombre());
 		System.out.println(v.getNombre() + "," + f.getNombre() + " y " + bt.getNombre() + " huyen a " + cm.getNombre());
-		
 end 
 
 rule "Pirata vence a Fezzik"
