@@ -6,71 +6,80 @@ import java.util.ArrayList;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-import utilidades.*;
+
+import utilidades.Acto;
+import utilidades.Archivo;
+import utilidades.Consulta;
+import utilidades.ConsultaQue;
+import utilidades.ConsultaQuien;
 import utilidades.Parser;
 
 public class Main {
 
-	private static KieServices ks = KieServices.Factory.get();
-	private static KieContainer kContainer = ks.getKieClasspathContainer();
+	private static final KieServices ks = KieServices.Factory.get();
+	private static final KieContainer kContainer = ks.getKieClasspathContainer();
 	private static KieSession kSession = kContainer.newKieSession("ksession-rules");
 
-	public static void main(String[] args) throws IOException {
-		ArrayList<Consulta> c = new ArrayList<Consulta>();
+	public static void main(String[] args) {
 
-		c = (ArrayList<Consulta>) Parser.parsear("C:\\Users\\fires\\Desktop\\Nueva\\input1.txt");
+		// System.out.println(kContainer.verify().getMessages().toString());
 
-		System.out.println(kContainer.verify().getMessages().toString());
+		String filePath = "/home/norberto/Downloads/input1.txt";
+		Archivo.setPath(filePath + ".output");
 
-		while (!c.isEmpty()) {
-			Archivo.getUnicaInstancia().escribir("Buenos dias, las respuestas a sus preguntas son:\n");
-			switch (c.get(0).getTipo()) {
+		ArrayList<Consulta> consultas = null;
+		try {
+			consultas = (ArrayList<Consulta>) Parser.parsear(filePath);
+		} catch (IOException e) {
+			System.err.println("No se ha podido leer el fichero: " + filePath);
+			System.exit(-1);
+		}
 
-			case "ConsultaQuien":
-				System.out.println("CONSULTA QUIEN");
-				ConsultaQuien cquien = ((ConsultaQuien) c.get(0));
-				//System.out.println(cquien.getNombre() + " " + cquien.getActo());
-				kSession.insert(cquien);
-				EjecutarHastaActo(cquien.getActo());
-				break;
+		for (Consulta consulta : consultas) {
+			// Init Session
+			kSession.fireAllRules();
+			switch (consulta.getTipo()) {
 			case "ConsultaQue":
-				System.out.println("CONSULTA QUE");
-				ConsultaQue cque = ((ConsultaQue) c.get(0));
-				System.out.println(cque.getActo());
-				EjecutarHastaActo(cque.getActo());
+				ConsultaQue consultaQue = (ConsultaQue) consulta;
+				ejecutarHastaActo(consultaQue.getActo());
+				kSession.insert(consultaQue);
+
 				break;
+			case "ConsultaQuien":
+				ConsultaQuien consultaQuien = (ConsultaQuien) consulta;
+				ejecutarHastaActo(consultaQuien.getActo());
+				kSession.insert(consultaQuien);
+
+				break;
+
 			default:
-				Archivo.getUnicaInstancia().escribir("La consulta que ha realizado no tiene un formato valido\n");
 				break;
 			}
-			c.remove(0);
+
+			kSession.fireAllRules();
+			resetSession();
 
 		}
-		Archivo.getUnicaInstancia().cerrarArchivo();
+
+		try {
+			Archivo.getUnicaInstancia().cerrarArchivo();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
-	private static void EjecutarHastaActo(Acto a) {
-
-		switch (a) {
-		
-		case Acto0:
-			System.out.println("Ejecuto hasta el acto0");
-			kSession.getAgenda().getAgendaGroup("Acto0").setFocus();
+	private static void ejecutarHastaActo(Acto acto) {
+		for (int i = 0; i <= acto.getNumActo(); i++) {
+			kSession.getAgenda().getAgendaGroup("Acto" + i).setFocus();
 			kSession.fireAllRules();
-			break;
-		case Acto1:
-			System.out.println("EjecutoHasta acto 1");
-			kSession.getAgenda().getAgendaGroup("Acto0").setFocus();
-			kSession.fireAllRules();
-			kSession.getAgenda().getAgendaGroup("Acto1").setFocus();
-			kSession.fireAllRules();
-			break;
-		default:
-			System.out.println("No se contempla este acto");
-			break;
-
 		}
+	}
 
+	private static void resetSession() {
+		kSession.destroy();
+		kSession = kContainer.newKieSession("ksession-rules");
 	}
 
 }

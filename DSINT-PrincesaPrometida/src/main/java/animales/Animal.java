@@ -9,7 +9,7 @@ public abstract class Animal {
 	private final String nombre;
 	private EstadoSalud estadoSalud;
 
-	public Animal(String tipo,Lugar ub) {
+	public Animal(String tipo, Lugar ub) {
 		this.ubicacionActual = ub;
 		this.nombre = tipo;
 		this.estadoSalud = EstadoSalud.VIVO;
@@ -35,5 +35,9 @@ public abstract class Animal {
 		this.estadoSalud = estadoSalud;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Es " + nombre + ", se encuentra en " + ubicacionActual + " y su estado es " + estadoSalud;
+	}
+
 }

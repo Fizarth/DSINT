@@ -3,7 +3,7 @@ package profesiones;
 public class Curandero extends Profesion {
 
 	public Curandero() {
-		super("Curandero");
+		super("curandero");
 	}
 
 }
