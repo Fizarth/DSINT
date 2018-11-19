@@ -114,7 +114,10 @@ end
 rule "Consulta Que"
 	when
 		con: ConsultaQue()
+		
 	then
+	
+	
 		System.out.println("CONSULTA QUIEN");
 end
 
