@@ -16,7 +16,7 @@ public abstract class Relacion {
 
 	@Override
 	public String toString() {
-		return "Relacion [ " + nombre + " " + afectado.getNombre() + " ]";
+		return  nombre + " " + afectado.getNombre();
 	}
 	
 	
