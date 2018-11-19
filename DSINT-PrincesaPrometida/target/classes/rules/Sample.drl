@@ -514,7 +514,7 @@ rule "Pirata vence a Iñigo"
 		
 	then
 		modify(i){
-			setEstadoSalud(EstadoSalud.INSCONCIENTE)
+			setEstadoSalud(EstadoSalud.INCONSCIENTE)
 		}
 		modify(p){
 			setUbicacionActual(cm)
@@ -541,7 +541,7 @@ rule "Pirata vence a Fezzik"
 		f: Fezzik(ubicacionActual == cm)
 	then
 		modify(f){
-			setEstadoSalud(EstadoSalud.INSCONCIENTE)
+			setEstadoSalud(EstadoSalud.INCONSCIENTE)
 		}
 		System.out.println(p.getNombre() + " vence a " + f.getNombre());
 end 
@@ -549,8 +549,8 @@ rule "Muere Vizzini"
 	when 
 		cm : CaminoMontana()
 		p: Pirata(ubicacionActual == cm)
-		f: Fezzik(estadoSalud == EstadoSalud.INSCONCIENTE)
-		i: Inigo(estadoSalud == EstadoSalud.INSCONCIENTE)
+		f: Fezzik(estadoSalud == EstadoSalud.INCONSCIENTE)
+		i: Inigo(estadoSalud == EstadoSalud.INCONSCIENTE)
 		v: Vizzini(ubicacionActual == cm)
 		e: Espadachin()
 		d: Desempleado()
