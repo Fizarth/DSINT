@@ -276,21 +276,6 @@ rule "Buttercup odia al pirata"
 end
 //Fin acto0
 // Inicio Acto1
-rule "Principe quiere a Buttercup"
-  when
-    pr: Personaje(nombre == "Principe")
-    bt: Personaje(nombre == "Buttercup")
-    
-  then
-    Relacion q1 = new QuiereA(bt);
-    ArrayList<Relacion> listaR = pr.getRelacionesPersonaje();
-    listaR.add(q1);
-    modify(pr){
-          setRelacionesPersonaje(listaR);
-    }
-    System.out.println("Relaciones de Principe: "+pr.getRelacionesPersonaje());
-end
-
 rule "Rey y Principe son familia"
   when
     pr: Personaje(nombre == "Principe Humperdink")
@@ -309,6 +294,42 @@ rule "Rey y Principe son familia"
       setRelacionesPersonaje(listaR2);
     }
 end
+
+rule "Principe quiere a Buttercup"
+  when
+    pr: Personaje(nombre == "Principe")
+    bt: Personaje(nombre == "Buttercup")
+    
+  then
+    Relacion q1 = new QuiereA(bt);
+    ArrayList<Relacion> listaR = pr.getRelacionesPersonaje();
+    listaR.add(q1);
+    modify(pr){
+          setRelacionesPersonaje(listaR);
+    }
+    System.out.println("Relaciones de Principe: "+pr.getRelacionesPersonaje());
+end
+
+rule "Buttercup prometida del príncipe"
+  when
+    pr: Personaje(nombre == "Principe")
+    bt: Personaje(nombre == "Buttercup")
+  then
+    Relacion p1 = new PrometidaDe(pr);
+    Relacion p2 = new PrometidoDe(bt);
+    ArrayList<Relacion> listaR1 = bt.getRelacionesPersonaje();
+    listaR1.add(p1);
+    modify(bt){
+          setRelacionesPersonaje(listaR1);
+    }
+    ArrayList<Relacion> listaR2 = pr.getRelacionesPersonaje();
+    listaR2.add(p2);
+    modify(pr){
+          setRelacionesPersonaje(listaR2);
+    }
+end
+
+
 
 rule "Principe y Conde amigos"
   when
