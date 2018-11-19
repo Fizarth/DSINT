@@ -1,9 +1,11 @@
 package animales;
 
+import lugares.Lugar;
+
 public class RoedorAspectoGigantesco extends Animal {
 
-	public RoedorAspectoGigantesco() {
-		super("Roedor de Aspecto Gigantesco");
+	public RoedorAspectoGigantesco(Lugar l) {
+		super("Roedor de Aspecto Gigantesco",l);
 	}
 
 }

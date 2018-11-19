@@ -1,15 +1,18 @@
 package animales;
 
 import lugares.*;
+import utilidades.EstadoSalud;
 
 public abstract class Animal {
 
 	private Lugar ubicacionActual;
 	private final String nombre;
+	private EstadoSalud estadoSalud;
 
-	public Animal(String tipo) {
-		this.ubicacionActual = null;
+	public Animal(String tipo,Lugar ub) {
+		this.ubicacionActual = ub;
 		this.nombre = tipo;
+		this.estadoSalud = EstadoSalud.VIVO;
 	}
 
 	public Lugar getUbicacionActual() {
@@ -24,4 +27,13 @@ public abstract class Animal {
 		return nombre;
 	}
 
+	public EstadoSalud getEstadoSalud() {
+		return estadoSalud;
+	}
+
+	public void setEstadoSalud(EstadoSalud estadoSalud) {
+		this.estadoSalud = estadoSalud;
+	}
+
+	
 }

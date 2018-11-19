@@ -1,9 +1,11 @@
 package animales;
 
+import lugares.Lugar;
+
 public class AnguilaElectrica extends Animal {
 
-	public AnguilaElectrica() {
-		super("Anguila Eléctrica");
+	public AnguilaElectrica(Lugar l) {
+		super("Anguila ElÃ©ctrica",l);
 	}
 
 }

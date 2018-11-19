@@ -1,9 +1,11 @@
 package animales;
 
+import lugares.Lugar;
+
 public class Caballo extends Animal {
 
-	public Caballo() {
-		super("Caballo");
+	public Caballo(Lugar l) {
+		super("Caballo", l);
 		
 	}
 
