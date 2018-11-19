@@ -109,7 +109,16 @@ rule "Consulta Quien"
 	then
 		System.out.println("ENTRO REGLA CONSULTA QUIEN");
 		System.out.println(p.toString());
-end 
+end
+
+rule "Consulta Quien No Existe"
+	when 
+		con: ConsultaQuien()
+		p: Personaje (nombre != con.getNombre)
+	then
+		System.out.println("ENTRO REGLA CONSULTA QUIEN NO EXISTE");
+
+end
 
 rule "Consulta Que"
 	when

@@ -26,7 +26,7 @@ public class Main {
 	
 		
 		
-		String filePath = args[0];
+		String filePath = "/home/norberto/Downloads/input1.txt";
 		
 		
 		ArrayList<Consulta> consultas = null;
@@ -34,7 +34,7 @@ public class Main {
 			consultas = (ArrayList<Consulta>) Parser.parsear(filePath);
 		} catch (IOException e) {
 			System.err.println("No se ha podido leer el fichero: " + filePath);
-			e.printStackTrace();
+			System.exit(-1);
 		}
 		
 		
