@@ -15,7 +15,5 @@ public abstract class Lugar {
 	public String toString() {
 		return nombre;
 	}
-	
-	
 
 }
