@@ -314,6 +314,7 @@ rule "Buttercup prometida del príncipe"
   when
     pr: Personaje(nombre == "Principe")
     bt: Personaje(nombre == "Buttercup")
+    c: Lugar(nombre == "Castillo");
   then
     Relacion p1 = new PrometidaDe(pr);
     Relacion p2 = new PrometidoDe(bt);
@@ -327,9 +328,11 @@ rule "Buttercup prometida del príncipe"
     modify(pr){
           setRelacionesPersonaje(listaR2);
     }
+    //Como es prometida ahora vivirá en el castillo
+    modify(bt){
+          setUbicacionActual(c);
+    }
 end
-
-
 
 rule "Principe y Conde amigos"
   when
