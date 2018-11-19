@@ -115,9 +115,12 @@ public abstract class Personaje {
 
 	@Override
 	public String toString() {
+		String ub;
+		if(ubicacionActual==null) ub = "No sé donde se encuentra";
+		else ub = "Actualmente se encuentra en " + ubicacionActual.toString();
 		String cadena =  estadoSalud + " y " + estadoCivil + " es de "+ origen + " es un "
-				+ sexo + "." +nombre + " es un personaje " + tipoImportancia 
-				+ " actualmente se encuentra en " + ubicacionActual + "." + nombre 
+				+ sexo + "." +nombre + " es un personaje " + tipoImportancia +". " 
+				+ ub + "." + nombre 
 				+ relacionesPersonaje;
 		if (perteneceCuento)
 			cadena = nombre + " pertenece al cuento y esta " + cadena;

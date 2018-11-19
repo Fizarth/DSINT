@@ -25,7 +25,7 @@ public class Main {
 		//System.out.println(kContainer.verify().getMessages().toString());
 	
 		
-		
+		//Cambiar ruta del fichero, que se introduzca por pantalla o se meta por teclado
 		String filePath = "/home/norberto/Downloads/input1.txt";
 		
 		
@@ -36,7 +36,6 @@ public class Main {
 			System.err.println("No se ha podido leer el fichero: " + filePath);
 			System.exit(-1);
 		}
-		
 		
 		kSession.fireAllRules();
 		for (Consulta consulta : consultas) {
@@ -58,18 +57,11 @@ public class Main {
 					break;
 			}
 			
-			
-			
 			kSession.fireAllRules();
-			
-			
+				
 		}
 		
-	
-	
 	}
-	
-
 	
 	private static void ejecutarHastaActo(Acto acto) {
 		for(int i = 0; i < acto.getNumActo(); i++){

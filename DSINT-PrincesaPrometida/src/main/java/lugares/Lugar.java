@@ -11,4 +11,11 @@ public abstract class Lugar {
 		return nombre;
 	}
 
+	@Override
+	public String toString() {
+		return nombre;
+	}
+	
+	
+
 }
