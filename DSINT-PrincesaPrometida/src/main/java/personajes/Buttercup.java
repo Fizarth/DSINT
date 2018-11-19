@@ -16,7 +16,7 @@ public class Buttercup extends Personaje {
 	public Buttercup(Profesion prof, Lugar ubicacionAct) {
 		super("Buttercup", Origen.FLORIN, Sexo.MUJER, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true,
 				TipoImportancia.PROTAGONISTA, ubicacionAct);
-		this.motivacion = Motivacion.ESTAR_CON_WEASLEY;
+		this.motivacion = Motivacion.ESTAR_CON_WESTLEY;
 		this.trabajaDe = prof; 
 	}
 
