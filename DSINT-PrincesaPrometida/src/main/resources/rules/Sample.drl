@@ -111,6 +111,7 @@ rule "Consulta Quien"
 	then
 		System.out.println("ENTRO REGLA CONSULTA QUIEN");
 		System.out.println(p.toString());
+		Archivo.getUnicaInstancia().escribir(p.toString() + "\n");
 end
 
 rule "Consulta Quien No Existe"
@@ -118,14 +119,33 @@ rule "Consulta Quien No Existe"
 		con: ConsultaQuien()
 		not Personaje (nombre == con.getNombre)
 	then
-		System.out.println("No sé quien es ese personaje");
+		System.out.println("No sé quien es " + con.getNombre() + " en el acto " + con.getActo());
+		Archivo.getUnicaInstancia().escribir("No sé quien es " + con.getNombre() + " en el acto " + con.getActo()+ "\n");
+end
+
+rule "Consulta Que Incio"
+	when
+		con: ConsultaQue()
+	then
+		System.out.println("CONSULTA QUE");
+		System.out.print("En el acto " + con.getActo().getNumActo() + "." + " ");
+		Archivo.getUnicaInstancia().escribir("En el acto " + con.getActo().getNumActo() + "." + " ");
 end
 
 rule "Consulta Que"
 	when
 		con: ConsultaQue()
+		per: Personaje()
 	then
-		System.out.println("CONSULTA QUE");
+		ArrayList<Relacion> relaciones = (ArrayList)per.getRelacionesPersonaje();
+		for(Relacion relacion : relaciones){
+			System.out.print(per.getNombre() + " " + relacion + ", ");
+			Archivo.getUnicaInstancia().escribir(per.getNombre() + " " + relacion + ", ");
+		}
+		Archivo.getUnicaInstancia().escribir("\n");
+		System.out.println("");
+		
+		
 end
 
 //Inicio Acto0

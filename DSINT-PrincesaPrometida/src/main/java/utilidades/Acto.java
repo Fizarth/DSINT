@@ -38,7 +38,8 @@ public enum Acto {
 	}
 	
 	public int getNumActo() {
-		return acto.charAt(4);
+		// resto 0 para pasarlo a int
+		return acto.charAt(acto.length()-1) - '0';
 	}
 	
 	

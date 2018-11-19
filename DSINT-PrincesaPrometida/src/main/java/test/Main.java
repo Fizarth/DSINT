@@ -8,6 +8,7 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
 import utilidades.Acto;
+import utilidades.Archivo;
 import utilidades.Consulta;
 import utilidades.ConsultaQue;
 import utilidades.ConsultaQuien;
@@ -27,6 +28,7 @@ public class Main {
 		
 		//Cambiar ruta del fichero, que se introduzca por pantalla o se meta por teclado
 		String filePath = "/home/norberto/Downloads/input1.txt";
+		Archivo.setPath(filePath + ".output");
 		
 		
 		ArrayList<Consulta> consultas = null;
@@ -64,10 +66,17 @@ public class Main {
 				
 		}
 		
+		try {
+			Archivo.getUnicaInstancia().cerrarArchivo();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private static void ejecutarHastaActo(Acto acto) {
-		for(int i = 0; i < acto.getNumActo(); i++){
+		for(int i = 0; i <= acto.getNumActo(); i++){
 			kSession.getAgenda().getAgendaGroup("Acto"+i).setFocus();
 			kSession.fireAllRules();
 		}
