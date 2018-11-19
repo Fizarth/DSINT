@@ -471,8 +471,98 @@ rule "Pirata salva a Buttercup"
 		System.out.println(p.getNombre()+" salva a " + bt.getNombre());		
 end
 
+//esta regla no me convence mucho pero no se como hacerlo sino para decir que llegan ahi
 rule "Pirata persigue a Buttercup"
 	when
-	
+		m: Lugar(nombre == "Mar")
+		an: Animal(ubicacionActual == m , estadoSalud == EstadoSalud.MUERTO)
+		v: Vizzini (ubicacionActual == m)
+		bt: Buttercup(ubicacionActual == m)
+		f: Fezzik(ubicacionActual == m)
+		i: Inigo(ubicacionActual == m)
+		p: Pirata(ubicacionActual == m)
+		acantilados: Lugar(nombre == "Acantilados de la Locura")
 	then
+		modify(i){
+			setUbicacionActual(acantilados)
+		}
+		modify(f){
+			setUbicacionActual(acantilados)
+		}
+		modify(bt){
+			setUbicacionActual(acantilados)
+		}
+		modify(v){
+			setUbicacionActual(acantilados)		
+		}
+		modify(p){
+			setUbicacionActual(acantilados)
+		}
+		System.out.println(v.getNombre()+ "," + f.getNombre() + "," + i.getNombre() + "," + bt.getNombre()+" y " + p.getNombre()+ " llegan a " + acantilados.getNombre());
 end
+
+rule "Pirata vence a Iñigo"
+	when
+		acantilados: AcantiladosLocura()
+		cm: CaminoMontana()
+		mercenario: Mercenario()
+		p: Pirata(ubicacionActual == acantilados, estadoSalud == EstadoSalud.VIVO)
+		i: Inigo(ubicacionActual == acantilados, estadoSalud == EstadoSalud.VIVO,trabajaDe == mercenario)
+		v: Vizzini(ubicacionActual == acantilados, estadoSalud == EstadoSalud.VIVO)
+		bt: Buttercup(ubicacionActual == acantilados, estadoSalud == EstadoSalud.VIVO)
+		f: Fezzik(ubicacionActual == acantilados, estadoSalud == EstadoSalud.VIVO,profesion == mercenario)
+		
+	then
+		modify(i){
+			setEstadoSalud(EstadoSalud.INSCONCIENTE)
+		}
+		modify(p){
+			setUbicacionActual(cm)
+		}
+		modify(bt){
+			setUbicacionActual(cm)
+		}
+		modify(v){
+			setUbicacionActual(cm)
+		}
+		modify(f){
+			setUbicacionActual(cm)
+		}
+		
+		System.out.println(p.getNombre() + " vence a " + i.getNombre());
+		System.out.println(v.getNombre() + "," + f.getNombre() + " y " + bt.getNombre() + " huyen a " + cm.getNombre());
+		
+end 
+
+rule "Pirata vence a Fezzik"
+	when
+		cm : CaminoMontana()
+		p: Pirata(ubicacionActual == cm)
+		f: Fezzik(ubicacionActual == cm)
+	then
+		modify(f){
+			setEstadoSalud(EstadoSalud.INSCONCIENTE)
+		}
+		System.out.println(p.getNombre() + " vence a " + f.getNombre());
+end 
+rule "Muere Vizzini"
+	when 
+		cm : CaminoMontana()
+		p: Pirata(ubicacionActual == cm)
+		f: Fezzik(estadoSalud == EstadoSalud.INSCONSCIENTE)
+		i: Inigo(estadoSalud == EstadoSalud.INSCONSCIENTE)
+		v: Vizzini(ubicacionActual == cm)
+		e: Espadachin()
+		d: Desempleado()
+	then 
+		modify(v){
+			setEstadoSalud(EstadoSalud.MUERTO);
+		}
+		modify(i){
+			setTrabajaDe(e);
+		}
+		modify(f){
+			setProfesion(d);
+		}
+		System.out.println("Vizzini esta " + v.getEstadoSalud() + " por " + p.getNombre());
+end 
