@@ -37,6 +37,8 @@ public class Main {
 			e.printStackTrace();
 		}
 		
+		
+		kSession.fireAllRules();
 		for (Consulta consulta : consultas) {
 			switch (consulta.getTipo()) {
 				case "ConsultaQue":
