@@ -1,9 +1,14 @@
-/rules/
-/utilidades/
-<<<<<<< HEAD
-=======
+/META-INF/
 /animales/
+/com/
+/dtables/
+/logback-test.xml
 /lugares/
+/mainProyecto/
 /personajes/
->>>>>>> branch 'master' of https://github.com/Fizarth/DSINT.git
+/process/
+/profesiones/
+/relaciones/
+/rules/
 /test/
+/utilidades/
