@@ -501,15 +501,46 @@ end
 rule "Pirata vence a Iñigo"
 	when
 		acantilados: AcantiladosLocura()
-		p: Pirata(ubicacionActual == acantilados)
-		i: Inigo(ubicacionActual == acantilados, estadoSalud == EstadoSalud.VIVO)
+		cm: CaminoMontana()
+		mercenario: Mercenario()
+		p: Pirata(ubicacionActual == acantilados, estadoSalud == EstadoSalud.VIVO)
+		i: Inigo(ubicacionActual == acantilados, estadoSalud == EstadoSalud.VIVO,trabajaDe == mercenario)
+		v: Vizzini(ubicacionActual == acantilados, estadoSalud == EstadoSalud.VIVO)
+		bt: Buttercup(ubicacionActual == acantilados, estadoSalud == EstadoSalud.VIVO)
+		f: Fezzik(ubicacionActual == acantilados, estadoSalud == EstadoSalud.VIVO,profesion == mercenario)
 		
 	then
+		modify(i){
+			setEstadoSalud(EstadoSalud.INSCONCIENTE)
+		}
+		modify(p){
+			setUbicacionActual(cm)
+		}
+		modify(bt){
+			setUbicacionActual(cm)
+		}
+		modify(v){
+			setUbicacionActual(cm)
+		}
+		modify(f){
+			setUbicacionActual(cm)
+		}
+		
+		System.out.println(p.getNombre() + " vence a " + i.getNombre());
+		System.out.println(v.getNombre() + "," + f.getNombre() + " y " + bt.getNombre() + " huyen a " + cm.getNombre());
+		
 end 
 
 rule "Pirata vence a Fezzik"
 	when
+		cm : CaminoMontana()
+		p: Pirata(ubicacionActual == cm)
+		f: Fezzik(ubicacionActual == cm)
 	then
+		modify(f){
+			setEstadoSalud(EstadoSalud.INSCONCIENTE)
+		}
+		System.out.println(p.getNombre() + " vence a " + f.getNombre());
 end 
 rule "Muere Vizzini"
 	when 
