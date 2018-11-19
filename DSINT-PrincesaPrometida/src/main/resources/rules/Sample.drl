@@ -114,7 +114,7 @@ end
 rule "Consulta Quien No Existe"
 	when 
 		con: ConsultaQuien()
-		p: Personaje (nombre != con.getNombre)
+		not Personaje (nombre == con.getNombre)
 	then
 		System.out.println("ENTRO REGLA CONSULTA QUIEN NO EXISTE");
 
