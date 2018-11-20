@@ -57,7 +57,7 @@ public class Main {
 			}
 
 			kSession.fireAllRules();
-			resetSession();
+			kSession.dispose();
 
 		}
 
@@ -75,11 +75,6 @@ public class Main {
 			kSession.getAgenda().getAgendaGroup("Acto" + i).setFocus();
 			kSession.fireAllRules();
 		}
-	}
-
-	private static void resetSession() {
-		kSession.destroy();
-		kSession = kContainer.newKieSession("ksession-rules");
 	}
 
 }
