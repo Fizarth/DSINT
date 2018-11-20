@@ -617,3 +617,11 @@ rule "Muere Vizzini"
 		}
 		System.out.println("Vizzini esta " + v.getEstadoSalud() + " por " + p.getNombre());
 end
+
+/*** ACTO 2 ****/
+
+/*** ACTO 3 ****/
+
+/*** ACTO 4 ****/
+
+/*** ACTO 5 || ACTO FINAL ****/
