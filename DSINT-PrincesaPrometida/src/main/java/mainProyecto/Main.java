@@ -20,13 +20,14 @@ public class Main {
 	private static final KieContainer kContainer = ks.getKieClasspathContainer();
 	private static KieSession kSession = kContainer.newKieSession("ksession-rules");
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		// System.out.println(kContainer.verify().getMessages().toString());
 
-		String filePath = "/home/norberto/Downloads/input1.txt";
-		Archivo.setPath(filePath + ".output");
-
+		//String filePath = "/home/norberto/Downloads/input1.txt";
+		String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\input1.txt";
+		Archivo.setPath(filePath + ".output.txt");
+		
 		ArrayList<Consulta> consultas = null;
 		try {
 			consultas = (ArrayList<Consulta>) Parser.parsear(filePath);
@@ -57,7 +58,9 @@ public class Main {
 			}
 
 			kSession.fireAllRules();
-			kSession.dispose();
+			//kSession.dispose();
+			kSession.destroy();
+			kSession = kContainer.newKieSession("ksession-rules");
 
 		}
 

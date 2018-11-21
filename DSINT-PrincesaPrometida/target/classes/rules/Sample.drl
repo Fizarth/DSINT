@@ -107,48 +107,6 @@ rule "Creacion de Personajes Acto1"
 		System.out.println("Acto1: Se crean los personajes");
 end
 
-//Consultas
-rule "Consulta Quien" 
-	when 
-		con: ConsultaQuien()
-		p: Personaje (nombre == con.getNombre)
-	then
-		System.out.println("ENTRO REGLA CONSULTA QUIEN");
-		System.out.println(p.toString());
-		Archivo.getUnicaInstancia().escribir(p.toString() + "\n");
-end
-
-rule "Consulta Quien No Existe"
-	when 
-		con: ConsultaQuien()
-		not Personaje (nombre == con.getNombre)
-	then
-		System.out.println("No sé quien es " + con.getNombre() + " en el acto " + con.getActo());
-		Archivo.getUnicaInstancia().escribir("No sé quien es " + con.getNombre() + " en el acto " + con.getActo()+ "\n");
-end
-
-rule "Consulta Que Incio"
-	when
-		con: ConsultaQue()
-	then
-		System.out.println("CONSULTA QUE");
-		System.out.print("En el acto " + con.getActo().getNumActo() + "." + " ");
-		Archivo.getUnicaInstancia().escribir("En el acto " + con.getActo().getNumActo() + "." + " ");
-end
-
-rule "Consulta Que"
-	when
-		con: ConsultaQue()
-		per: Personaje()
-	then
-		ArrayList<Relacion> relaciones = (ArrayList)per.getRelacionesPersonaje();
-		for(Relacion relacion : relaciones){
-			System.out.print(per.getNombre() + " " + relacion + ", ");
-			Archivo.getUnicaInstancia().escribir(per.getNombre() + " " + relacion + ", ");
-		}
-		Archivo.getUnicaInstancia().escribir("\n");
-		System.out.println("");
-end
 
 //Inicio Acto0
 rule "Nieto es"
@@ -166,6 +124,7 @@ rule "Nieto es"
       setRelacionesPersonaje(listant);
     }
    System.out.println("El nieto es familiar del abuelo y la madre" );
+   Archivo.getUnicaInstancia().añadirInf("El nieto es familiar del abuelo y la madre\n");
 end
 
 rule "Abuelo es"
@@ -184,6 +143,7 @@ rule "Abuelo es"
       setRelacionesPersonaje(listaab);
     }
     System.out.println("Abuelo familia" );
+    Archivo.getUnicaInstancia().añadirInf("El abuelo es familiar del nieto y de la madre.\n");
 end
 
 rule "Madre es"
@@ -201,6 +161,7 @@ rule "Madre es"
           setRelacionesPersonaje(listamd);
     }
     System.out.println("Madre es familiar del abuelo y nieto" );
+    Archivo.getUnicaInstancia().añadirInf("La madre es familiar del abuelo y del nieto.\n");
 end
 
 rule "Nieto está enfermo"
@@ -213,6 +174,7 @@ when
   		setUbicacionActual(null);
   	}
   	System.out.println("Madre se despide y abuelo lee un cuento al nieto" );
+  	Archivo.getUnicaInstancia().añadirInf("La madre se fespide y el abuelo lee un cuendo al nieto enfermo.\n");
 end
 
 rule "Westley quiere a Buttercup"
@@ -226,6 +188,7 @@ rule "Westley quiere a Buttercup"
     modify(wt){
           setRelacionesPersonaje(listaR);
     }
+    Archivo.getUnicaInstancia().añadirInf("Westley se enamora de Buttercup.\n");
 end
 
 rule "Buttercup quiere a Westley"
@@ -239,6 +202,7 @@ rule "Buttercup quiere a Westley"
     modify(bt){
           setRelacionesPersonaje(listaR);
     }
+    Archivo.getUnicaInstancia().añadirInf("Buttercup se enamora de Wetsley.\n");
 end
 
 rule "Relacion Conocer"
@@ -260,6 +224,7 @@ rule "Relacion Conocer"
         modify(p2){
         	setRelacionesPersonaje(listaR2);
         }
+        Archivo.getUnicaInstancia().añadirInf(p1.getNombre() + " conoce a " + p2.getNombre() + ".\n"); 
 end
 
 rule "Westley se va a hacer fortuna"
@@ -273,6 +238,7 @@ rule "Westley se va a hacer fortuna"
     		setUbicacionActual(l);
     	}
      System.out.println(p1.getNombre() + " se va a " + l.getNombre() + " para " + p1.getMotivacion());
+     Archivo.getUnicaInstancia().añadirInf(p1.getNombre() + " se va a " + l.getNombre() + " para " + p1.getMotivacion()+".\n");
 end
 
 rule "Westley muere"
@@ -285,6 +251,7 @@ rule "Westley muere"
     		setEstadoSalud(EstadoSalud.MUERTO);
     	}
      System.out.println(p.getNombre() + " esta " + p.getEstadoSalud() +" asesinado por " + p2.getNombre());
+     Archivo.getUnicaInstancia().añadirInf(p.getNombre() + " esta " + p.getEstadoSalud() +" asesinado por " + p2.getNombre()+".\n");
 end
 
 rule "Buttercup odia al pirata"
@@ -307,6 +274,7 @@ rule "Buttercup odia al pirata"
 	    modify(pr){
 	          setRelacionesPersonaje(listaR2);
 	    }
+	    Archivo.getUnicaInstancia().añadirInf("Buttercup odia al pirata por la muerte de weatley.\n");
 end
 //Fin acto0
 // Inicio Acto1
@@ -622,3 +590,53 @@ rule "Muere Vizzini"
 		}
 		System.out.println("Vizzini esta " + v.getEstadoSalud() + " por " + p.getNombre());
 end
+
+
+
+//Consultas
+rule "Consulta Quien" 
+	when 
+		con: ConsultaQuien()
+		p: Personaje (nombre == con.getNombre)
+	then
+		System.out.println("ENTRO REGLA CONSULTA QUIEN");
+		System.out.println(p.toString());
+		Archivo.getUnicaInstancia().escribir(p.toString() + "\n");
+end
+
+rule "Consulta Quien No Existe"
+	when 
+		con: ConsultaQuien()
+		not Personaje (nombre == con.getNombre)
+	then
+		System.out.println("No sé quien es " + con.getNombre() + " en el acto " + con.getActo());
+		Archivo.getUnicaInstancia().escribir("No sé quien es " + con.getNombre() + " en el acto " + con.getActo()+ "\n");
+end
+
+rule "Consulta Que Incio"
+	when
+		con: ConsultaQue()
+	then
+		System.out.println("CONSULTA QUE");
+		System.out.print("En el acto " + con.getActo().getNumActo() + "." + " ");
+		Archivo.getUnicaInstancia().escribir("En el acto " + con.getActo().getNumActo() + "." + " ");
+		Archivo.getUnicaInstancia().escribirInf();
+		Archivo.getUnicaInstancia().escribir("FIn pregunta que\n");
+end
+
+//rule "Consulta Que"
+	//when
+	//	con: ConsultaQue()
+	//	per: Personaje()
+	//then
+//		ArrayList<Relacion> relaciones = (ArrayList)per.getRelacionesPersonaje();
+	//	for(Relacion relacion : relaciones){
+	//		Archivo.getUnicaInstancia().escribir(per.getNombre() + " " + relacion + ", ");
+	//	}
+	//	Archivo.getUnicaInstancia().escribir("\n");
+	//	System.out.println("");
+//end
+
+
+
+
