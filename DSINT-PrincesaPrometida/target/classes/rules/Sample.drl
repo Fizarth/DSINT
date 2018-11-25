@@ -12,7 +12,7 @@ import profesiones.*;
 
 
 //Creación de la base
-rule "Creacion Profesiones"
+rule "Creación Profesiones"
 	then 
 		insert(new BrigadaBrutal());
 		insert(new Curandero());
@@ -31,7 +31,7 @@ rule "Creacion Profesiones"
 		System.out.println("Creo las profesiones");
 end 
 
-rule "Creacion Lugares"
+rule "Creación Lugares"
 	then
 		insert(new AcantiladosLocura());
 		insert(new Bosque());
@@ -48,14 +48,14 @@ rule "Creacion Lugares"
 		System.out.println("Creo los lugares");	
 end 
 
-rule "Creacion Animales"
+rule "Creación Animales"
 	when 
 		mar: Lugar(nombre == "Mar")
 		granja: Lugar(nombre == "Granja")
 		bl: Lugar(nombre=="Boque de los Ladrones")
 		pantano: Lugar(nombre == "Pantano de Fuego")
 	then
-		insert(new AnguilaElectrica(mar));
+		insert(new AnguilaChillona(mar));
 		insert(new Caballo(granja));
 		insert(new Cabra(granja));
 		insert(new Cerdo(granja));
@@ -65,7 +65,7 @@ rule "Creacion Animales"
 		System.out.println("Se han añadido los animales");
 end
 
-rule "Creacion Personajes Acto 0"
+rule "Creación Personajes Acto 0"
 	agenda-group "Acto0"
 	when 
 		granja: Granja()
@@ -81,12 +81,10 @@ rule "Creacion Personajes Acto 0"
 		insert(new Nieto(hab));
 		insert (new Pirata(pir,mar));
 		
-	
-		
 		System.out.println("Acto0: Se crean los personajes");
 end
 
-rule "Creacion de Personajes Acto1"
+rule "Creación de Personajes Acto1"
 	agenda-group "Acto1"
 	when 
 		mercenario: Mercenario()
@@ -406,7 +404,7 @@ rule "Anguila ataca a buttercup"
 	when 
 		m: Mar();
 		bt: Buttercup( ubicacionActual==m )
-		a: AnguilaElectrica(ubicacionActual== m)
+		a: AnguilaChillona( ubicacionActual== m)
 	then 
 		modify(bt){
 			setEstadoSalud(EstadoSalud.EN_PELIGRO);
@@ -420,7 +418,7 @@ rule "Fezzik salva a Buttercup"
 		m: Mar()
 		bt: Buttercup( estadoSalud == EstadoSalud.EN_PELIGRO, ubicacionActual == m )
 		fz: Fezzik( ubicacionActual == m )
-		a: AnguilaElectrica(ubicacionActual== m)
+		a: AnguilaChillona( ubicacionActual== m)
 	then
 		modify(bt){
 			setEstadoSalud(EstadoSalud.VIVO);
@@ -435,7 +433,7 @@ rule "Llegada a los acantilados"
 	when
 		m: Mar( )
 		acantilados: AcantiladosLocura(  )
-		an: Animal(ubicacionActual == m , estadoSalud == EstadoSalud.MUERTO)
+		an: AnguilaChillona(ubicacionActual == m , estadoSalud == EstadoSalud.MUERTO)
 		v: Vizzini (ubicacionActual == m)
 		bt: Buttercup(ubicacionActual == m)
 		f: Fezzik(ubicacionActual == m)
