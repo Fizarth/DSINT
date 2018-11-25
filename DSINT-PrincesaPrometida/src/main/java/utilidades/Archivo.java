@@ -9,6 +9,7 @@ public class Archivo {
 	private static Archivo unicaInstancia;
 	BufferedWriter bfwriter;
 	private static String path = null;
+	private String informacion;
 	
 	
 	private Archivo() throws IOException {
@@ -37,4 +38,11 @@ public class Archivo {
 		Archivo.path = path;
 	}
 	
+	public void añadirInf(String s) {
+		this.informacion += s +".\n";		
+	}
+	
+	public void escribirInf() throws IOException {
+		this.bfwriter.write(this.informacion);
+	}
 }
