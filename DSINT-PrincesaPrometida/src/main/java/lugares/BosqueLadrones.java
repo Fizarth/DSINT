@@ -3,7 +3,7 @@ package lugares;
 public class BosqueLadrones extends Lugar{
 
 	public BosqueLadrones() {
-		super("Boque de los Ladrones");
+		super("El Boque de los Ladrones");
 	}
 
 }

@@ -18,8 +18,5 @@ public abstract class Relacion {
 	public String toString() {
 		return  nombre + " " + afectado.getNombre();
 	}
-	
-	
-	
-	
+		
 }

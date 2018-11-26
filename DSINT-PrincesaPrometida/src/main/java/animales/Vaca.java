@@ -5,7 +5,7 @@ import lugares.Lugar;
 public class Vaca extends Animal {
 
 	public Vaca(Lugar l) {
-		super("Vaca", l);
+		super("una vaca", l);
 	}
 
 }

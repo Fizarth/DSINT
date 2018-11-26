@@ -5,8 +5,6 @@ import utilidades.*;
 
 public class Abuelo extends Personaje {
 
-	// TODO Añadir relacion familiar_de
-
 	public Abuelo(Lugar ubicacionAct) {
 		super("Abuelo", Origen.CHICAGO, Sexo.HOMBRE, EstadoCivil.CASADO, EstadoSalud.VIVO, false,
 				TipoImportancia.NARRADOR, ubicacionAct);

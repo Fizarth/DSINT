@@ -50,10 +50,10 @@ end
 
 rule "Creación Animales"
 	when 
-		mar: Lugar(nombre == "Mar")
-		granja: Lugar(nombre == "Granja")
-		bl: Lugar(nombre=="Boque de los Ladrones")
-		pantano: Lugar(nombre == "Pantano de Fuego")
+		mar: Mar()
+		granja: Granja()
+		bl: BosqueLadrones()
+		pantano: PantanoFuego()
 	then
 		insert(new AnguilaChillona(mar));
 		insert(new Caballo(granja));
