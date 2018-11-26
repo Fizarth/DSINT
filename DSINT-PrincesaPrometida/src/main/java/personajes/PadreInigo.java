@@ -16,11 +16,11 @@ public class PadreInigo extends Personaje{
 		this.trabajaDe = prof;
 	}
 
-	public Profesion getProfesion() {
+	public Profesion getTrabajaDe() {
 		return trabajaDe;
 	}
 
-	public void setProfesion(Profesion profesion) {
+	public void setTrabajaDe(Profesion profesion) {
 		this.trabajaDe = profesion;
 	}
 	

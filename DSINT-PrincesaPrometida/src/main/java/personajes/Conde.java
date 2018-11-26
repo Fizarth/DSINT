@@ -6,9 +6,9 @@ import utilidades.*;
 
 public class Conde extends Personaje {
 
-	// TODO añadir amigo de
-	// TODO añadir conoce_a
-	// TODO añadir enemigo de
+	// TODO aï¿½adir amigo de
+	// TODO aï¿½adir conoce_a
+	// TODO aï¿½adir enemigo de
 
 	private Motivacion motivacion; // hacerlo lista
 	private TituloNobiliario titulo;
@@ -38,11 +38,11 @@ public class Conde extends Personaje {
 		this.titulo = titulo;
 	}
 
-	public Profesion getProfesion() {
+	public Profesion getTrabajaDe() {
 		return trabajaDe;
 	}
 
-	public void setProfesion(Profesion profesion) {
+	public void setTrabajaDe(Profesion profesion) {
 		this.trabajaDe = profesion;
 	}
 

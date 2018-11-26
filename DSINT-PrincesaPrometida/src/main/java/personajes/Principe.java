@@ -39,11 +39,11 @@ public class Principe extends Personaje {
 		this.titulo = titulo;
 	}
 
-	public Profesion getProfesion() {
+	public Profesion getTrabajaDe() {
 		return trabajaDe;
 	}
 
-	public void setProfesion(Profesion profesion) {
+	public void setTrabajaDe(Profesion profesion) {
 		this.trabajaDe = profesion;
 	}
 

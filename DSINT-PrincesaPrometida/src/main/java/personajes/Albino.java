@@ -7,7 +7,7 @@ import utilidades.*;
 public class Albino extends Personaje {
 
 	private Profesion trabajaDe; //LISTA
-	// TODO Añadir conoce_a
+	// TODO Aï¿½adir conoce_a
 
 	public Albino(Profesion profesion, Lugar ubicacionAct) {
 		super("Jai", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.INDEFINIDO, EstadoSalud.VIVO, true,
@@ -15,11 +15,11 @@ public class Albino extends Personaje {
 		this.trabajaDe = profesion;
 	}
 
-	public Profesion getTrabaja_de() {
+	public Profesion getTrabajaDe() {
 		return trabajaDe;
 	}
 
-	public void setTrabaja_de(Profesion trabajaDe) {
+	public void setTrabajaDe(Profesion trabajaDe) {
 		this.trabajaDe = trabajaDe;
 	}
 
