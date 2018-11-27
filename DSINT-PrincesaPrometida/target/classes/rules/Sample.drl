@@ -186,7 +186,7 @@ rule "Westley quiere a Buttercup"
     modify(wt){
           setRelacionesPersonaje(listaR);
     }
-    //Archivo.getUnicaInstancia().añadirInf("Westley se enamora de Buttercup.\n");
+    Archivo.getUnicaInstancia().añadirInf("Westley se enamora de Buttercup.\n");
 end
 
 rule "Buttercup quiere a Westley"
@@ -200,7 +200,7 @@ rule "Buttercup quiere a Westley"
     modify(bt){
           setRelacionesPersonaje(listaR);
     }
-   // Archivo.getUnicaInstancia().añadirInf("Buttercup se enamora de Wetsley.\n");
+   Archivo.getUnicaInstancia().añadirInf("Buttercup se enamora de Wetsley.\n");
 end
 
 rule "Relacion Conocer"
@@ -222,7 +222,7 @@ rule "Relacion Conocer"
         modify(p2){
         	setRelacionesPersonaje(listaR2);
         }
-       // Archivo.getUnicaInstancia().añadirInf(p1.getNombre() + " conoce a " + p2.getNombre() + ".\n"); 
+        Archivo.getUnicaInstancia().añadirInf(p1.getNombre() + " conoce a " + p2.getNombre() + ".\n"); 
 end
 
 rule "Westley se va a hacer fortuna"
@@ -628,6 +628,7 @@ rule "Consulta Que"
 		Archivo.getUnicaInstancia().escribir("En el acto " + con.getActo().getNumActo() + "." + " ");
 		Archivo.getUnicaInstancia().escribirInf();
 		Archivo.getUnicaInstancia().escribir("Fin pregunta que\n");
+		//System.out.println(Archivo.getUnicaInstancia().getpath());
 end
 
 

@@ -47,6 +47,20 @@ public class Archivo {
 	}
 	
 	public void resetearInf() {
-		path = null;
+		informacion = "";
 	}
+
+	public String getInformacion() {
+		return informacion;
+	}
+
+	public void setInformacion(String informacion) {
+		this.informacion = informacion;
+	}
+
+	public static String getPath() {
+		return path;
+	}
+	
+	
 }
