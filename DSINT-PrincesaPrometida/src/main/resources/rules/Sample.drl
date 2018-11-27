@@ -619,7 +619,7 @@ rule "Consulta Quien No Existe"
 		Archivo.getUnicaInstancia().escribir("No sé quien es " + con.getNombre() + " en el acto " + con.getActo()+ "\n");
 end
 
-rule "Consulta Que Incio"
+rule "Consulta Que"
 	when
 		con: ConsultaQue()
 	then
@@ -627,20 +627,9 @@ rule "Consulta Que Incio"
 		System.out.print("En el acto " + con.getActo().getNumActo() + "." + " ");
 		Archivo.getUnicaInstancia().escribir("En el acto " + con.getActo().getNumActo() + "." + " ");
 		Archivo.getUnicaInstancia().escribirInf();
-		Archivo.getUnicaInstancia().escribir("FIn pregunta que\n");
+		Archivo.getUnicaInstancia().escribir("Fin pregunta que\n");
 end
 
-//rule "Consulta Que"
-	//when
-	//	con: ConsultaQue()
-	//	per: Personaje()
-	//then
-//		ArrayList<Relacion> relaciones = (ArrayList)per.getRelacionesPersonaje();
-	//	for(Relacion relacion : relaciones){
-	//		Archivo.getUnicaInstancia().escribir(per.getNombre() + " " + relacion + ", ");
-	//	}
-	//	Archivo.getUnicaInstancia().escribir("\n");
-	//	System.out.println("");
-//end
+
 
 
