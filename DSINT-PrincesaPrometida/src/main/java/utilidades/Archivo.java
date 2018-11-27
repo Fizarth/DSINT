@@ -45,4 +45,8 @@ public class Archivo {
 	public void escribirInf() throws IOException {
 		this.bfwriter.write(this.informacion);
 	}
+	
+	public void resetearInf() {
+		path = null;
+	}
 }

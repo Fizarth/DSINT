@@ -56,7 +56,7 @@ public class Main {
 			default:
 				break;
 			}
-
+			Archivo.getUnicaInstancia().resetearInf();
 			kSession.fireAllRules();
 			//kSession.dispose();
 			kSession.destroy();
