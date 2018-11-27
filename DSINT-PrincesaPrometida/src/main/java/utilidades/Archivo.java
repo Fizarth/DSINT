@@ -45,4 +45,22 @@ public class Archivo {
 	public void escribirInf() throws IOException {
 		this.bfwriter.write(this.informacion);
 	}
+	
+	public void resetearInf() {
+		informacion = "";
+	}
+
+	public String getInformacion() {
+		return informacion;
+	}
+
+	public void setInformacion(String informacion) {
+		this.informacion = informacion;
+	}
+
+	public static String getPath() {
+		return path;
+	}
+	
+	
 }

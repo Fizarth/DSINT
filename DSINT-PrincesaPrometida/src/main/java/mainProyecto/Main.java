@@ -44,24 +44,31 @@ public class Main {
 				ConsultaQue consultaQue = (ConsultaQue) consulta;
 				ejecutarHastaActo(consultaQue.getActo());
 				kSession.insert(consultaQue);
+				//Archivo.getUnicaInstancia().resetearInf();
 
 				break;
 			case "ConsultaQuien":
 				ConsultaQuien consultaQuien = (ConsultaQuien) consulta;
 				ejecutarHastaActo(consultaQuien.getActo());
 				kSession.insert(consultaQuien);
+				
 
 				break;
 
 			default:
 				break;
 			}
-
+			System.out.println(Archivo.getUnicaInstancia().getInformacion());
+			
+			
+			
 			kSession.fireAllRules();
 			//kSession.dispose();
 			kSession.destroy();
-			kSession = kContainer.newKieSession("ksession-rules");
+			Archivo.getUnicaInstancia().resetearInf();
 
+			kSession = kContainer.newKieSession("ksession-rules");
+			
 		}
 
 		try {
