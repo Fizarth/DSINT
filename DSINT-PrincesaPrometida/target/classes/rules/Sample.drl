@@ -122,7 +122,7 @@ rule "Nieto es"
       setRelacionesPersonaje(listant);
     }
    System.out.println("El nieto es familiar del abuelo y la madre" );
-  // Archivo.getUnicaInstancia().añadirInf("El nieto es familiar del abuelo y la madre\n");
+   Archivo.getUnicaInstancia().añadirInf("El nieto es familiar del abuelo y la madre\n");
 end
 
 rule "Abuelo es"
@@ -141,7 +141,7 @@ rule "Abuelo es"
       setRelacionesPersonaje(listaab);
     }
     System.out.println("Abuelo familia" );
-    //Archivo.getUnicaInstancia().añadirInf("El abuelo es familiar del nieto y de la madre.\n");
+    Archivo.getUnicaInstancia().añadirInf("El abuelo es familiar del nieto y de la madre.\n");
 end
 
 rule "Madre es"
@@ -272,7 +272,7 @@ rule "Buttercup odia al pirata"
 	    modify(pr){
 	          setRelacionesPersonaje(listaR2);
 	    }
-	  //  Archivo.getUnicaInstancia().añadirInf("Buttercup odia al pirata por la muerte de weatley.\n");
+	    Archivo.getUnicaInstancia().añadirInf("Buttercup odia al pirata por la muerte de weatley.\n");
 end
 //Fin acto0
 // Inicio Acto1
