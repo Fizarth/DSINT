@@ -24,8 +24,8 @@ public class Main {
 
 		// System.out.println(kContainer.verify().getMessages().toString());
 
-		//String filePath = "/home/norberto/Downloads/input1.txt";
-		String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\input1.txt";
+		String filePath = "/home/norberto/Downloads/input1.txt";
+		//String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\input1.txt";
 		Archivo.setPath(filePath + ".output.txt");
 		
 		ArrayList<Consulta> consultas = null;
