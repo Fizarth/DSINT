@@ -38,7 +38,7 @@ public class Archivo {
 		Archivo.path = path;
 	}
 	
-	public void añadirInf(String s) {
+	public void addInf(String s) {
 		this.informacion += s ;		
 	}
 	
