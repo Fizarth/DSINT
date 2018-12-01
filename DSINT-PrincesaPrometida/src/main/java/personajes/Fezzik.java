@@ -9,34 +9,11 @@ import utilidades.Origen;
 import utilidades.Sexo;
 import utilidades.TipoImportancia;
 
-public class Fezzik extends Personaje {
+public class Fezzik extends PersonajeCuento {
 
-	// TODO amigo de
-
-	private Motivacion motivacion; // LISTA
-	private Profesion trabajaDe; //LISTA
-
-	public Fezzik(Profesion prof, Lugar ubicacionAct) {
-		super("Fezzik", Origen.TURQUIA, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true,
-				TipoImportancia.PROTAGONISTA, ubicacionAct);
-		this.motivacion = Motivacion.TENER_TRABAJO;
-		this.trabajaDe = prof;
-	}
-
-	public Motivacion getMotivacion() {
-		return motivacion;
-	}
-
-	public void setMotivacion(Motivacion motivacion) {
-		this.motivacion = motivacion;
-	}
-
-	public Profesion getTrabajaDe() {
-		return trabajaDe;
-	}
-
-	public void setTrabajaDe(Profesion profesion) {
-		this.trabajaDe = profesion;
+	public Fezzik(Lugar ubicacionAct, Profesion profesion, Motivacion motivacion) {
+		super("Fezzik", Origen.TURQUIA, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO,
+				TipoImportancia.PROTAGONISTA, ubicacionAct, profesion, motivacion);
 	}
 
 }

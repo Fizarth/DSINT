@@ -33,6 +33,28 @@ public abstract class Personaje {
 
 	}
 
+	/**
+	 * Constructor para quitar la variable perteneceCuento
+	 * @param nombre
+	 * @param origen
+	 * @param sexo
+	 * @param estadoCivil
+	 * @param salud
+	 * @param importancia
+	 * @param ubicacionAct
+	 */
+	public Personaje(String nombre, Origen origen, Sexo sexo, EstadoCivil estadoCivil, EstadoSalud salud,
+			TipoImportancia importancia, Lugar ubicacionAct) {
+		this.estadoCivil = estadoCivil;
+		this.estadoSalud = salud;
+		this.nombre = nombre;
+		this.origen = origen;
+		this.sexo = sexo;
+		this.tipoImportancia = importancia;
+		this.ubicacionActual = ubicacionAct;
+		this.relacionesPersonaje = new ArrayList<Relacion>();
+	}
+
 	public ArrayList<Relacion> getRelacionesPersonaje() {
 		return relacionesPersonaje;
 	}
@@ -122,10 +144,6 @@ public abstract class Personaje {
 				+ sexo + "." +nombre + " es un personaje " + tipoImportancia +". " 
 				+ ub + "." + nombre 
 				+ relacionesPersonaje;
-		if (perteneceCuento)
-			cadena = nombre + " pertenece al cuento y esta " + cadena;
-		else 
-			cadena = nombre + " no pertenece al cuento y esta " + cadena;
 		return cadena;
 				
 	

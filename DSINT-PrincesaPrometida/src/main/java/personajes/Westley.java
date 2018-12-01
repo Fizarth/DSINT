@@ -4,45 +4,11 @@ import lugares.*;
 import profesiones.*;
 import utilidades.*;
 
-public class Westley extends Personaje {
-	
-	//TODO enemigo de
-	//TODO quiere a 
-	
-	private Motivacion motivacion;//LISTA
-	private Profesion trabajaDe;
+public class Westley extends PersonajeCuento {
 
-	public Westley(Profesion prof, Lugar ubicacionAct) {
-		super("Westley", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true, 
-				TipoImportancia.PROTAGONISTA, ubicacionAct);
-		this.motivacion = Motivacion.GANAR_DINERO;
-		this.trabajaDe = prof;
+	public Westley(Lugar ubicacionAct, Profesion profesion, Motivacion motivacion) {
+		super("Westley", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO,
+				TipoImportancia.PROTAGONISTA, ubicacionAct, profesion, motivacion);
 	}
-
-	public Motivacion getMotivacion() {
-		return motivacion;
-	}
-
-	public void setMotivacion(Motivacion motivacion) {
-		this.motivacion = motivacion;
-	}
-
-	public Profesion getTrabajaDe() {
-		return trabajaDe;
-	}
-
-	public void setTrabajaDe(Profesion profesion) {
-		this.trabajaDe = profesion;
-	}
-
-	@Override
-	public String toString() {
-		String cadena = super.toString();
-		return cadena + ".Westley se ve motivado por: "+motivacion+ "y  trabaja de=" + trabajaDe ;
-	}
-	
-	
-	
-	
 
 }

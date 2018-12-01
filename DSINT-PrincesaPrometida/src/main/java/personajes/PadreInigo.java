@@ -4,25 +4,13 @@ import lugares.*;
 import profesiones.*;
 import utilidades.*;
 
-public class PadreInigo extends Personaje{
+public class PadreInigo extends PersonajeCuento{
 	
-	//TODO familiar de 
-	
-	private Profesion trabajaDe;
-
-	public PadreInigo(Profesion prof, Lugar ubicacionAct) {
-		super("Domingo Montoya", Origen.ESPANA, Sexo.HOMBRE, EstadoCivil.INDEFINIDO, EstadoSalud.MUERTO, true,  
-				TipoImportancia.SECUNDARIO,ubicacionAct);
-		this.trabajaDe = prof;
+	public PadreInigo(Lugar ubicacionAct, Profesion profesion) {
+		super("Domingo Montoya", Origen.ESPANA, Sexo.HOMBRE, EstadoCivil.INDEFINIDO, EstadoSalud.MUERTO,  
+				TipoImportancia.SECUNDARIO,ubicacionAct, profesion, Motivacion.DESCONOCIDA);
+		
 	}
 
-	public Profesion getTrabajaDe() {
-		return trabajaDe;
-	}
-
-	public void setTrabajaDe(Profesion profesion) {
-		this.trabajaDe = profesion;
-	}
-	
 	
 }

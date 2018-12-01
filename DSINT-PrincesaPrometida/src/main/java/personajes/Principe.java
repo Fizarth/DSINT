@@ -4,47 +4,12 @@ import lugares.*;
 import profesiones.*;
 import utilidades.*;
 
-public class Principe extends Personaje {
+public class Principe extends PersonajeCuento {
 
-	// TODO ENEMigo de
-	// TODO familiar de
-	// TODO prometido de
-	// TODO quiere a
+	public Principe(Lugar ubicacionAct, Profesion profesion, Motivacion motivacion) {
+		super("Principe Humperdink", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO,
+				TipoImportancia.PROTAGONISTA, ubicacionAct, profesion, motivacion);
 
-	private Motivacion motivacion; // LISTA
-	private TituloNobiliario titulo;
-	private Profesion trabajaDe;
-
-	public Principe(Profesion prof, Lugar ubicacionAct) {
-		super("Principe Humperdink", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true,
-				TipoImportancia.PROTAGONISTA, ubicacionAct);
-		this.motivacion = Motivacion.DESCONOCIDA;
-		this.titulo = TituloNobiliario.PRINCIPE;
-		this.trabajaDe = prof;
-	}
-
-	public Motivacion getMotivacion() {
-		return motivacion;
-	}
-
-	public void setMotivacion(Motivacion motivacion) {
-		this.motivacion = motivacion;
-	}
-
-	public TituloNobiliario getTitulo() {
-		return titulo;
-	}
-
-	public void setTitulo(TituloNobiliario titulo) {
-		this.titulo = titulo;
-	}
-
-	public Profesion getTrabajaDe() {
-		return trabajaDe;
-	}
-
-	public void setTrabajaDe(Profesion profesion) {
-		this.trabajaDe = profesion;
 	}
 
 }
