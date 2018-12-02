@@ -9,12 +9,12 @@ public class PersonajeCuento extends Personaje {
 	private Profesion profesion;
 	private Motivacion motivacion;
 	private TituloNobiliario tit;
-	
+
 	public PersonajeCuento(String nombre, Origen origen, Sexo sexo, EstadoCivil estadoCivil, EstadoSalud salud,
 			TipoImportancia importancia, Lugar ubicacionAct, Profesion profesion, Motivacion motivacion) {
-		
+
 		super(nombre, origen, sexo, estadoCivil, salud, importancia, ubicacionAct);
-		
+
 		this.profesion = profesion;
 		this.motivacion = motivacion;
 	}
@@ -46,13 +46,11 @@ public class PersonajeCuento extends Personaje {
 	@Override
 	public String toString() {
 		String inf = super.toString();
-		inf = "Este personaje pertecene al cuento." + inf + " Se dedica a " + profesion + " y tiene como motivación " + motivacion.getString()+".";
-		if(tit!=null) inf+=" Es un noble, su título es " + tit.getString() + ".";
+		inf = "Este personaje pertecene al cuento." + inf + " Se dedica a " + profesion + " y tiene como motivación "
+				+ motivacion.getString() + ".";
+		if (tit != null)
+			inf += " Es un noble, su título es " + tit.getString() + ".";
 		return inf;
 	}
-	
-	
-	
-	
 
 }

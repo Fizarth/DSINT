@@ -497,7 +497,7 @@ rule "Llegada a los acantilados"
 			setMotivacion(Motivacion.SECUESTRAR_PRINCESA)
 		}
 		System.out.println(v.getNombre() + "," + f.getNombre() + "," + i.getNombre() + "y" + bt.getNombre() + " llegan a " + acantilados.getNombre());
-		System.out.println(p.getNombre() + " quiere " + p.getMotivacion());
+		System.out.println(p.getNombre() + " quiere " + p.getMotivacion().getString());
 end
 
 rule "Pirata llega a los acantilados"
@@ -563,7 +563,7 @@ rule "Pirata vence a Iñigo"
 		cm: CaminoMontana()
 		mercenario: Mercenario()
 		p: Pirata(ubicacionActual == ac)
-		i: Inigo(ubicacionActual == ac, profesion == mercenario)
+		i: Inigo(ubicacionActual == ac, profesion == mercenario, estadoSalud == EstadoSalud.VIVO)
 	then
 		modify(i){
 			setEstadoSalud(EstadoSalud.INCONSCIENTE)
@@ -578,32 +578,33 @@ end
 rule "Pirata vence a Fezzik"
 	when
 		cm : CaminoMontana()
+		ac: AcantiladosLocura()
+		des: Desempleado()
 		p: Pirata(ubicacionActual == cm)
-		f: Fezzik(ubicacionActual == cm)
+		f: Fezzik(ubicacionActual == cm, estadoSalud == EstadoSalud.VIVO)
+		i: Inigo(estadoSalud == EstadoSalud.INCONSCIENTE, ubicacionActual == ac)
 	then
 		modify(f){
 			setEstadoSalud(EstadoSalud.INCONSCIENTE)
 		}
+		modify(i){
+			setUbicacionActual(null)
+		}
+		modify(i){
+			setProfesion(des);
+		}
 		System.out.println(p.getNombre() + " vence a " + f.getNombre());
 end
+
 rule "Principe llega a los acantilados"
 	when
 		ac: AcantiladosLocura()
 		cm: CaminoMontana()
-		e: Espadachin()
 		p: Pirata(ubicacionActual == cm)
-		f: Fezzik(estadoSalud == EstadoSalud.INCONSCIENTE)
-		i: Inigo(ubicacionActual == ac)
-		pr: Principe(motivacion == Motivacion.DESCONOCIDA)
+		f: Fezzik(ubicacionActual == cm, estadoSalud == EstadoSalud.INCONSCIENTE)
+		pr: Principe(motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
 		cd: Conde()
 	then
-		modify(i){
-			setUbicacionActual(null)
-		}
-		
-		modify(i){
-			setProfesion(e);
-		}
 		modify(pr){
 			setUbicacionActual(ac)
 		}
@@ -613,7 +614,7 @@ rule "Principe llega a los acantilados"
 		modify(pr){
 			setMotivacion(Motivacion.SALVAR_BUTTERCUP);
 		}
-		System.out.println("Principe llega a los acantilados para salvar a Buttercup");
+		System.out.println("Príncipe llega a los acantilados para salvar a Buttercup");
 end 
 
 //Fezzik será actualizado en el siguiente acto
@@ -621,13 +622,12 @@ rule "Muere Vizzini"
 	when 
 		cm : CaminoMontana()
 		p: Pirata(ubicacionActual == cm)
-		i: Inigo(ubicacionActual == null)
 		v: Vizzini(ubicacionActual == cm)
 	then 
 		modify(v){
 			setEstadoSalud(EstadoSalud.MUERTO);
 		}
-		System.out.println("Vizzini esta " + v.getEstadoSalud() + " por " + p.getNombre());
+		System.out.println("Vizzini está " + v.getEstadoSalud().getString() + " por " + p.getNombre());
 end
 
 
