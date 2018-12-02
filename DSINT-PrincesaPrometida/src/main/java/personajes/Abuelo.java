@@ -6,7 +6,7 @@ import utilidades.*;
 public class Abuelo extends Personaje {
 
 	public Abuelo(Lugar ubicacionAct) {
-		super("Abuelo", Origen.CHICAGO, Sexo.HOMBRE, EstadoCivil.CASADO, EstadoSalud.VIVO, false,
+		super("Abuelo", Origen.CHICAGO, Sexo.HOMBRE, EstadoCivil.CASADO, EstadoSalud.VIVO, 
 				TipoImportancia.NARRADOR, ubicacionAct);
 	}
 

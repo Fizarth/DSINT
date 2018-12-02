@@ -6,9 +6,9 @@ import utilidades.*;
 
 public class Valerie extends PersonajeCuento {
 
-	public Valerie(Lugar ubicacionAct, Profesion profesion, Motivacion motivacion) {
+	public Valerie(Lugar ubicacionAct, Profesion profesion) {
 		super("Valerie", Origen.FLORIN, Sexo.MUJER, EstadoCivil.CASADO, EstadoSalud.VIVO, TipoImportancia.SECUNDARIO,
-				ubicacionAct, profesion, motivacion);
+				ubicacionAct, profesion, Motivacion.DESCONOCIDA);
 	}
 
 }

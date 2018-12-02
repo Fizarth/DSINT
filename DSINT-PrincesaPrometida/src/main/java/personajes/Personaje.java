@@ -19,20 +19,6 @@ public abstract class Personaje {
 
 	private ArrayList<Relacion> relacionesPersonaje;
 
-	public Personaje(String nombre, Origen origen, Sexo sexo, EstadoCivil estadoCivil, EstadoSalud salud,
-			boolean cuento, TipoImportancia importancia, Lugar ubicacionAct) {
-		this.estadoCivil = estadoCivil;
-		this.estadoSalud = salud;
-		this.nombre = nombre;
-		this.origen = origen;
-		this.perteneceCuento = cuento;
-		this.sexo = sexo;
-		this.tipoImportancia = importancia;
-		this.ubicacionActual = ubicacionAct;
-		this.relacionesPersonaje = new ArrayList<Relacion>();
-
-	}
-
 	/**
 	 * Constructor para quitar la variable perteneceCuento
 	 * @param nombre

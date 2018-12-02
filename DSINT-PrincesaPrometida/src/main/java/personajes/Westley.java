@@ -6,9 +6,9 @@ import utilidades.*;
 
 public class Westley extends PersonajeCuento {
 
-	public Westley(Lugar ubicacionAct, Profesion profesion, Motivacion motivacion) {
+	public Westley(Lugar ubicacionAct, Profesion profesion) {
 		super("Westley", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO,
-				TipoImportancia.PROTAGONISTA, ubicacionAct, profesion, motivacion);
+				TipoImportancia.PROTAGONISTA, ubicacionAct, profesion, Motivacion.DESCONOCIDA);
 	}
 
 }

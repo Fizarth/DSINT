@@ -19,7 +19,7 @@ public enum Motivacion {
 		case HUMILLAR_PRINCIPE: return "humillar al príncipe";
 		case DESCONOCIDA: return "desconocida";
 
-		default: return "No existe";
+		default: return "no tiene motivación";
 		}
 		
 	}
