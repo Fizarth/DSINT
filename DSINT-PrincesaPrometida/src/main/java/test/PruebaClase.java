@@ -24,10 +24,6 @@ public class PruebaClase {
 		
 
 	}
-	
-	public Modificable getModificable(String s) {
-		
 
-	}
 
 }
