@@ -1,11 +1,17 @@
 package test;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
 import lugares.*;
 import profesiones.*;
+import utilidades.Archivo;
+import utilidades.Consulta;
+import utilidades.Parser;
 import personajes.*;
 
 public class TestPersonajes {
@@ -17,6 +23,9 @@ public class TestPersonajes {
 		//System.out.println(kContainer.verify().getMessages().toString());
 
 		KieSession kSession = kContainer.newKieSession("ksession-rules");
+		
+			Archivo.setPath("/home/norberto/input1.txt.out");
+		
 		
 		// Lugar l1 = new AcantiladosLocura();
 		// Lugar l2 = new Bosque();

@@ -12,6 +12,7 @@ import utilidades.Archivo;
 import utilidades.Consulta;
 import utilidades.ConsultaQue;
 import utilidades.ConsultaQuien;
+import utilidades.ConsultaSi;
 import utilidades.Parser;
 
 public class Main {
@@ -24,7 +25,7 @@ public class Main {
 
 		// System.out.println(kContainer.verify().getMessages().toString());
 
-		String filePath = "/home/norberto/Downloads/input1.txt";
+		String filePath = "/home/norberto/input1.txt";
 		//String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\input1.txt";
 		Archivo.setPath(filePath + ".output.txt");
 		
@@ -54,7 +55,14 @@ public class Main {
 				
 
 				break;
-
+				
+			case "ConsultaSi":
+				System.out.println("Consulta Si");
+				ConsultaSi consultaSi = (ConsultaSi) consulta;
+				
+				
+				break;
+				
 			default:
 				break;
 			}
