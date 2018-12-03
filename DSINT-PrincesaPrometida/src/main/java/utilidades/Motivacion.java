@@ -2,7 +2,7 @@ package utilidades;
 
 public enum Motivacion {
 	TENER_TRABAJO, SALVAR_BUTTERCUP, VENGAR_PADRE, DECLARAR_GUERRA, GANAR_DINERO, SECUESTRAR_PRINCESA,
-	ESTAR_CON_WESTLEY, ESTAR_CON_BUTTERCUP, SERVIR_PRINCIPE, ESTUDIAR_DOLOR, HUMILLAR_PRINCIPE, DESCONOCIDA;
+	ESTAR_CON_WESTLEY, ESTAR_CON_BUTTERCUP, SERVIR_PRINCIPE, ESTUDIAR_DOLOR, HUMILLAR_PRINCIPE, AMOR_VERDADERO, DESCONOCIDA;
 
 	public String getString() {
 		switch (this) {
@@ -28,6 +28,8 @@ public enum Motivacion {
 			return "estudiar el dolor";
 		case HUMILLAR_PRINCIPE:
 			return "humillar al príncipe";
+		case AMOR_VERDADERO:
+			return "amor verdadero";
 		case DESCONOCIDA:
 			return "desconocida";
 

@@ -644,8 +644,146 @@ end
 
 /*** ACTO 4 	Presentación	de	la	Nueva	Reina	hasta la	muerte de	Westley ****/
 
-/*** ACTO 5 || ACTO FINAL  Llegan	a	casa	del	Asombroso	Max	hasta	el	final. ****/
+/*** ACTO 5 || ACTO FINAL  Llegan	a	casa	del	Milagroso	Max	hasta	el	final. ****/
+rule "Creación de Personajes Acto5"
+	agenda-group "Acto5"
+	when
+		cur: Curandero()
+		sac: Sacerdote()
+		visir: Visir()
+		ig: IglesiaCastillo()
+		cs: CasaMilagrosoMax()
+	then
+		insert(new Max(cs, cur ));
+		insert(new Valerie(cs, cur));
+		insert(new Obispo(ig, sac));
+		System.out.println("Acto5: Se crean los personajes");
+end
 
+rule "Comprar un milagro"
+	when
+		pd: PozoDesesperacion()
+		cs: CasaMilagrosoMax()
+		bb: BrigadaBrutal()
+		i: Inigo(ubicacionActual == pd)
+		w: Westley(ubicacionActual == pd, estadoSalud == EstadoSalud.MUERTO)
+		f: Fezzik(ubicacionActual == pd, profesion == bb)
+		m: Max(ubicacionActual == cs)
+	then
+		modify(i){
+			setUbicacionActual(cs);
+		}
+		modify(f){
+			setUbicacionActual(cs);
+		}
+		modify(w){
+			setUbicacionActual(cs);
+		}
+	    modify(m){
+	          setMotivacion(Motivacion.GANAR_DINERO);
+	    }
+		System.out.println("Llegada a la casa del milagrero");
+end
+
+rule "Está Medio Muerto"
+	when
+		cs: CasaMilagrosoMax()
+		i: Inigo(ubicacionActual == cs)
+		w: Westley(ubicacionActual == cs, estadoSalud == EstadoSalud.MUERTO)
+		f: Fezzik(ubicacionActual == cs)
+		m: Max(ubicacionActual == cs, motivacion == Motivacion.GANAR_DINERO)
+		v: Valerie(ubicacionActual == cs)
+	then
+		modify(w){
+			setEstadoSalud(EstadoSalud.MEDIO_MUERTO);
+		}
+		modify(w){
+	          setMotivacion(Motivacion.AMOR_VERDADERO);
+	    }
+		System.out.println("Se descubre que está medio muerto");
+end
+
+rule "Discursión de matrimorio"
+	when
+		cs: CasaMilagrosoMax()
+		i: Inigo(ubicacionActual == cs)
+		w: Westley(ubicacionActual == cs, estadoSalud == EstadoSalud.MEDIO_MUERTO)
+		f: Fezzik(ubicacionActual == cs)
+		m: Max(ubicacionActual == cs, motivacion == Motivacion.GANAR_DINERO)
+		v: Valerie(ubicacionActual == cs)
+	then
+		modify(m){
+	          setEstadoCivil(EstadoCivil.CASADO);
+	    }
+	    modify(v){
+	          setEstadoCivil(EstadoCivil.CASADO);
+	    }
+	    Relacion fm1 = new FamiliarDe(v);
+	    Relacion fm2 = new FamiliarDe(m);
+	    ArrayList<Relacion> listM = m.getRelacionesPersonaje();
+	    listM.add(fm1);
+	    modify(m){
+	      setRelacionesPersonaje(listM);
+	    }
+	     ArrayList<Relacion> listV = v.getRelacionesPersonaje();
+	    listV.add(fm2);
+	    modify(v){
+	      setRelacionesPersonaje(listV);
+	    }
+		System.out.println("Max y Valerie tienen una discursión");
+end
+
+rule "Causa noble"
+	when
+		cs: CasaMilagrosoMax()
+		i: Inigo(ubicacionActual == cs)
+		w: Westley(ubicacionActual == cs, estadoSalud == EstadoSalud.MEDIO_MUERTO)
+		f: Fezzik(ubicacionActual == cs)
+		m: Max(ubicacionActual == cs, motivacion == Motivacion.GANAR_DINERO)
+		v: Valerie(ubicacionActual == cs)
+		princ: Principe()
+	then
+		Relacion od1 = new OdiaA(princ);
+    	Relacion od2 = new OdiadoPor(m);
+    	
+    	ArrayList<Relacion> listaR1 = m.getRelacionesPersonaje();
+   		listaR1.add(od1);
+	    modify(m){
+	          setRelacionesPersonaje(listaR1);
+	    }
+    	ArrayList<Relacion> listaR2 = princ.getRelacionesPersonaje();
+   		listaR2.add(od2);
+	    modify(princ){
+	          setRelacionesPersonaje(listaR2);
+	    }
+	    modify(m){
+	          setMotivacion(Motivacion.HUMILLAR_PRINCIPE);
+	    }
+	    System.out.println("Max hace la píldora");
+end
+
+rule "Plan de asalto"
+	when
+		cs: CasaMilagrosoMax()
+		mc: MurallaCastillo()
+		i: Inigo(ubicacionActual == cs)
+		w: Westley(ubicacionActual == cs, estadoSalud == EstadoSalud.MEDIO_MUERTO)
+		f: Fezzik(ubicacionActual == cs)
+	then
+		modify(i){
+			setUbicacionActual(mc);
+		}
+		modify(f){
+			setUbicacionActual(mc);
+		}
+		modify(w){
+			setUbicacionActual(mc);
+		}
+		modify(w){
+			setEstadoSalud(EstadoSalud.VIVO);
+		}
+	    System.out.println("La píldora surge efecto y trazan el plan para entrar al castillo");
+end
 
 //Consultas
 rule "Consulta Quien" 
