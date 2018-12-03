@@ -65,7 +65,7 @@ rule "Creación Animales"
 		insert(new Perro(c));
 		insert(new RoedorAspectoGigantesco(pantano));
 		insert(new Vaca(granja));
-		System.out.println("Se han añadido los animales");
+		//System.out.println("Se han añadido los animales");
 end
 
 rule "Creación Personajes Acto 0"
