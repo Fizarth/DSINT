@@ -636,7 +636,7 @@ rule "Muere Vizzini"
 		System.out.println("Vizzini está " + v.getEstadoSalud().getString() + " por " + p.getNombre());
 end
 //Las ubicaciones y empleos de Fezzik e Íñigo ya han sido modificadas en las reglas anteriores, 
-//ya no hay que tenerlo encuenta en el acto2
+//ya no hay que modificarlo en el acto2
 
 /*** ACTO 2 El	príncipe	sigue	las	huellas	hasta	que	se	produce	el beso	de	amor	verdadero****/
 
