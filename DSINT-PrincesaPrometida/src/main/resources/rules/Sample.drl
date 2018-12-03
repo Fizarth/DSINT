@@ -52,17 +52,20 @@ rule "Creación Animales"
 	when 
 		mar: Mar()
 		granja: Granja()
+		c: Castillo()
 		bl: BosqueLadrones()
 		pantano: PantanoFuego()
+		cM: CasaMilagrosoMax()
 	then
 		insert(new AnguilaChillona(mar));
 		insert(new Caballo(granja));
-		insert(new Cabra(granja));
+		insert(new Cabra(cM));
 		insert(new Cerdo(granja));
-		insert(new Perro(bl));
+		insert(new Gallina(bl));
+		insert(new Perro(c));
 		insert(new RoedorAspectoGigantesco(pantano));
 		insert(new Vaca(granja));
-		System.out.println("Se han añadido los animales");
+		//System.out.println("Se han añadido los animales");
 end
 
 rule "Creación Personajes Acto 0"
@@ -74,37 +77,15 @@ rule "Creación Personajes Acto 0"
 		pir: Pirateria()
 		mar: Mar()
 	then
-		insert(new Westley(granjero, granja));
-		insert(new Buttercup(granjero,granja));
+		insert(new Westley(granja, granjero));
+		insert(new Buttercup(granja, granjero));
 		insert(new Abuelo(hab));
 		insert(new Madre(hab));
 		insert(new Nieto(hab));
-		insert (new Pirata(pir,mar));
+		insert (new Pirata(mar, pir));
 		
 		System.out.println("Acto0: Se crean los personajes");
 end
-
-rule "Creación de Personajes Acto1"
-	agenda-group "Acto1"
-	when 
-		mercenario: Mercenario()
-		Gobernante: Gobernante()
-		v: Visir()
-		castillo: Castillo()
-		e : Espana()
-		h: Herrero()
-		bosque: Bosque()
-	then
-		insert(new Vizzini(mercenario, bosque));
-		insert(new Inigo(mercenario, bosque));
-		insert(new Fezzik(mercenario, bosque));
-		insert(new Rey(Gobernante, castillo));
-		insert(new Principe(Gobernante, castillo));
-		insert(new Conde(v, castillo));
-		insert(new PadreInigo(h, e));
-		System.out.println("Acto1: Se crean los personajes");
-end
-
 
 //Inicio Acto0
 rule "Nieto es"
@@ -122,7 +103,7 @@ rule "Nieto es"
       setRelacionesPersonaje(listant);
     }
    System.out.println("El nieto es familiar del abuelo y la madre" );
-   Archivo.getUnicaInstancia().añadirInf("El nieto es familiar del abuelo y la madre\n");
+   Archivo.getUnicaInstancia().addInf("El nieto es familiar del abuelo y la madre\n");
 end
 
 rule "Abuelo es"
@@ -141,7 +122,7 @@ rule "Abuelo es"
       setRelacionesPersonaje(listaab);
     }
     System.out.println("Abuelo familia" );
-    Archivo.getUnicaInstancia().añadirInf("El abuelo es familiar del nieto y de la madre.\n");
+    Archivo.getUnicaInstancia().addInf("El abuelo es familiar del nieto y de la madre.\n");
 end
 
 rule "Madre es"
@@ -159,7 +140,7 @@ rule "Madre es"
           setRelacionesPersonaje(listamd);
     }
     System.out.println("Madre es familiar del abuelo y nieto" );
-    //Archivo.getUnicaInstancia().añadirInf("La madre es familiar del abuelo y del nieto.\n");
+    Archivo.getUnicaInstancia().addInf("La madre es familiar del abuelo y del nieto.\n");
 end
 
 rule "Nieto está enfermo"
@@ -172,37 +153,10 @@ when
   		setUbicacionActual(null);
   	}
   	System.out.println("Madre se despide y abuelo lee un cuento al nieto" );
-  	//Archivo.getUnicaInstancia().añadirInf("La madre se fespide y el abuelo lee un cuendo al nieto enfermo.\n");
+  	Archivo.getUnicaInstancia().addInf("La madre se despide y el abuelo lee un cuendo al nieto enfermo.\n");
 end
 
-rule "Westley quiere a Buttercup"
-  when
-    wt: Personaje(nombre == "Westley")
-    bt: Personaje(nombre == "Buttercup")
-  then
-    Relacion q1 = new QuiereA(bt);
-    ArrayList<Relacion> listaR = wt.getRelacionesPersonaje();
-    listaR.add(q1);
-    modify(wt){
-          setRelacionesPersonaje(listaR);
-    }
-    Archivo.getUnicaInstancia().añadirInf("Westley se enamora de Buttercup.\n");
-end
-
-rule "Buttercup quiere a Westley"
-  when
-    wt: Personaje(nombre == "Westley")
-    bt: Personaje(nombre == "Buttercup")
-  then
-    Relacion q1 = new QuiereA(wt);
-    ArrayList<Relacion> listaR = bt.getRelacionesPersonaje();
-    listaR.add(q1);
-    modify(bt){
-          setRelacionesPersonaje(listaR);
-    }
-   Archivo.getUnicaInstancia().añadirInf("Buttercup se enamora de Wetsley.\n");
-end
-
+//Modificar esta relación
 rule "Relacion Conocer"
     when
         p1 : Personaje(ubicacionActual != null)
@@ -222,41 +176,82 @@ rule "Relacion Conocer"
         modify(p2){
         	setRelacionesPersonaje(listaR2);
         }
-        Archivo.getUnicaInstancia().añadirInf(p1.getNombre() + " conoce a " + p2.getNombre() + ".\n"); 
+        Archivo.getUnicaInstancia().addInf(p1.getNombre() + " conoce a " + p2.getNombre() + ".\n"); 
+end
+
+rule "Westley quiere a Buttercup"
+  when
+  	g : Lugar( nombre == "Granja" )
+    wt: Westley( ubicacionActual == g)
+    bt: Buttercup( ubicacionActual == g)
+  then
+    Relacion q1 = new QuiereA(bt);
+    ArrayList<Relacion> listaR = wt.getRelacionesPersonaje();
+    listaR.add(q1);
+    modify(wt){
+          setRelacionesPersonaje(listaR);
+    }
+    modify(wt){
+          setMotivacion(Motivacion.ESTAR_CON_BUTTERCUP);
+    }
+    Archivo.getUnicaInstancia().addInf("Westley se enamora de Buttercup.\n");
+end
+
+rule "Buttercup quiere a Westley"
+  when
+    g : Lugar( nombre == "Granja" )
+    wt: Westley( ubicacionActual == g)
+    bt: Buttercup( ubicacionActual == g)
+  then
+    Relacion q1 = new QuiereA(wt);
+    ArrayList<Relacion> listaR = bt.getRelacionesPersonaje();
+    listaR.add(q1);
+    modify(bt){
+          setRelacionesPersonaje(listaR);
+    }
+    modify(wt){
+          setMotivacion(Motivacion.ESTAR_CON_WESTLEY);
+    }
+   Archivo.getUnicaInstancia().addInf("Buttercup se enamora de Wetsley.\n");
 end
 
 rule "Westley se va a hacer fortuna"
     when
     	l: Lugar(nombre == "Mar")
    		lg: Lugar(nombre == "Granja");
-        p1: Westley(nombre == "Westley", ubicacionActual== lg,motivacion == Motivacion.GANAR_DINERO)
+        p1: Westley( ubicacionActual == lg, motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
    		
     then
+    	modify(p1){
+    		setMotivacion(Motivacion.GANAR_DINERO);
+    	}
     	modify(p1){
     		setUbicacionActual(l);
     	}
      System.out.println(p1.getNombre() + " se va a " + l.getNombre() + " para " + p1.getMotivacion());
-     //Archivo.getUnicaInstancia().añadirInf(p1.getNombre() + " se va a " + l.getNombre() + " para " + p1.getMotivacion()+".\n");
+     Archivo.getUnicaInstancia().addInf("Como " + p1.getNombre()+ "quería estar con Buttercup, se va al " + 
+     l.getNombre() + " para " + p1.getMotivacion().getString() +".\n");
 end
 
 rule "Westley muere"
     when
     	lm: Lugar(nombre == "Mar")
-        p: Personaje(nombre == "Westley",ubicacionActual == lm)
-   		p2: Personaje(nombre == "Robert el Pirata")
+        p: Westley(ubicacionActual == lm)
+   		p2: Pirata(ubicacionActual == lm)
     then
     	modify(p){
     		setEstadoSalud(EstadoSalud.MUERTO);
     	}
-     System.out.println(p.getNombre() + " esta " + p.getEstadoSalud() +" asesinado por " + p2.getNombre());
-    // Archivo.getUnicaInstancia().añadirInf(p.getNombre() + " esta " + p.getEstadoSalud() +" asesinado por " + p2.getNombre()+".\n");
+     System.out.println(p.getNombre() + " esta " + p.getEstadoSalud().getString() +" asesinado por " + p2.getNombre());
+     Archivo.getUnicaInstancia().addInf(p.getNombre() + " esta " + p.getEstadoSalud().getString() +" asesinado por " + p2.getNombre()+".\n");
 end
 
 rule "Buttercup odia al pirata"
     when
-    	exists (Westley (estadoSalud == EstadoSalud.MUERTO))
-    	bt: Personaje(nombre == "Buttercup")
-    	pr: Personaje(nombre == "Robert el Pirata")
+    	g :Lugar(nombre == "Granja")
+    	exists (Westley(estadoSalud == EstadoSalud.MUERTO))
+    	bt: Buttercup( ubicacionActual == g, motivacion == Motivacion.ESTAR_CON_WESTLEY)
+    	pr: Pirata( )
     then
     	Relacion od1 = new OdiaA(pr);
     	Relacion od2 = new OdiadoPor(bt);
@@ -266,20 +261,46 @@ rule "Buttercup odia al pirata"
 	    modify(bt){
 	          setRelacionesPersonaje(listaR1);
 	    }
+	    modify(bt){
+	          setMotivacion(Motivacion.DESCONOCIDA);
+	    }
 	 
     	ArrayList<Relacion> listaR2 = pr.getRelacionesPersonaje();
    		listaR2.add(od2);
 	    modify(pr){
 	          setRelacionesPersonaje(listaR2);
 	    }
-	    Archivo.getUnicaInstancia().añadirInf("Buttercup odia al pirata por la muerte de weatley.\n");
+	    Archivo.getUnicaInstancia().addInf("Buttercup odia al pirata por la muerte de Westley y pierde su motivación.\n");
 end
 //Fin acto0
+
 // Inicio Acto1
+rule "Creación de Personajes Acto1"
+	agenda-group "Acto1"
+	when 
+		mercenario: Mercenario()
+		gobernante: Gobernante()
+		visir: Visir()
+		castillo: Castillo()
+		esp : Espana()
+		herrero: Herrero()
+		bosque: Bosque()
+	then
+		insert(new Vizzini(bosque, mercenario ));
+		insert(new Inigo(bosque, mercenario));
+		insert(new Fezzik(bosque, mercenario));
+		insert(new Rey(castillo, gobernante));
+		insert(new Principe(castillo, gobernante));
+		insert(new Conde(castillo, visir));
+		insert(new PadreInigo(esp, herrero));
+		System.out.println("Acto1: Se crean los personajes");
+end
+
+
 rule "Rey y Principe son familia"
   when
-    pr: Personaje(nombre == "Principe Humperdink")
-    ry: Personaje(nombre == "El Rey")
+    pr: Principe( )
+    ry: Rey( )
   then
     Relacion fm1 = new FamiliarDe(ry);
     Relacion fm2 = new FamiliarDe(pr);
@@ -295,10 +316,32 @@ rule "Rey y Principe son familia"
     }
 end
 
-rule "Principe quiere a Buttercup"
+rule "Principe y Conde amigos"
   when
-    pr: Personaje(nombre == "Principe")
-    bt: Personaje(nombre == "Buttercup")
+    pr: Principe( )
+    cd: Conde( )
+  then
+    Relacion am1 = new AmigoDe(cd);
+    Relacion am2 = new AmigoDe(pr);
+    ArrayList<Relacion> listaR = pr.getRelacionesPersonaje();
+    listaR.add(am1);
+    modify(pr){
+      setRelacionesPersonaje(listaR);
+    }
+    ArrayList<Relacion> listaR2 = cd.getRelacionesPersonaje();
+    listaR2.add(am2);
+    modify(cd){
+      setRelacionesPersonaje(listaR2);
+    }
+    modify(cd){
+      setMotivacion(Motivacion.SERVIR_PRINCIPE);
+    }
+end
+
+rule "El príncipe quiere a Buttercup"
+  when
+    pr: Principe( )
+    bt: Buttercup( )
     
   then
     Relacion q1 = new QuiereA(bt);
@@ -307,12 +350,15 @@ rule "Principe quiere a Buttercup"
     modify(pr){
           setRelacionesPersonaje(listaR);
     }
+    modify(pr){
+          setMotivacion(Motivacion.ESTAR_CON_BUTTERCUP);
+    }
 end
 
 rule "Buttercup prometida del príncipe"
   when
-    pr: Personaje(nombre == "Principe Humperdink")
-    bt: Personaje(nombre == "Buttercup")
+    pr: Principe(motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
+    bt: Buttercup( )
     c: Lugar(nombre == "Castillo");
   then
     Relacion p1 = new PrometidaDe(pr);
@@ -334,45 +380,16 @@ rule "Buttercup prometida del príncipe"
     System.out.println("El Príncipe y Buttercup se prometen y se anuncia la boda");
 end
 
-rule "Principe y Conde amigos"
-  when
-    pr: Personaje(nombre == "Principe Humperdink")
-    cd: Personaje(nombre == "Tyrone Rugen")
-  then
-    Relacion am1 = new AmigoDe(cd);
-    Relacion am2 = new AmigoDe(pr);
-    ArrayList<Relacion> listaR = pr.getRelacionesPersonaje();
-    listaR.add(am1);
-    modify(pr){
-      setRelacionesPersonaje(listaR);
-    }
-    ArrayList<Relacion> listaR2 = cd.getRelacionesPersonaje();
-    listaR2.add(am2);
-    modify(pr){
-      setRelacionesPersonaje(listaR2);
-    }
-end
-/*
-rule "Anunciamiento boda"
-	when 
-		c: Lugar(nombre == "Castillo")
-		//exists Buttercup(ubicacionActual == c)
-		exists Buttercup( relacionesPersonaje )
-	then
-		System.out.println("Anunciamiento boda entre Buttercup y el principe");
-		// ni idea pork ya esta lo de prometida pero como en los apuntes pone algo del anunciamiento de la boda
-end 
-*/
 rule "Buttercup sale a pasear"
 	when
 		b: Lugar(nombre=="Bosque")
 		c: Lugar(nombre =="Castillo")
-		bt: Buttercup(ubicacionActual == c)
+		bt: Buttercup( ubicacionActual == c)
 	then
 		modify(bt){
 			setUbicacionActual(b);
 		}
-		System.out.println("La Buttercup sale a pasear al bosque");
+		System.out.println("Buttercup sale a pasear al bosque");
 end			
 
 rule "Secuestro Buttercup"
@@ -380,11 +397,35 @@ rule "Secuestro Buttercup"
 		b: Bosque();
 		princesa: Buttercup(ubicacionActual == b)
 		mer: Mercenario()
-		v: Vizzini(ubicacionActual == b, motivacion == Motivacion.DECLARAR_GUERRA)
-		i: Inigo(ubicacionActual == b, trabajaDe == mer)
-		f: Fezzik(ubicacionActual == b, trabajaDe== mer)
+		v: Vizzini(ubicacionActual == b, profesion == mer)
+		i: Inigo(ubicacionActual == b, profesion == mer)
+		f: Fezzik(ubicacionActual == b, profesion == mer)
+	then
+		modify(i){
+			setMotivacion(Motivacion.SECUESTRAR_PRINCESA);
+		}
+		modify(f){
+			setMotivacion(Motivacion.SECUESTRAR_PRINCESA);
+		}
+		modify(v){
+			setMotivacion(Motivacion.SECUESTRAR_PRINCESA);
+		}
+		System.out.println(v.getNombre() + "," + i.getNombre() + " y " + f.getNombre() + " secuestran a "+ princesa.getNombre());
+end
+
+rule "Huida por el mar"
+	when
+		b: Bosque();
+		princesa: Buttercup(ubicacionActual == b)
+		mer: Mercenario()
+		v: Vizzini(ubicacionActual == b, profesion == mer, motivacion == Motivacion.SECUESTRAR_PRINCESA)
+		i: Inigo(ubicacionActual == b, profesion == mer)
+		f: Fezzik(ubicacionActual == b, profesion == mer)
 		mar: Mar()
 	then
+		modify(v){
+			setMotivacion(Motivacion.DECLARAR_GUERRA);
+		}
 		modify(princesa){
 			setUbicacionActual(mar);
 		}
@@ -397,23 +438,23 @@ rule "Secuestro Buttercup"
 		modify(v){
 			setUbicacionActual(mar);
 		}
-		System.out.println(v.getNombre() + "," + i.getNombre() + " y " + f.getNombre() + " secuestran a "+ princesa.getNombre());
+		System.out.println("Los mercenarios se llevan a Buttercup por el mar para llegar a la frontera de Guilder.");
 end
 
 rule "Anguila ataca a buttercup"
 	when 
 		m: Mar();
-		bt: Buttercup( ubicacionActual==m )
-		a: AnguilaChillona( ubicacionActual== m)
+		bt: Buttercup(ubicacionActual == m )
+		a: AnguilaChillona(ubicacionActual == m)
 	then 
 		modify(bt){
 			setEstadoSalud(EstadoSalud.EN_PELIGRO);
 		}
-		System.out.println(a.getNombre() + " ataca a " + bt.getNombre() + " esta " + bt.getEstadoSalud());
+		System.out.println(bt.getNombre() + " intenta escapar y en el agua es atacada por " + a.getNombre() + 
+		", ahora ella está " + bt.getEstadoSalud().getString() +".");
 end
 
 rule "Fezzik salva a Buttercup"
-
 	when 
 		m: Mar()
 		bt: Buttercup( estadoSalud == EstadoSalud.EN_PELIGRO, ubicacionActual == m )
@@ -426,7 +467,7 @@ rule "Fezzik salva a Buttercup"
 		modify(a){
 			setEstadoSalud(EstadoSalud.MUERTO);
 		}		
-		System.out.println(fz.getNombre()+" salva a " + bt.getNombre());		
+		System.out.println(fz.getNombre()+" salva a " + bt.getNombre() + ", la anguila muere.");		
 end
 
 rule "Llegada a los acantilados"
@@ -434,10 +475,10 @@ rule "Llegada a los acantilados"
 		m: Mar( )
 		acantilados: AcantiladosLocura(  )
 		an: AnguilaChillona(ubicacionActual == m , estadoSalud == EstadoSalud.MUERTO)
-		v: Vizzini (ubicacionActual == m)
+		v: Vizzini( ubicacionActual == m)
 		bt: Buttercup(ubicacionActual == m)
-		f: Fezzik(ubicacionActual == m)
-		i: Inigo(ubicacionActual == m)
+		f: Fezzik( ubicacionActual == m)
+		i: Inigo( ubicacionActual == m)
 		p: Pirata( ubicacionActual == m )
 	then
 		modify(i){
@@ -456,7 +497,7 @@ rule "Llegada a los acantilados"
 			setMotivacion(Motivacion.SECUESTRAR_PRINCESA)
 		}
 		System.out.println(v.getNombre() + "," + f.getNombre() + "," + i.getNombre() + "y" + bt.getNombre() + " llegan a " + acantilados.getNombre());
-		System.out.println(p.getNombre() + " quiere " + p.getMotivacion());
+		System.out.println(p.getNombre() + " quiere " + p.getMotivacion().getString());
 end
 
 rule "Pirata llega a los acantilados"
@@ -522,7 +563,7 @@ rule "Pirata vence a Iñigo"
 		cm: CaminoMontana()
 		mercenario: Mercenario()
 		p: Pirata(ubicacionActual == ac)
-		i: Inigo(ubicacionActual == ac, trabajaDe == mercenario)
+		i: Inigo(ubicacionActual == ac, profesion == mercenario, estadoSalud == EstadoSalud.VIVO)
 	then
 		modify(i){
 			setEstadoSalud(EstadoSalud.INCONSCIENTE)
@@ -537,32 +578,33 @@ end
 rule "Pirata vence a Fezzik"
 	when
 		cm : CaminoMontana()
+		ac: AcantiladosLocura()
+		des: Desempleado()
 		p: Pirata(ubicacionActual == cm)
-		f: Fezzik(ubicacionActual == cm)
+		f: Fezzik(ubicacionActual == cm, estadoSalud == EstadoSalud.VIVO)
+		i: Inigo(estadoSalud == EstadoSalud.INCONSCIENTE, ubicacionActual == ac)
 	then
 		modify(f){
 			setEstadoSalud(EstadoSalud.INCONSCIENTE)
 		}
+		modify(i){
+			setUbicacionActual(null)
+		}
+		modify(i){
+			setProfesion(des);
+		}
 		System.out.println(p.getNombre() + " vence a " + f.getNombre());
 end
+
 rule "Principe llega a los acantilados"
 	when
 		ac: AcantiladosLocura()
 		cm: CaminoMontana()
-		e: Espadachin()
 		p: Pirata(ubicacionActual == cm)
-		f: Fezzik(estadoSalud == EstadoSalud.INCONSCIENTE)
-		i: Inigo(ubicacionActual == ac)
-		pr: Principe(motivacion == Motivacion.DESCONOCIDA)
+		f: Fezzik(ubicacionActual == cm, estadoSalud == EstadoSalud.INCONSCIENTE)
+		pr: Principe(motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
 		cd: Conde()
 	then
-		modify(i){
-			setUbicacionActual(null)
-		}
-		
-		modify(i){
-			setTrabajaDe(e);
-		}
 		modify(pr){
 			setUbicacionActual(ac)
 		}
@@ -572,7 +614,7 @@ rule "Principe llega a los acantilados"
 		modify(pr){
 			setMotivacion(Motivacion.SALVAR_BUTTERCUP);
 		}
-		System.out.println("Principe llega a los acantilados para salvar a Buttercup");
+		System.out.println("Príncipe llega a los acantilados para salvar a Buttercup");
 end 
 
 //Fezzik será actualizado en el siguiente acto
@@ -580,23 +622,22 @@ rule "Muere Vizzini"
 	when 
 		cm : CaminoMontana()
 		p: Pirata(ubicacionActual == cm)
-		i: Inigo(ubicacionActual == null)
 		v: Vizzini(ubicacionActual == cm)
 	then 
 		modify(v){
 			setEstadoSalud(EstadoSalud.MUERTO);
 		}
-		System.out.println("Vizzini esta " + v.getEstadoSalud() + " por " + p.getNombre());
+		System.out.println("Vizzini está " + v.getEstadoSalud().getString() + " por " + p.getNombre());
 end
 
 
-/*** ACTO 2 ****/
+/*** ACTO 2 El	príncipe	sigue	las	huellas	hasta	que	se	produce	el beso	de	amor	verdadero****/
 
-/*** ACTO 3 ****/
+/*** ACTO 3  Buttercup	y	Westley	llegan	al	pantano	hasta que	muere	el	rey****/
 
-/*** ACTO 4 ****/
+/*** ACTO 4 	Presentación	de	la	Nueva	Reina	hasta la	muerte de	Westley ****/
 
-/*** ACTO 5 || ACTO FINAL ****/
+/*** ACTO 5 || ACTO FINAL  Llegan	a	casa	del	Asombroso	Max	hasta	el	final. ****/
 
 
 //Consultas

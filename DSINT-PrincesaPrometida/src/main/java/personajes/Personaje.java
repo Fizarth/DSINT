@@ -19,18 +19,27 @@ public abstract class Personaje {
 
 	private ArrayList<Relacion> relacionesPersonaje;
 
+	/**
+	 * Constructor para quitar la variable perteneceCuento
+	 * 
+	 * @param nombre
+	 * @param origen
+	 * @param sexo
+	 * @param estadoCivil
+	 * @param salud
+	 * @param importancia
+	 * @param ubicacionAct
+	 */
 	public Personaje(String nombre, Origen origen, Sexo sexo, EstadoCivil estadoCivil, EstadoSalud salud,
-			boolean cuento, TipoImportancia importancia, Lugar ubicacionAct) {
+			TipoImportancia importancia, Lugar ubicacionAct) {
 		this.estadoCivil = estadoCivil;
 		this.estadoSalud = salud;
 		this.nombre = nombre;
 		this.origen = origen;
-		this.perteneceCuento = cuento;
 		this.sexo = sexo;
 		this.tipoImportancia = importancia;
 		this.ubicacionActual = ubicacionAct;
 		this.relacionesPersonaje = new ArrayList<Relacion>();
-
 	}
 
 	public ArrayList<Relacion> getRelacionesPersonaje() {
@@ -116,20 +125,15 @@ public abstract class Personaje {
 	@Override
 	public String toString() {
 		String ub;
-		if(ubicacionActual==null) ub = "No sé donde se encuentra";
-		else ub = "Actualmente se encuentra en " + ubicacionActual.toString();
-		String cadena =  estadoSalud + " y " + estadoCivil + " es de "+ origen + " es un "
-				+ sexo + "." +nombre + " es un personaje " + tipoImportancia +". " 
-				+ ub + "." + nombre 
-				+ relacionesPersonaje;
-		if (perteneceCuento)
-			cadena = nombre + " pertenece al cuento y esta " + cadena;
-		else 
-			cadena = nombre + " no pertenece al cuento y esta " + cadena;
+		if (ubicacionActual == null)
+			ub = "actualmente no sé donde se encuentra";
+		else
+			ub = "actualmente se encuentra en " + ubicacionActual.toString();
+		String cadena = nombre + " es un personaje " + tipoImportancia.getString() + ". Es de " + origen + "y " + ub
+				+ ". Es " + sexo.getString() + ", está " + estadoSalud.getString() + " y su estado civil es "
+				+ estadoCivil.getString() + "." + nombre + " " + relacionesPersonaje + ".";
 		return cadena;
-				
-	
+
 	}
 
-	
 }

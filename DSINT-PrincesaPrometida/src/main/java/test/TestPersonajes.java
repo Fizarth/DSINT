@@ -55,7 +55,7 @@ public class TestPersonajes {
 		Personaje p1 = new Abuelo(l9);
 		// Personaje p2 = new Albino();
 		// Personaje p3 = new Anciana();
-		Personaje p4 = new Buttercup(t1, l8);
+		Personaje p4 = new Buttercup(l8, t1);
 		// Personaje p5 = new Conde();
 		// Personaje p6 = new Fezzik();
 		// Personaje p7 = new Inigo();
@@ -64,12 +64,12 @@ public class TestPersonajes {
 		Personaje p10 = new Nieto(l9);
 		// Personaje p11 = new Obispo();
 		// Personaje p12 = new PadreInigo();
-		Personaje p13 = new Pirata(t2,l10);
+		Personaje p13 = new Pirata(l10,t2);
 		// Personaje p14 = new Principe();
-		Personaje p15 = new Rey(t3,l6);
+		Personaje p15 = new Rey(l6,t3);
 		// Personaje p16 = new Valerie();
 		// Personaje p17 = new Vizzini();
-		Personaje p18 = new Westley(t1, l8);
+		Personaje p18 = new Westley(l8, t1);
 		// Personaje p19 = new Yalin();
 
 		kSession.insert(p1);

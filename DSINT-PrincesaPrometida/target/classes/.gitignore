@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /rules/
 <<<<<<< HEAD
 /utilidades/
@@ -5,3 +6,18 @@
 >>>>>>> branch 'master' of https://github.com/Fizarth/DSINT.git
 /mainProyecto/
 /test/
+=======
+/META-INF/
+/animales/
+/com/
+/dtables/
+/lugares/
+/mainProyecto/
+/personajes/
+/process/
+/profesiones/
+/relaciones/
+/rules/
+/test/
+/utilidades/
+>>>>>>> branch 'master' of https://github.com/Fizarth/DSINT.git

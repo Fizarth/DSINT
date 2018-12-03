@@ -4,22 +4,11 @@ import lugares.*;
 import profesiones.*;
 import utilidades.*;
 
-public class Obispo extends Personaje{
-
-	private Profesion trabajaDe;
+public class Obispo extends PersonajeCuento{
 	
-	public Obispo(Profesion prof, Lugar ubicacionAct) {
-		super("Obispo Gangoso", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO, true,  
-				TipoImportancia.SECUNDARIO, ubicacionAct);
-		this.trabajaDe = prof;
-	}
-
-	public Profesion getTrabajaDe() {
-		return trabajaDe;
-	}
-
-	public void setTrabajaDe(Profesion profesion) {
-		this.trabajaDe = profesion;
+	public Obispo(Lugar ubicacionAct, Profesion profesion) {
+		super("Obispo Gangoso", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.SOLTERO, EstadoSalud.VIVO,  
+				TipoImportancia.SECUNDARIO, ubicacionAct, profesion, Motivacion.DESCONOCIDA);
 	}
 
 	

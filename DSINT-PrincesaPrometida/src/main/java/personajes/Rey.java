@@ -4,35 +4,12 @@ import lugares.*;
 import profesiones.*;
 import utilidades.*;
 
-public class Rey extends Personaje {
+public class Rey extends PersonajeCuento {
 
-	// TODO familiar de
+	public Rey(Lugar ubicacionAct, Profesion profesion) {
+		super("El Rey", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.CASADO, EstadoSalud.VIVO, TipoImportancia.SECUNDARIO,
+				ubicacionAct, profesion, Motivacion.DESCONOCIDA);
 
-	private TituloNobiliario titulo;
-	private Profesion trabajaDe;
-
-	public Rey(Profesion prof, Lugar ubicacionAct) {
-		super("El Rey", Origen.FLORIN, Sexo.HOMBRE, EstadoCivil.CASADO, EstadoSalud.VIVO, true,
-				TipoImportancia.SECUNDARIO, ubicacionAct);
-		this.titulo = TituloNobiliario.REY;
-		this.trabajaDe = prof;
-
-	}
-
-	public TituloNobiliario getTitulo() {
-		return titulo;
-	}
-
-	public void setTitulo(TituloNobiliario titulo) {
-		this.titulo = titulo;
-	}
-
-	public Profesion getTrabajaDe() {
-		return trabajaDe;
-	}
-
-	public void setTrabajaDe(Profesion profesion) {
-		this.trabajaDe = profesion;
 	}
 
 }

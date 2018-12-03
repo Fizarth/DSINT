@@ -1,17 +1,17 @@
 package utilidades;
 
-public enum Sexo implements Modificable{
-	HOMBRE{
-		public Object getInstance(String s) {
-			return HOMBRE;
-		}
-	}
-	, MUJER
-	{
-		public Object getInstance(String s) {
-			return MUJER;
-		}
-	}
-
+public enum Sexo {
+	HOMBRE, MUJER;
 	
+	public String getString() {
+		switch (this) {
+		case HOMBRE:
+			return "un hombre";
+		case MUJER:
+			return "una mujer";
+		default:
+			return "no lo sé";
+		}
+
+	}
 }
