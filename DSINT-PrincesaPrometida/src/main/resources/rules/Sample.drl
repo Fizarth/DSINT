@@ -876,6 +876,123 @@ rule "Plan de asalto"
 	    System.out.println("La píldora surge efecto y trazan el plan para entrar al castillo");
 end
 
+rule "La Boda oficial primera parte"
+	when
+		ig: IglesiaCastillo()
+		cast: Castillo()
+		r: Rey(ubicacionActual == cast)
+		b: Buttercup(ubicacionActual == cast)
+		pr: Principe(ubicacionActual == cast)
+		cd: Conde(ubicacionActual == cast)
+		ob: Obispo(ubicacionActual == ig)
+	then
+		modify(r){
+			setUbicacionActual(ig);
+		}
+		modify(b){
+			setUbicacionActual(ig);
+		}
+		modify(pr){
+			setUbicacionActual(ig);
+		}
+		modify(cd){
+			setUbicacionActual(ig);
+		}
+	    System.out.println("Inicio de la boda");
+end
+
+rule "Inicio del plan"
+	when
+		
+		pc: PuertaCastillo()
+		mc: MurallaCastillo()
+		y: Yalin(ubicacionActual == pc)
+		i: Inigo(ubicacionActual == mc)
+		w: Westley(ubicacionActual == mc)
+		f: Fezzik(ubicacionActual == mc)
+	then
+		modify(i){
+			setUbicacionActual(pc);
+		}
+		modify(f){
+			setUbicacionActual(pc);
+		}
+		modify(w){
+			setUbicacionActual(pc);
+		}
+	    System.out.println("Inicio del plan para entrar al castillo");
+end
+
+rule "La Boda oficial segunda parte"
+	when
+		ig: IglesiaCastillo()
+		pc : PasilloCastillo()
+		r: Rey(ubicacionActual == ig)
+		b: Buttercup(ubicacionActual == ig)
+		pr: Principe(ubicacionActual == ig)
+		cd: Conde(ubicacionActual == ig)
+		ob: Obispo(ubicacionActual == ig)
+	then
+		modify(cd){
+			setUbicacionActual(pc);
+		}
+	    System.out.println("el conde abandona la boda con algunos guardias");
+end
+
+rule "Entrada al Castillo"
+	when
+		pc: PuertaCastillo()
+		pas : PasilloCastillo()
+		y: Yalin(ubicacionActual == pc)
+		i: Inigo(ubicacionActual == pc)
+		w: Westley(ubicacionActual == pc)
+		f: Fezzik(ubicacionActual == pc)
+	then
+	    System.out.println("Los guardias se asustan y Yalin les da la llave para entrar");
+	    modify(i){
+			setUbicacionActual(pas);
+		}
+		modify(f){
+			setUbicacionActual(pas);
+		}
+		modify(w){
+			setUbicacionActual(pas);
+		}
+end
+
+rule "La Boda oficial fin"
+	when
+		ig: IglesiaCastillo()
+		pc : PasilloCastillo()
+		cas : Castillo()
+		r: Rey(ubicacionActual == ig)
+		b: Buttercup(ubicacionActual == ig)
+		pr: Principe(ubicacionActual == ig)
+		ob: Obispo(ubicacionActual == ig)
+	then
+		modify(pr){
+			setUbicacionActual(cas);
+		}
+		modify(r){
+			setUbicacionActual(cas);
+		}
+		modify(b){
+			setUbicacionActual(cas);
+		}
+	    System.out.println("Termina la boda");
+end
+
+rule "Encuentro con el Conde"
+	when
+		pas : PasilloCastillo()
+		c: Conde(ubicacionActual == pas)
+		i: Inigo(ubicacionActual == pas)
+		w: Westley(ubicacionActual == pas)
+		f: Fezzik(ubicacionActual == pas)
+	then
+	    System.out.println("Iñigo mata a los guardias y el conde sale huyendo");   
+end
+
 //Consultas
 rule "Consulta Quien" 
 	when 
