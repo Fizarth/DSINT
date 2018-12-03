@@ -1100,7 +1100,6 @@ rule "Vacío legal"
 	    modify(p){
 			setUbicacionActual(ap);
 		}
-		System.out.println("Buttercup se lanza a darle amor a Westley, pero este está débil");
 end
 
 rule "A sufrimiento"
