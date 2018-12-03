@@ -600,6 +600,7 @@ rule "Principe llega a los acantilados"
 	when
 		ac: AcantiladosLocura()
 		cm: CaminoMontana()
+		des: Desempleado()
 		p: Pirata(ubicacionActual == cm)
 		f: Fezzik(ubicacionActual == cm, estadoSalud == EstadoSalud.INCONSCIENTE)
 		pr: Principe(motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
@@ -614,10 +615,15 @@ rule "Principe llega a los acantilados"
 		modify(pr){
 			setMotivacion(Motivacion.SALVAR_BUTTERCUP);
 		}
+		modify(f){
+			setUbicacionActual(null)
+		}
+		modify(f){
+			setProfesion(des);
+		}
 		System.out.println("Príncipe llega a los acantilados para salvar a Buttercup");
 end 
 
-//Fezzik será actualizado en el siguiente acto
 rule "Muere Vizzini"
 	when 
 		cm : CaminoMontana()
@@ -629,7 +635,8 @@ rule "Muere Vizzini"
 		}
 		System.out.println("Vizzini está " + v.getEstadoSalud().getString() + " por " + p.getNombre());
 end
-
+//Las ubicaciones y empleos de Fezzik e Íñigo ya han sido modificadas en las reglas anteriores, 
+//ya no hay que tenerlo encuenta en el acto2
 
 /*** ACTO 2 El	príncipe	sigue	las	huellas	hasta	que	se	produce	el beso	de	amor	verdadero****/
 
