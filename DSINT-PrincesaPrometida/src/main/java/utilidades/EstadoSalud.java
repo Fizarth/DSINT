@@ -1,7 +1,7 @@
 package utilidades;
 
 public enum EstadoSalud {
-	ENFERMO, VIVO, BORRACHO, MUERTO, MEDIO_MUERTO, EN_PELIGRO, INCONSCIENTE;
+	ENFERMO, VIVO, BORRACHO, MUERTO, MEDIO_MUERTO, EN_PELIGRO, DEBIL, HERIDO, RECUPERADO, INCONSCIENTE;
 
 	public String getString() {
 		switch (this) {
@@ -19,6 +19,12 @@ public enum EstadoSalud {
 			return "en peligro";
 		case INCONSCIENTE:
 			return "inconsciente";
+		case DEBIL:
+			return "débil";
+		case HERIDO:
+			return "herido";
+		case RECUPERADO:
+			return "recuperado";
 		default:
 			return "no se sabe";
 		}

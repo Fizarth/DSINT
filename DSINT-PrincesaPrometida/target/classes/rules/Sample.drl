@@ -735,8 +735,387 @@ end
 
 /*** ACTO 4 	Presentación	de	la	Nueva	Reina	hasta la	muerte de	Westley ****/
 
-/*** ACTO 5 || ACTO FINAL  Llegan	a	casa	del	Asombroso	Max	hasta	el	final. ****/
+/*** ACTO 5 || ACTO FINAL  Llegan	a	casa	del	Milagroso	Max	hasta	el	final. ****/
+rule "Creación de Personajes Acto5"
+	agenda-group "Acto5"
+	when
+		cur: Curandero()
+		sac: Sacerdote()
+		visir: Visir()
+		ig: IglesiaCastillo()
+		cs: CasaMilagrosoMax()
+	then
+		insert(new Max(cs, cur ));
+		insert(new Valerie(cs, cur));
+		insert(new Obispo(ig, sac));
+		System.out.println("Acto5: Se crean los personajes");
+end
 
+rule "Comprar un milagro"
+	when
+		pd: PozoDesesperacion()
+		cs: CasaMilagrosoMax()
+		bb: BrigadaBrutal()
+		i: Inigo(ubicacionActual == pd)
+		w: Westley(ubicacionActual == pd, estadoSalud == EstadoSalud.MUERTO)
+		f: Fezzik(ubicacionActual == pd, profesion == bb)
+		m: Max(ubicacionActual == cs)
+	then
+		modify(i){
+			setUbicacionActual(cs);
+		}
+		modify(f){
+			setUbicacionActual(cs);
+		}
+		modify(w){
+			setUbicacionActual(cs);
+		}
+	    modify(m){
+	          setMotivacion(Motivacion.GANAR_DINERO);
+	    }
+		System.out.println("Llegada a la casa del milagrero");
+end
+
+rule "Está Medio Muerto"
+	when
+		cs: CasaMilagrosoMax()
+		i: Inigo(ubicacionActual == cs)
+		w: Westley(ubicacionActual == cs, estadoSalud == EstadoSalud.MUERTO)
+		f: Fezzik(ubicacionActual == cs)
+		m: Max(ubicacionActual == cs, motivacion == Motivacion.GANAR_DINERO)
+		v: Valerie(ubicacionActual == cs)
+	then
+		modify(w){
+			setEstadoSalud(EstadoSalud.MEDIO_MUERTO);
+		}
+		modify(w){
+	          setMotivacion(Motivacion.AMOR_VERDADERO);
+	    }
+		System.out.println("Se descubre que está medio muerto");
+end
+
+rule "Discursión de matrimorio"
+	when
+		cs: CasaMilagrosoMax()
+		i: Inigo(ubicacionActual == cs)
+		w: Westley(ubicacionActual == cs, estadoSalud == EstadoSalud.MEDIO_MUERTO)
+		f: Fezzik(ubicacionActual == cs)
+		m: Max(ubicacionActual == cs, motivacion == Motivacion.GANAR_DINERO)
+		v: Valerie(ubicacionActual == cs)
+	then
+		modify(m){
+	          setEstadoCivil(EstadoCivil.CASADO);
+	    }
+	    modify(v){
+	          setEstadoCivil(EstadoCivil.CASADO);
+	    }
+	    Relacion fm1 = new FamiliarDe(v);
+	    Relacion fm2 = new FamiliarDe(m);
+	    ArrayList<Relacion> listM = m.getRelacionesPersonaje();
+	    listM.add(fm1);
+	    modify(m){
+	      setRelacionesPersonaje(listM);
+	    }
+	     ArrayList<Relacion> listV = v.getRelacionesPersonaje();
+	    listV.add(fm2);
+	    modify(v){
+	      setRelacionesPersonaje(listV);
+	    }
+		System.out.println("Max y Valerie tienen una discursión");
+end
+
+rule "Causa noble"
+	when
+		cs: CasaMilagrosoMax()
+		i: Inigo(ubicacionActual == cs)
+		w: Westley(ubicacionActual == cs, estadoSalud == EstadoSalud.MEDIO_MUERTO)
+		f: Fezzik(ubicacionActual == cs)
+		m: Max(ubicacionActual == cs, motivacion == Motivacion.GANAR_DINERO)
+		v: Valerie(ubicacionActual == cs)
+		princ: Principe()
+	then
+		Relacion od1 = new OdiaA(princ);
+    	Relacion od2 = new OdiadoPor(m);
+    	
+    	ArrayList<Relacion> listaR1 = m.getRelacionesPersonaje();
+   		listaR1.add(od1);
+	    modify(m){
+	          setRelacionesPersonaje(listaR1);
+	    }
+    	ArrayList<Relacion> listaR2 = princ.getRelacionesPersonaje();
+   		listaR2.add(od2);
+	    modify(princ){
+	          setRelacionesPersonaje(listaR2);
+	    }
+	    modify(m){
+	          setMotivacion(Motivacion.HUMILLAR_PRINCIPE);
+	    }
+	    System.out.println("Max hace la píldora");
+end
+
+rule "Plan de asalto"
+	when
+		cs: CasaMilagrosoMax()
+		mc: MurallaCastillo()
+		i: Inigo(ubicacionActual == cs)
+		w: Westley(ubicacionActual == cs, estadoSalud == EstadoSalud.MEDIO_MUERTO)
+		f: Fezzik(ubicacionActual == cs)
+	then
+		modify(i){
+			setUbicacionActual(mc);
+		}
+		modify(f){
+			setUbicacionActual(mc);
+		}
+		modify(w){
+			setUbicacionActual(mc);
+		}
+		modify(w){
+			setEstadoSalud(EstadoSalud.DEBIL);
+		}
+	    System.out.println("La píldora surge efecto y trazan el plan para entrar al castillo");
+end
+
+rule "La Boda oficial primera parte"
+	when
+		ig: IglesiaCastillo()
+		cast: Castillo()
+		r: Rey(ubicacionActual == cast)
+		b: Buttercup(ubicacionActual == cast)
+		pr: Principe(ubicacionActual == cast)
+		cd: Conde(ubicacionActual == cast)
+		ob: Obispo(ubicacionActual == ig)
+	then
+		modify(r){
+			setUbicacionActual(ig);
+		}
+		modify(b){
+			setUbicacionActual(ig);
+		}
+		modify(pr){
+			setUbicacionActual(ig);
+		}
+		modify(cd){
+			setUbicacionActual(ig);
+		}
+	    System.out.println("Inicio de la boda");
+end
+
+rule "Inicio del plan"
+	when
+		pc: PuertaCastillo()
+		mc: MurallaCastillo()
+		y: Yalin(ubicacionActual == pc)
+		i: Inigo(ubicacionActual == mc)
+		w: Westley(ubicacionActual == mc)
+		f: Fezzik(ubicacionActual == mc)
+	then
+		modify(i){
+			setUbicacionActual(pc);
+		}
+		modify(f){
+			setUbicacionActual(pc);
+		}
+		modify(w){
+			setUbicacionActual(pc);
+		}
+	    System.out.println("Inicio del plan para entrar al castillo");
+end
+
+rule "La Boda oficial segunda parte"
+	when
+		ig: IglesiaCastillo()
+		pc : PasilloCastillo()
+		r: Rey(ubicacionActual == ig)
+		b: Buttercup(ubicacionActual == ig)
+		pr: Principe(ubicacionActual == ig)
+		cd: Conde(ubicacionActual == ig)
+		ob: Obispo(ubicacionActual == ig)
+	then
+		modify(cd){
+			setUbicacionActual(pc);
+		}
+	    System.out.println("el conde abandona la boda con algunos guardias");
+end
+
+rule "Entrada al Castillo"
+	when
+		pc: PuertaCastillo()
+		pas : PasilloCastillo()
+		y: Yalin(ubicacionActual == pc)
+		i: Inigo(ubicacionActual == pc)
+		w: Westley(ubicacionActual == pc)
+		f: Fezzik(ubicacionActual == pc)
+	then
+	    System.out.println("Los guardias se asustan y Yalin les da la llave para entrar");
+	    modify(i){
+			setUbicacionActual(pas);
+		}
+		modify(f){
+			setUbicacionActual(pas);
+		}
+		modify(w){
+			setUbicacionActual(pas);
+		}
+end
+
+rule "La Boda oficial fin"
+	when
+		ig: IglesiaCastillo()
+		pc : PasilloCastillo()
+		cas : Castillo()
+		r: Rey(ubicacionActual == ig)
+		b: Buttercup(ubicacionActual == ig)
+		pr: Principe(ubicacionActual == ig)
+		ob: Obispo(ubicacionActual == ig)
+	then
+		modify(pr){
+			setUbicacionActual(cas);
+		}
+		modify(r){
+			setUbicacionActual(cas);
+		}
+		modify(b){
+			setUbicacionActual(cas);
+		}
+		modify(b){
+			setEstadoCivil(EstadoCivil.CASADO);
+		}
+		modify(pr){
+			setEstadoCivil(EstadoCivil.CASADO);
+		}
+	    System.out.println("Termina la boda");
+end
+
+rule "Encuentro con el Conde"
+	when
+		pas : PasilloCastillo()
+		sc : SalonCastillo()
+		c: Conde(ubicacionActual == pas)
+		i: Inigo(ubicacionActual == pas)
+		w: Westley(ubicacionActual == pas)
+		f: Fezzik(ubicacionActual == pas)
+	then
+	    System.out.println("Iñigo mata a los guardias y el conde sale huyendo");
+	    modify(i){
+			setUbicacionActual(sc);
+		} 
+		modify(c){
+			setUbicacionActual(sc);
+		} 
+	    modify(w){
+			setUbicacionActual(null);
+		}   
+end
+
+rule "Charla con el Rey"
+	when
+		cas : Castillo()
+		ap: AposentosPrincesa()
+		r: Rey(ubicacionActual == cas)
+		b: Buttercup(ubicacionActual == cas, estadoCivil == EstadoCivil.CASADO)
+	then
+		System.out.println("Buttercup tiene aprecio por el Rey");
+		Relacion am1 = new AmigoDe(r);
+    	Relacion am2 = new AmigoDe(b);
+    	
+    	ArrayList<Relacion> listaR1 = b.getRelacionesPersonaje();
+   		listaR1.add(am1);
+	    modify(b){
+	          setRelacionesPersonaje(listaR1);
+	    }
+    	ArrayList<Relacion> listaR2 = r.getRelacionesPersonaje();
+   		listaR2.add(am2);
+	    modify(r){
+	          setRelacionesPersonaje(listaR2);
+	    }
+	    
+	    System.out.println("Buttercup le dice al rey que lo ha hecho por él y que se suicidadrá en sus aposentos");
+	    modify(r){
+			setUbicacionActual(null);
+		}
+		modify(b){
+			setUbicacionActual(ap);
+		}
+end
+
+rule "Enfrentamiento con el Conde"
+	when
+		sc : SalonCastillo()
+		c: Conde(ubicacionActual == sc)
+		i: Inigo(ubicacionActual == sc)
+	then
+	    System.out.println("El conde lanza un cuchillo que hiere a Iñigo");
+	    modify(i){
+			setEstadoSalud(EstadoSalud.HERIDO);
+		}   
+end
+
+rule "Reencuentro"
+	when
+		ap : AposentosPrincesa()
+		b: Buttercup(ubicacionActual == ap, motivacion == Motivacion.SUICIDARSE)
+		w: Westley(ubicacionActual == null, estadoSalud == EstadoSalud.DEBIL)
+	then
+	    modify(w){
+			setUbicacionActual(ap);
+		}
+		System.out.println("Buttercup intenta suicidarse pero Westley la detiene");
+		modify(b){
+			setMotivacion(Motivacion.ESTAR_CON_WESTLEY);
+		}
+		modify(w){
+			setMotivacion(Motivacion.ESTAR_CON_BUTTERCUP);
+		}
+		System.out.println("Buttercup se lanza a darle amor a Westley, pero este está débil");
+end
+
+rule "Prepárate a morir"
+	when
+		sc : SalonCastillo()
+		c: Conde(ubicacionActual == sc)
+		i: Inigo(ubicacionActual == sc, estadoSalud == EstadoSalud.HERIDO)
+	then
+	    System.out.println("Hola, me llamo Íñigo Montoya. Tú mataste a mi padre. Prepárate a morir");
+		modify(c){
+			setEstadoSalud(EstadoSalud.MUERTO);
+		}
+end
+
+rule "Vacío legal"
+	when
+		ap : AposentosPrincesa()
+		b: Buttercup(ubicacionActual == ap, motivacion == Motivacion.ESTAR_CON_WESTLEY)
+		w: Westley(ubicacionActual == ap, estadoSalud == EstadoSalud.DEBIL, motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
+		p: Principe(ubicacionActual == null)
+	then
+		System.out.println("Buttercup y Westley llegan a la conclusión que al no decir \"Si quiero\" ella no se ha casado");
+		modify(b){
+			setEstadoCivil(EstadoCivil.SOLTERO);
+		}
+		modify(p){
+			setEstadoCivil(EstadoCivil.SOLTERO);
+		}
+		System.out.println("El príncipe aparece");
+	    modify(p){
+			setUbicacionActual(ap);
+		}
+end
+
+rule "A sufrimiento"
+	when
+		ap : AposentosPrincesa()
+		b: Buttercup(ubicacionActual == ap, estadoCivil == EstadoCivil.SOLTERO)
+		w: Westley(ubicacionActual == ap)
+		p: Principe(ubicacionActual == ap, estadoCivil == EstadoCivil.SOLTERO)
+	then
+		System.out.println("Westley y el prícipe se van a enfrentar en un duelo \"a sufrimiento\" ");
+		
+		System.out.println("Westley le explica al príncipe cómo lo va a mutiliar");
+		modify(w){
+			setEstadoSalud(EstadoSalud.RECUPERADO);
+		}
+end
 
 //Consultas
 rule "Consulta Quien" 
