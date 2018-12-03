@@ -640,6 +640,97 @@ end
 
 /*** ACTO 2 El	príncipe	sigue	las	huellas	hasta	que	se	produce	el beso	de	amor	verdadero****/
 
+rule "Pirata y Buttercup huyen"
+	when 
+		camino : CaminoMontana()
+		v: Vizzini(estadoSalud == EstadoSalud.MUERTO)
+		b: Buttercup(ubicacionActual == camino)
+		p: Pirata(ubicacionActual == camino)
+		colina: Colina()
+	then 
+		modify(b){
+			setUbicacionActual(colina)
+		}
+		modify(p){
+			setUbicacionActual(colina)
+		}
+		Archivo.getUnicaInstancia().escribir("El pirata y Buttercup huyen hacia la colina");
+end
+
+rule "Principe rastrea a Buttercup"
+	when 
+		ac: AcantiladosLocura()
+		pirata: Pirata(ubicacionActual != ac) //soolo llega cuando ya no esten alli.
+		p: Principe(ubicacionActual == ac)
+		cm: CaminoMontana()
+	then 
+		modify(p){
+			setUbicacionActual(cm)
+		}
+		Archivo.getUnicaInstancia().escribir(p.getNombre() + " rastrea a su prometida hasta "+ cm.getNombre());
+end 
+
+rule "Buttercup descubre quien es su secuestrador"
+	when 
+		colina: Colina()
+		but: Buttercup(ubicacionActual == colina)
+		pir: Pirata(ubicacionActual == colina)
+	then 
+		Archivo.getUnicaInstancia().escribir(but.getNombre() +" descubre que ha sido secuestrada por " + pir.getNombre());
+	
+end
+
+rule "Principe alcanza a la princesa"
+//solo llegara cuando el pirata y la princesa esten alli.
+	when 
+		co: Colina()
+		cm: CaminoMontana()
+		but: Buttercup(ubicacionActual == co)
+		pir: Pirata(ubicacionActual == co)
+		prin: Principe(ubicacionActual == cm)
+	then 
+		modify(prin){
+			setUbicacionActual(co)
+		}
+		Archivo.getUnicaInstancia().escribir(prin.getNombre() + " se encuentra en " + co.getNombre());
+end
+
+rule "Como Desees en la colina"
+	when 
+		co: Colina()
+		we: Westley(estadoSalud == EstadoSalud.MUERTO)
+		bu: Buttercup(ubicacionActual == co)
+		pr: Principe (ubicacionActual == co)
+		pi: Pirata(ubicacionActual == co)
+		pa: PantanoFuego()
+	then 
+		Archivo.getUnicaInstancia().escribir(bu.getNombre() + " empuja a " + pi.getNombre()+ " y grita: COMO DESEES.\n");
+		modify(we){
+			setEstadoSalud(EstadoSalud.VIVO),
+			setUbicacionActual(pa);
+		}
+		Archivo.getUnicaInstancia().escribir(bu.getNombre() + " se tira por " + co.getNombre()+"\n");
+		modify(bu){
+			setUbicacionActual(pa);
+		}
+		Archivo.getUnicaInstancia().escribir(bu.getNombre() +" y " + we.getNombre() + " estan en " +pa.getNombre() + "\n");
+//no se que hacer con el principe ni el pirata xD
+		
+end
+
+rule "ubicacionPirata"
+	when
+		w: Westley(estadoSalud == EstadoSalud.VIVO)
+		p: Pirata(ubicacionActual != w.getUbicacionActual)
+	then 
+		modify(p){
+			setUbicacionActual(w.getUbicacionActual());
+		}
+end 
+
+
+
+
 /*** ACTO 3  Buttercup	y	Westley	llegan	al	pantano	hasta que	muere	el	rey****/
 
 /*** ACTO 4 	Presentación	de	la	Nueva	Reina	hasta la	muerte de	Westley ****/
