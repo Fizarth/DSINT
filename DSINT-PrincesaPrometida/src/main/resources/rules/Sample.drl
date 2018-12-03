@@ -871,7 +871,7 @@ rule "Plan de asalto"
 			setUbicacionActual(mc);
 		}
 		modify(w){
-			setEstadoSalud(EstadoSalud.VIVO);
+			setEstadoSalud(EstadoSalud.DEBIL);
 		}
 	    System.out.println("La píldora surge efecto y trazan el plan para entrar al castillo");
 end
@@ -903,7 +903,6 @@ end
 
 rule "Inicio del plan"
 	when
-		
 		pc: PuertaCastillo()
 		mc: MurallaCastillo()
 		y: Yalin(ubicacionActual == pc)
@@ -979,18 +978,144 @@ rule "La Boda oficial fin"
 		modify(b){
 			setUbicacionActual(cas);
 		}
+		modify(b){
+			setEstadoCivil(EstadoCivil.CASADO);
+		}
+		modify(pr){
+			setEstadoCivil(EstadoCivil.CASADO);
+		}
 	    System.out.println("Termina la boda");
 end
 
 rule "Encuentro con el Conde"
 	when
 		pas : PasilloCastillo()
+		sc : SalonCastillo()
 		c: Conde(ubicacionActual == pas)
 		i: Inigo(ubicacionActual == pas)
 		w: Westley(ubicacionActual == pas)
 		f: Fezzik(ubicacionActual == pas)
 	then
-	    System.out.println("Iñigo mata a los guardias y el conde sale huyendo");   
+	    System.out.println("Iñigo mata a los guardias y el conde sale huyendo");
+	    modify(i){
+			setUbicacionActual(sc);
+		} 
+		modify(c){
+			setUbicacionActual(sc);
+		} 
+	    modify(w){
+			setUbicacionActual(null);
+		}   
+end
+
+rule "Charla con el Rey"
+	when
+		cas : Castillo()
+		ap: AposentosPrincesa()
+		r: Rey(ubicacionActual == cas)
+		b: Buttercup(ubicacionActual == cas, estadoCivil == EstadoCivil.CASADO)
+	then
+		System.out.println("Buttercup tiene aprecio por el Rey");
+		Relacion am1 = new AmigoDe(r);
+    	Relacion am2 = new AmigoDe(b);
+    	
+    	ArrayList<Relacion> listaR1 = b.getRelacionesPersonaje();
+   		listaR1.add(am1);
+	    modify(b){
+	          setRelacionesPersonaje(listaR1);
+	    }
+    	ArrayList<Relacion> listaR2 = r.getRelacionesPersonaje();
+   		listaR2.add(am2);
+	    modify(r){
+	          setRelacionesPersonaje(listaR2);
+	    }
+	    
+	    System.out.println("Buttercup le dice al rey que lo ha hecho por él y que se suicidadrá en sus aposentos");
+	    modify(r){
+			setUbicacionActual(null);
+		}
+		modify(b){
+			setUbicacionActual(ap);
+		}
+end
+
+rule "Enfrentamiento con el Conde"
+	when
+		sc : SalonCastillo()
+		c: Conde(ubicacionActual == sc)
+		i: Inigo(ubicacionActual == sc)
+	then
+	    System.out.println("El conde lanza un cuchillo que hiere a Iñigo");
+	    modify(i){
+			setEstadoSalud(EstadoSalud.HERIDO);
+		}   
+end
+
+rule "Reencuentro"
+	when
+		ap : AposentosPrincesa()
+		b: Buttercup(ubicacionActual == ap, motivacion == Motivacion.SUICIDARSE)
+		w: Westley(ubicacionActual == null, estadoSalud == EstadoSalud.DEBIL)
+	then
+	    modify(w){
+			setUbicacionActual(ap);
+		}
+		System.out.println("Buttercup intenta suicidarse pero Westley la detiene");
+		modify(b){
+			setMotivacion(Motivacion.ESTAR_CON_WESTLEY);
+		}
+		modify(w){
+			setMotivacion(Motivacion.ESTAR_CON_BUTTERCUP);
+		}
+		System.out.println("Buttercup se lanza a darle amor a Westley, pero este está débil");
+end
+
+rule "Prepárate a morir"
+	when
+		sc : SalonCastillo()
+		c: Conde(ubicacionActual == sc)
+		i: Inigo(ubicacionActual == sc, estadoSalud == EstadoSalud.HERIDO)
+	then
+	    System.out.println("Hola, me llamo Íñigo Montoya. Tú mataste a mi padre. Prepárate a morir");
+		modify(c){
+			setEstadoSalud(EstadoSalud.MUERTO);
+		}
+end
+
+rule "Vacío legal"
+	when
+		ap : AposentosPrincesa()
+		b: Buttercup(ubicacionActual == ap, motivacion == Motivacion.ESTAR_CON_WESTLEY)
+		w: Westley(ubicacionActual == ap, estadoSalud == EstadoSalud.DEBIL, motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
+		p: Principe(ubicacionActual == null)
+	then
+		System.out.println("Buttercup y Westley llegan a la conclusión que al no decir \"Si quiero\" ella no se ha casado");
+		modify(b){
+			setEstadoCivil(EstadoCivil.SOLTERO);
+		}
+		modify(p){
+			setEstadoCivil(EstadoCivil.SOLTERO);
+		}
+		System.out.println("El príncipe aparece");
+	    modify(p){
+			setUbicacionActual(ap);
+		}
+		System.out.println("Buttercup se lanza a darle amor a Westley, pero este está débil");
+end
+
+rule "A sufrimiento"
+	when
+		ap : AposentosPrincesa()
+		b: Buttercup(ubicacionActual == ap, estadoCivil == EstadoCivil.SOLTERO)
+		w: Westley(ubicacionActual == ap)
+		p: Principe(ubicacionActual == ap, estadoCivil == EstadoCivil.SOLTERO)
+	then
+		System.out.println("Westley y el prícipe se van a enfrentar en un duelo \"a sufrimiento\" ");
+		
+		System.out.println("Westley le explica al príncipe cómo lo va a mutiliar");
+		modify(w){
+			setEstadoSalud(EstadoSalud.RECUPERADO);
+		}
 end
 
 //Consultas
