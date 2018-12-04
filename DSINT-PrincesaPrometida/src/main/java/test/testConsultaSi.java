@@ -16,13 +16,13 @@ public class testConsultaSi {
 
 		KieSession kSession = kContainer.newKieSession("ksession-rules");
 		
-		ConsultaQuien conq = new ConsultaQuien("Fezzik", Acto.Acto1);
-		ConsultaSi consulta = new ConsultaSi("Fezzik","mujer",conq);
+		ConsultaQuien conq = new ConsultaQuien("Príncipe Humperdink", Acto.Acto1);
+		//ConsultaSi consulta = new ConsultaSi("Fezzik","mujer",conq);
 		
 		String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\input1.txt";
 		Archivo.setPath(filePath + ".output.txt");
 		
-		kSession.insert(consulta);
+		kSession.insert(conq);
 
 		kSession.fireAllRules();
 		kSession.getAgenda().getAgendaGroup("Acto0").setFocus();		
