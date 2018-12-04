@@ -88,21 +88,7 @@ rule "Creación Personajes Acto 0"
 end
 
 
-rule "Consulta si Sexo"
- when 
-  consulta : ConsultaSi()
-  eval (Sexo.isValor(consulta.getValorAtributo()))
-  p: Personaje(nombre == consulta.getNombre())
- then
-  modify(p){
-   setSexo(Sexo.get(consulta.getValorAtributo()));
-  }
- 
- insert (consulta.getConsulta()); 
- 
-  System.out.println("SE PUEDE HACER ");
-  System.out.println( p.getNombre() +" es "+ p.getSexo());
-end
+
 
 
 
@@ -1198,8 +1184,7 @@ rule "Consulta Que"
 		//System.out.println(Archivo.getUnicaInstancia().getpath());
 end
 
-<<<<<<< HEAD
-=======
+
 rule "Consulta si Sexo"
  	when 
   		consulta : ConsultaSi()
@@ -1213,6 +1198,5 @@ rule "Consulta si Sexo"
   		System.out.println("SE PUEDE HACER ");
   		System.out.println( p.getNombre() +" es "+ p.getSexo());
 end
->>>>>>> branch 'master' of https://github.com/Fizarth/DSINT
 
 
