@@ -1202,7 +1202,7 @@ end
 rule "Consulta si Lugar" 
 	when 
 		consulta: ConsultaSi()
-		lugar: Lugar(nombre == consulta.getAtributo())
+		lugar: Lugar(nombre == consulta.getValorAtributo())
 		p: Personaje(nombre == consulta.getNombre())
 	then 
 		modify(p){
