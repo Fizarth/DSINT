@@ -16,8 +16,8 @@ public class testConsultaSi {
 
 		KieSession kSession = kContainer.newKieSession("ksession-rules");
 		
-		ConsultaQuien conq = new ConsultaQuien("Príncipe Humperdink", Acto.Acto1);
-		//ConsultaSi consulta = new ConsultaSi("Fezzik","mujer",conq);
+		ConsultaQuien conq = new ConsultaQuien("Buttercup", Acto.Acto1);
+		ConsultaSi consulta = new ConsultaSi("Buttercup","Castillo",conq);
 		
 		String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\input1.txt";
 		Archivo.setPath(filePath + ".output.txt");
