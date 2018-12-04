@@ -794,7 +794,7 @@ rule "Está Medio Muerto"
 		System.out.println("Se descubre que está medio muerto");
 end
 
-rule "Discursión de matrimorio"
+rule "Discusión de matrimorio"
 	when
 		cs: CasaMilagrosoMax()
 		i: Inigo(ubicacionActual == cs)
@@ -821,7 +821,7 @@ rule "Discursión de matrimorio"
 	    modify(v){
 	      setRelacionesPersonaje(listV);
 	    }
-		System.out.println("Max y Valerie tienen una discursión");
+		System.out.println("Max y Valerie tienen una discusión");
 end
 
 rule "Causa noble"
@@ -834,6 +834,7 @@ rule "Causa noble"
 		v: Valerie(ubicacionActual == cs)
 		princ: Principe()
 	then
+		System.out.println("Si Westley revive el príncipe sufrirá humillaciones a mansalba");
 		Relacion od1 = new OdiaA(princ);
     	Relacion od2 = new OdiadoPor(m);
     	
