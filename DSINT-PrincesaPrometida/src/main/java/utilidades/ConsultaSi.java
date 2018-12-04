@@ -48,6 +48,11 @@ public class ConsultaSi implements Consulta {
 		public String getTipo() {
 			return "ConsultaSi";
 		}
+
+		@Override
+		public Acto getActo() {
+			return consulta.getActo();
+		}
 		
 		
 		

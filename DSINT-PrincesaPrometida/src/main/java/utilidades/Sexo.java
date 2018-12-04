@@ -1,17 +1,44 @@
 package utilidades;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum Sexo {
 	HOMBRE, MUJER;
 	
 	public String getString() {
 		switch (this) {
 		case HOMBRE:
-			return "un hombre";
+			return "hombre";
 		case MUJER:
-			return "una mujer";
+			return "mujer";
 		default:
 			return "no lo sé";
 		}
 
 	}
+	
+	private static final Map<String, Sexo> lookup = new HashMap<>();
+	
+	public static Sexo get(String s) {
+		return lookup.get(s);
+	}
+	
+
+	static {
+		for (Sexo sexo : Sexo.values()) {
+			lookup.put(sexo.getString(), sexo);
+		}
+	}
+
+
+	public static boolean isValor(String s) {
+		if (s.equals("hombre")) return true;
+		if (s.equals("mujer")) return true;		
+		return false;
+	}
+
+
+	
+	
 }

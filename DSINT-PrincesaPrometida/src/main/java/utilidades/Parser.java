@@ -38,7 +38,10 @@ public class Parser {
 				
 			else if (isConsultaSi(line)) consultas.add(consultaSiFromLine(line));
 			
-			else System.out.println("Linea: " + line + " no aceptada");
+			else {
+				System.out.println("Linea: " + line + " no aceptada");
+				Archivo.getUnicaInstancia().escribir("No tentiendo la pregunta acerca de la película\n");
+			}
 			
 		}
 		
