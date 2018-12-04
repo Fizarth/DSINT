@@ -144,9 +144,12 @@ public class Parser {
 		
 		
 		// obtener valor atributo
-		valorAtributo = palabras[i+1];
-		// eliminar ","
-		valorAtributo = valorAtributo.substring(0, valorAtributo.length()-1);
+		
+		while (!palabras[i++].contains(","))
+			valorAtributo += palabras[i] + " ";
+			
+		// eliminar "," && " "
+		valorAtributo = valorAtributo.substring(0, valorAtributo.length()-2);
 			
 	
 		

@@ -11,6 +11,28 @@ import profesiones.*;
 
 
 
+
+
+rule "Consulta si Lugar" 
+	when 
+		consulta: ConsultaSi()
+		lugar: Lugar(nombre == consulta.getValorAtributo())
+		p: Personaje(nombre == consulta.getNombre())
+	then 
+		modify(p){
+			setUbicacionActual(lugar)
+		}
+		insert (consulta.getConsulta());
+		
+		System.out.println("ENTRO EN CONSULTA SI LUGAR Y MODIFICO " + p.getNombre() + " en " + p.getUbicacionActual());
+end 
+
+
+
+
+
+
+
 //Creación de la base
 rule "Creación Profesiones"
 	then 
@@ -1199,16 +1221,4 @@ rule "Consulta si Sexo"
   		System.out.println( p.getNombre() +" es "+ p.getSexo());
 end
 
-rule "Consulta si Lugar" 
-	when 
-		consulta: ConsultaSi()
-		lugar: Lugar(nombre == consulta.getValorAtributo())
-		p: Personaje(nombre == consulta.getNombre())
-	then 
-		modify(p){
-			setUbicacionActual(lugar)
-		}
-		insert (consulta.getConsulta());
-		
-		System.out.println("ENTRO EN CONSULTA SI LUGAR Y MODIFICO " + p.getNombre() + " en " + p.getUbicacionActual());
-end 
+

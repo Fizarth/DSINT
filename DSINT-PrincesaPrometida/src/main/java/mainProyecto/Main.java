@@ -38,8 +38,10 @@ public class Main {
 			// Init Session
 			kSession.fireAllRules();
 			
-			ejecutarHastaActo(consulta.getActo());
+			
+			
 			kSession.insert(consulta);
+			ejecutarHastaActo(consulta.getActo());
 			
 		
 			System.out.println(Archivo.getUnicaInstancia().getInformacion());
