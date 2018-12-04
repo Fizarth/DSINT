@@ -1209,4 +1209,6 @@ rule "Consulta si Lugar"
 			setUbicacionActual(lugar)
 		}
 		insert (consulta.getConsulta());
+		
+		System.out.println("ENTRO EN CONSULTA SI LUGAR Y MODIFICO " + p.getNombre() + " en " + p.getUbicacionActual());
 end 
