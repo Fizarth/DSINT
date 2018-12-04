@@ -713,7 +713,7 @@ rule "Como Desees en la colina"
 //no se que hacer con el principe ni el pirata xD
 		
 end
-
+/*
 rule "ubicacionPirata"
 	when
 		w: Westley(estadoSalud == EstadoSalud.VIVO)
@@ -723,7 +723,7 @@ rule "ubicacionPirata"
 			setUbicacionActual(w.getUbicacionActual());
 		}
 end 
-
+*/
 
 
 
