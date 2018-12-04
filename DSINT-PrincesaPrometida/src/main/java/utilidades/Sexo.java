@@ -33,9 +33,7 @@ public enum Sexo {
 
 
 	public static boolean isValor(String s) {
-		if (s.equals("hombre")) return true;
-		if (s.equals("mujer")) return true;		
-		return false;
+		return s.equals("hombre") || s.equals("mujer");
 	}
 
 

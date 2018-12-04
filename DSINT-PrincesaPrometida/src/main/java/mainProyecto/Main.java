@@ -10,9 +10,6 @@ import org.kie.api.runtime.KieSession;
 import utilidades.Acto;
 import utilidades.Archivo;
 import utilidades.Consulta;
-import utilidades.ConsultaQue;
-import utilidades.ConsultaQuien;
-import utilidades.ConsultaSi;
 import utilidades.Parser;
 
 public class Main {
@@ -42,8 +39,10 @@ public class Main {
 			// Init Session
 			kSession.fireAllRules();
 			
-			ejecutarHastaActo(consulta.getActo());
+			
+			
 			kSession.insert(consulta);
+			ejecutarHastaActo(consulta.getActo());
 			
 		
 			System.out.println(Archivo.getUnicaInstancia().getInformacion());

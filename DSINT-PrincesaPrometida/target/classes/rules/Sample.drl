@@ -11,6 +11,28 @@ import profesiones.*;
 
 
 
+
+
+rule "Consulta si Lugar" 
+	when 
+		consulta: ConsultaSi()
+		lugar: Lugar(nombre == consulta.getValorAtributo())
+		p: Personaje(nombre == consulta.getNombre())
+	then 
+		modify(p){
+			setUbicacionActual(lugar)
+		}
+		insert (consulta.getConsulta());
+		
+		System.out.println("ENTRO EN CONSULTA SI LUGAR Y MODIFICO " + p.getNombre() + " en " + p.getUbicacionActual());
+end 
+
+
+
+
+
+
+
 //Creación de la base
 rule "Creación Profesiones"
 	then 
@@ -69,7 +91,7 @@ rule "Creación Animales"
 end
 
 rule "Creación Personajes Acto 0"
-	agenda-group "Acto0"
+	//agenda-group "Acto0"
 	when 
 		granja: Granja()
 		granjero: Granjero()
@@ -86,6 +108,12 @@ rule "Creación Personajes Acto 0"
 		
 		System.out.println("Acto0: Se crean los personajes");
 end
+
+
+
+
+
+
 
 //Inicio Acto0
 rule "Nieto es"
@@ -161,6 +189,7 @@ rule "Relacion Conocer"
     when
         p1 : Personaje(ubicacionActual != null)
         p2 : Personaje(nombre != p1.getNombre(), ubicacionActual == p1.getUbicacionActual() )
+        eval (Relacion.notExistsRelacion(p1,p2))
     then
 
         Relacion r = new ConoceA(p2);
@@ -359,7 +388,7 @@ rule "Buttercup prometida del príncipe"
   when
     pr: Principe(motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
     bt: Buttercup( )
-    c: Lugar(nombre == "Castillo");
+    c: Castillo();
   then
     Relacion p1 = new PrometidaDe(pr);
     Relacion p2 = new PrometidoDe(bt);
@@ -1177,21 +1206,19 @@ rule "Consulta Que"
 		//System.out.println(Archivo.getUnicaInstancia().getpath());
 end
 
-rule "Consulta si Sexo"
- when 
-  consulta : ConsultaSi()
-  eval (Sexo.isValor(consulta.getValorAtributo()))
-  p: Personaje(nombre == consulta.getNombre())
- then
-  modify(p){
-   setSexo(Sexo.get(consulta.getValorAtributo()));
-  }
- 
- insert (consulta.getConsulta()); 
- 
-  System.out.println("SE PUEDE HACER ");
-  System.out.println( p.getNombre() +" es "+ p.getSexo());
-end
 
+rule "Consulta si Sexo"
+ 	when 
+  		consulta : ConsultaSi()
+  		eval (Sexo.isValor(consulta.getValorAtributo()))
+ 		p: Personaje(nombre == consulta.getNombre())
+ 	then
+  		modify(p){
+   			setSexo(Sexo.get(consulta.getValorAtributo()));
+  		}
+ 		insert (consulta.getConsulta()); 
+  		System.out.println("SE PUEDE HACER ");
+  		System.out.println( p.getNombre() +" es "+ p.getSexo());
+end
 
 
