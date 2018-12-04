@@ -535,7 +535,7 @@ rule "Historia Domingo Montoya"
 		ac: AcantiladosLocura()
 		p: Pirata( ubicacionActual == ac )
 		i: Inigo( ubicacionActual == ac )
-		pi: PadreInigo()
+		pi: PadreInigo(estadoSalud == EstadoSalud.MUERTO)
 	then
 		Relacion fm1 = new FamiliarDe(pi);
 	    Relacion fm2 = new FamiliarDe(i);
@@ -550,10 +550,6 @@ rule "Historia Domingo Montoya"
 	    modify(pi){
 	      setRelacionesPersonaje(listaR2);
 	    }
-	    
-		modify(pi){
-			setEstadoSalud(EstadoSalud.MUERTO);
-		}
 		modify(i){
 			setMotivacion(Motivacion.VENGAR_PADRE);
 		}
@@ -1007,9 +1003,13 @@ rule "Encuentro con el Conde"
 		modify(c){
 			setUbicacionActual(sc);
 		} 
+		System.out.println("Westley desaparece");
 	    modify(w){
 			setUbicacionActual(null);
 		}   
+		modify(f){
+			setUbicacionActual(null);
+		} 
 end
 
 rule "Charla con el Rey"
@@ -1113,11 +1113,38 @@ rule "A sufrimiento"
 		w: Westley(ubicacionActual == ap)
 		p: Principe(ubicacionActual == ap, estadoCivil == EstadoCivil.SOLTERO)
 	then
+		
 		System.out.println("Westley y el prícipe se van a enfrentar en un duelo \"a sufrimiento\" ");
 		
 		System.out.println("Westley le explica al príncipe cómo lo va a mutiliar");
 		modify(w){
 			setEstadoSalud(EstadoSalud.RECUPERADO);
+		}
+		System.out.println("El príncipe se asusta y lo atan a la silla");
+end
+
+rule "Huida"
+	when
+		ap : AposentosPrincesa()
+		b: Buttercup(ubicacionActual == ap)
+		w: Westley(ubicacionActual == ap)
+		p: Principe(ubicacionActual == ap)
+		sc : SalonCastillo()
+		i: Inigo(ubicacionActual == sc, estadoSalud == EstadoSalud.HERIDO)
+		f: Fezzik(ubicacionActual == null)
+		pC: PatioCastillo()
+	then
+		System.out.println("Íñigo aparece");
+		modify(i){
+			setUbicacionActual(ap);
+		}
+		System.out.println("Westley realmente sigue débil");
+		modify(w){
+			setEstadoSalud(EstadoSalud.DEBIL);
+		}
+		System.out.println("Fezzik aparece con cuatro caballos");
+		modify(f){
+			setUbicacionActual(pC);
 		}
 end
 
