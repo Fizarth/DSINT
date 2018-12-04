@@ -40,34 +40,12 @@ public class Main {
 		for (Consulta consulta : consultas) {
 			// Init Session
 			kSession.fireAllRules();
-			switch (consulta.getTipo()) {
-			case "ConsultaQue":
-				ConsultaQue consultaQue = (ConsultaQue) consulta;
-				ejecutarHastaActo(consultaQue.getActo());
-				kSession.insert(consultaQue);
-				//Archivo.getUnicaInstancia().resetearInf();
-
-				break;
-			case "ConsultaQuien":
-				ConsultaQuien consultaQuien = (ConsultaQuien) consulta;
-				ejecutarHastaActo(consultaQuien.getActo());
-				kSession.insert(consultaQuien);
-				
-
-				break;
-				
-			case "ConsultaSi":
-				System.out.println("Consulta Si");
-				ConsultaSi consultaSi = (ConsultaSi) consulta;
-				
-				
-				break;
-				
-			default:
-				break;
-			}
-			System.out.println(Archivo.getUnicaInstancia().getInformacion());
 			
+			ejecutarHastaActo(consulta.getActo());
+			kSession.insert(consulta);
+			
+		
+			System.out.println(Archivo.getUnicaInstancia().getInformacion());
 			
 			
 			kSession.fireAllRules();

@@ -1159,7 +1159,8 @@ rule "Consulta si Sexo"
   modify(p){
    setSexo(Sexo.get(consulta.getValorAtributo()));
   }
-  
+ 
+ insert (consulta.getConsulta()); 
  
   System.out.println("SE PUEDE HACER ");
   System.out.println( p.getNombre() +" es "+ p.getSexo());
