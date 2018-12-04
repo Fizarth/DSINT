@@ -10,9 +10,6 @@ import org.kie.api.runtime.KieSession;
 import utilidades.Acto;
 import utilidades.Archivo;
 import utilidades.Consulta;
-import utilidades.ConsultaQue;
-import utilidades.ConsultaQuien;
-import utilidades.ConsultaSi;
 import utilidades.Parser;
 
 public class Main {
