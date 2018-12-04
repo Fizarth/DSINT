@@ -1199,4 +1199,14 @@ rule "Consulta si Sexo"
   		System.out.println( p.getNombre() +" es "+ p.getSexo());
 end
 
-
+rule "Consulta si Lugar" 
+	when 
+		consulta: ConsultaSi()
+		lugar: Lugar(nombre == consulta.getAtributo())
+		p: Personaje(nombre == consulta.getNombre())
+	then 
+		modify(p){
+			setUbicacionActual(lugar)
+		}
+		insert (consulta.getConsulta());
+end 
