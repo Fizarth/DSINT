@@ -1,20 +1,26 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /rules/
 /lugares/
 /personajes/
 =======
 /META-INF/
+=======
+>>>>>>> branch 'master' of https://github.com/Fizarth/DSINT.git
 /animales/
 /com/
-/dtables/
-/logback-test.xml
 /lugares/
 /mainProyecto/
 /personajes/
-/process/
 /profesiones/
 /relaciones/
-/rules/
 /test/
 /utilidades/
+<<<<<<< HEAD
+>>>>>>> branch 'master' of https://github.com/Fizarth/DSINT.git
+=======
+/META-INF/
+/dtables/
+/process/
+/rules/
 >>>>>>> branch 'master' of https://github.com/Fizarth/DSINT.git
