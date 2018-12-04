@@ -164,6 +164,7 @@ rule "Relacion Conocer"
     when
         p1 : Personaje(ubicacionActual != null)
         p2 : Personaje(nombre != p1.getNombre(), ubicacionActual == p1.getUbicacionActual() )
+        eval (Relacion.notExistsRelacion(p1,p2))
     then
 
         Relacion r = new ConoceA(p2);
@@ -362,7 +363,7 @@ rule "Buttercup prometida del príncipe"
   when
     pr: Principe(motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
     bt: Buttercup( )
-    c: Lugar(nombre == "Castillo");
+    c: Castillo();
   then
     Relacion p1 = new PrometidaDe(pr);
     Relacion p2 = new PrometidoDe(bt);
