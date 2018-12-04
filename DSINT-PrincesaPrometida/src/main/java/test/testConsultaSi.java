@@ -19,14 +19,19 @@ public class testConsultaSi {
 		ConsultaQuien conq = new ConsultaQuien("Buttercup", Acto.Acto1);
 		ConsultaSi consulta = new ConsultaSi("Buttercup","hombre",conq);
 		
+		
 		kSession.insert(consulta);
 
-
 		kSession.fireAllRules();
-		//kSession.getAgenda().getAgendaGroup("Acto0").setFocus();
-		//kSession.fireAllRules();
+		//kSession.getAgenda().getAgendaGroup("Acto0").setFocus();		
+	//	kSession.fireAllRules();
 		//kSession.getAgenda().getAgendaGroup("Acto1").setFocus();
-		//kSession.fireAllRules();
+		
+		
+		
+		kSession.fireAllRules();
+		
+		
 		
 	}
 }	
