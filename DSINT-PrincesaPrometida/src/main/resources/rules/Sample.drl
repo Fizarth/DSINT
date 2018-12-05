@@ -10,15 +10,6 @@ import java.util.*;
 import profesiones.*;
 
 
-
-
-
-
-
-
-
-
-
 //Creación de la base
 rule "Creación Profesiones"
 	then 
@@ -73,7 +64,7 @@ rule "Creación Animales"
 		insert(new Perro(c));
 		insert(new RoedorAspectoGigantesco(pantano));
 		insert(new Vaca(granja));
-		//System.out.println("Se han añadido los animales");
+		System.out.println("Se han añadido los animales");
 end
 
 rule "Creación Personajes Acto 0"
@@ -95,18 +86,12 @@ rule "Creación Personajes Acto 0"
 		System.out.println("Acto0: Se crean los personajes");
 end
 
-
-
-
-
-
-
 //Inicio Acto0
 rule "Nieto es"
   when
-    nt: Personaje(nombre == "El Nieto")
-    ab: Personaje(nombre == "Abuelo")
-    md: Personaje(nombre == "La Madre") 
+    nt: Nieto()
+    ab: Abuelo()
+    md:Madre() 
   then
     Relacion fm1 = new FamiliarDe(ab);
     Relacion fm2 = new FamiliarDe(md);
@@ -122,9 +107,9 @@ end
 
 rule "Abuelo es"
   when
-    nt: Personaje(nombre == "El Nieto")
-    ab: Personaje(nombre == "Abuelo")
-    md: Personaje(nombre == "La Madre") 
+    nt: Nieto()
+    ab: Abuelo()
+    md:Madre() 
   then
     Relacion fm1 = new FamiliarDe(nt);
     Relacion fm2 = new FamiliarDe(md);
@@ -141,9 +126,9 @@ end
 
 rule "Madre es"
   when
-    nt: Personaje(nombre == "El Nieto")
-    ab: Personaje(nombre == "Abuelo")
-    md: Personaje(nombre == "La Madre") 
+    nt: Nieto()
+    ab: Abuelo()
+    md:Madre()
   then
     Relacion fm1 = new FamiliarDe(ab);
     Relacion fm2 = new FamiliarDe(nt);
@@ -903,10 +888,11 @@ rule "Comprar un milagro"
 		pd: PozoDesesperacion()
 		cs: CasaMilagrosoMax()
 		bb: BrigadaBrutal()
+		cur: Curandero()
 		i: Inigo(ubicacionActual == pd)
 		w: Westley(ubicacionActual == pd, estadoSalud == EstadoSalud.MUERTO)
 		f: Fezzik(ubicacionActual == pd, profesion == bb)
-		m: Max(ubicacionActual == cs)
+		m: Max(ubicacionActual == cs, profesion == cur, estadoSalud == EstadoSalud.VIVO)
 	then
 		modify(i){
 			setUbicacionActual(cs);
