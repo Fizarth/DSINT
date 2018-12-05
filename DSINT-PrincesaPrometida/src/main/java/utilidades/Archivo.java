@@ -27,7 +27,7 @@ public class Archivo {
 	}
 	
 	public void escribir(String s) throws IOException {
-		 this.bfwriter.write(s);
+		 this.bfwriter.write(this.informacion);
 	}
 	
 	public void cerrarArchivo() throws IOException {
@@ -39,7 +39,7 @@ public class Archivo {
 	}
 	
 	public void addInf(String s) {
-		this.informacion += s ;		
+		this.informacion += s + "\n" ;		
 	}
 	
 	public void escribirInf() throws IOException {

@@ -665,7 +665,7 @@ rule "Pirata y Buttercup huyen"
 		modify(p){
 			setUbicacionActual(colina)
 		}
-		Archivo.getUnicaInstancia().escribir("El pirata y Buttercup huyen hacia la colina");
+		Archivo.getUnicaInstancia().addInf("El pirata y Buttercup huyen hacia la colina");
 end
 
 rule "Principe rastrea a Buttercup"
@@ -674,11 +674,12 @@ rule "Principe rastrea a Buttercup"
 		pirata: Pirata(ubicacionActual != ac) //soolo llega cuando ya no esten alli.
 		p: Principe(ubicacionActual == ac)
 		cm: CaminoMontana()
+		conde: Conde(ubicacionActual == ac)
 	then 
 		modify(p){
 			setUbicacionActual(cm)
 		}
-		Archivo.getUnicaInstancia().escribir(p.getNombre() + " rastrea a su prometida hasta "+ cm.getNombre());
+		Archivo.getUnicaInstancia().addInf(p.getNombre() + " rastrea a su prometida hasta "+ cm.getNombre());
 end 
 
 rule "Buttercup descubre quien es su secuestrador"
@@ -687,7 +688,7 @@ rule "Buttercup descubre quien es su secuestrador"
 		but: Buttercup(ubicacionActual == colina)
 		pir: Pirata(ubicacionActual == colina)
 	then 
-		Archivo.getUnicaInstancia().escribir(but.getNombre() +" descubre que ha sido secuestrada por " + pir.getNombre());
+		Archivo.getUnicaInstancia().addInf(but.getNombre() +" descubre que ha sido secuestrada por " + pir.getNombre());
 	
 end
 
@@ -699,11 +700,15 @@ rule "Principe alcanza a la princesa"
 		but: Buttercup(ubicacionActual == co)
 		pir: Pirata(ubicacionActual == co)
 		prin: Principe(ubicacionActual == cm)
+		conde: Conde(ubicacionActual == cm)
 	then 
 		modify(prin){
 			setUbicacionActual(co)
 		}
-		Archivo.getUnicaInstancia().escribir(prin.getNombre() + " se encuentra en " + co.getNombre());
+		modify(conde){
+			setUbicacionActual(co)
+		}
+		Archivo.getUnicaInstancia().addInf(prin.getNombre() + " se encuentra en " + co.getNombre());
 end
 
 rule "Como Desees en la colina"
@@ -713,18 +718,15 @@ rule "Como Desees en la colina"
 		bu: Buttercup(ubicacionActual == co)
 		pr: Principe (ubicacionActual == co)
 		pi: Pirata(ubicacionActual == co)
-		pa: PantanoFuego()
+		
 	then 
-		Archivo.getUnicaInstancia().escribir(bu.getNombre() + " empuja a " + pi.getNombre()+ " y grita: COMO DESEES.\n");
+		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " empuja a " + pi.getNombre()+ " y grita: COMO DESEES.");
 		modify(we){
-			setEstadoSalud(EstadoSalud.VIVO),
-			setUbicacionActual(pa);
+			setEstadoSalud(EstadoSalud.VIVO)
 		}
-		Archivo.getUnicaInstancia().escribir(bu.getNombre() + " se tira por " + co.getNombre()+"\n");
-		modify(bu){
-			setUbicacionActual(pa);
-		}
-		Archivo.getUnicaInstancia().escribir(bu.getNombre() +" y " + we.getNombre() + " estan en " +pa.getNombre() + "\n");
+		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " se tira por " + co.getNombre()+"\n");
+		Archivo.getUnicaInstancia().addInf("Se produce el beso de amor verdadero");
+		
 //no se que hacer con el principe ni el pirata xD
 		
 end
@@ -744,7 +746,141 @@ end
 
 /*** ACTO 3  Buttercup	y	Westley	llegan	al	pantano	hasta que	muere	el	rey****/
 
+rule "Adentrar en el pantano"
+	when 
+		co: Colina()
+		bu: Buttercup(ubicacionActual == co)
+		pa: PantanoFuego()
+		we: Westley(estadoSalud == EstadoSalud.VIVO,ubicacionActual == co)
+		pr: Principe(ubicacionActual == co)
+	then
+		modify(bu){
+			setUbicacionActual(pa);
+		}
+		modify(we){
+			setUbicacionActual(pa);
+		}
+		Archivo.getUnicaInstancia().addInf(bu.getNombre() +" y " + we.getNombre() + " se adentran en " +pa.getNombre());
+end 
+
+rule "Primer Horror"
+	when
+		pa: PantanoFuego()
+		we: Westley(ubicacionActual == pa)
+		bu: Buttercup(ubicacionActual == pa)
+	then
+		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " +bu.getNombre() +" superan las erupciones de fuego, ya que son precedidas de un sonido de burbuja");
+end 
+
+rule "Leyenda del capitan Robert"
+	when
+		pa: PantanoFuego()
+		we: Westley(ubicacionActual == pa)
+		bu: Buttercup(ubicacionActual == pa)
+		es: Espadachin()
+	then 
+		Archivo.getUnicaInstancia().addInf(we.getNombre() + " cuenta a " + bu.getNombre() + " como el capitan Robert le hace ayudante");
+		modify(we)}{
+			setProfesion(es);
+		}
+end 	
+
+rule "Segundo Horror" 
+	when 
+		pa: PantanoFuego()
+		we: Westley(ubicacionActual == pa)
+		bu: Buttercup(ubicacionActual == pa)
+	then 
+		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " +bu.getNombre() + "superan el segundo horror: las arenas resplandecientes, ya que saben que aspecto tienen");
+end
+
+rule "Tercer Horror"
+	when 
+		pa: PantanoFuego()
+		we: Westley(ubicacionActual == pa)
+		bu: Buttercup(ubicacionActual == pa)
+		rag: Animal(ubicacionActual == pa)		
+	then 
+		modify(rag){
+			setEstadoSalud(EstadoSalud.MUERTO);
+		}
+		Archivo.getUnicaInstancia().addInf(we.getNombre() + " mata a " + rag.getNombre());
+		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " + bu.getNombre() + " superan el tercer horror");
+end 
+
+rule "Principe va a la salida del pantano"
+	when 
+		pa: PantanoFuego()
+		co: Colina()
+		we: Westley(ubicacionActual == pa)
+		bu: Buttercup(ubicacionActual == pa)
+		pr: Principe (ubicacionActual == co)
+		bo: Bosque()
+		conde: Conde(ubicacionActual == co)
+	then 
+		modify(pr){
+			setUbicacionActual(bo);
+		}
+		modify(conde){
+			setUbicacionActual(bo);
+		}
+		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " va a " + pr.getUbicacionActual());
+end 
+
+rule "Salen del pantano de fuego"
+	when 
+		pa: PantanoFuego()
+		bo: Bosque()
+		we: Westley(ubicacionActual == pa)
+		bu: Buttercup(ubicacionActual == pa)
+		rag: Animal(ubicacionActual == pa, estadoSalud == EstadoSalud.MUERTO)
+		pr: Principe(ubicacionActual == bo)
+	then 
+		modify(bu){
+			setUbicacionActual(bo);
+		}
+		modify(we){
+			setUbicacionActual(bo);
+		}
+		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " + bu.getNombre() + " salen de " + pa.getNombre() + " encontrandose con " + pr.getNombre());
+end 
+
+rule "promesa de vida"
+	when 
+		bo: Bosque()
+		ca: Castillo()
+		we: Westley(ubicacionActual == bo)
+		bu: Buttercup(ubicacionActual == bo)
+		pr: Principe(ubicacionActual == bo)		
+		conde: Conde(ubicacionActual == bo)
+		po: PozoDesesperacion()
+	then 
+		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " se entrega, con la condicion de que " + we.getNombre() + " seguira " + we.getEstadoSalud());
+		modify(we){
+			setUbicacionActual(po);
+		} 
+		modify(bu){
+			setUbicacionActual(ca);
+		}
+		modify(pr){
+			setUbicacionActual(ca);
+		}
+		modify(conde){
+			setUbicacionActual(ca);
+		}
+		
+		Archivo.getUnicaInstancia().addInf(we.getNombre() + " descubre que " + conde.getNombre() + " tiene 6 dedos");
+		Archivo.getUnicaInstancia().addInf(conde.getNombre() + "," + bu.getNombre() + " y " + pr.getNombre() + " van al  Castillo");
+end 
+
+
 /*** ACTO 4 	Presentación	de	la	Nueva	Reina	hasta la	muerte de	Westley ****/
+
+rule "sueño Buttercup"
+	when
+	then
+end 
+
 
 /*** ACTO 5 || ACTO FINAL  Llegan	a	casa	del	Milagroso	Max	hasta	el	final. ****/
 rule "Creación de Personajes Acto5"
