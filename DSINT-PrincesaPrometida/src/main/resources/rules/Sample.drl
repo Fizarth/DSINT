@@ -13,20 +13,6 @@ import profesiones.*;
 
 
 
-rule "Consulta si Lugar" 
-	when 
-		consulta: ConsultaSi()
-		lugar: Lugar(nombre == consulta.getValorAtributo())
-		p: Personaje(nombre == consulta.getNombre())
-	then 
-		modify(p){
-			setUbicacionActual(lugar)
-		}
-		insert (consulta.getConsulta());
-		
-		System.out.println("ENTRO EN CONSULTA SI LUGAR Y MODIFICO " + p.getNombre() + " en " + p.getUbicacionActual());
-end 
-
 
 
 
@@ -91,7 +77,7 @@ rule "Creación Animales"
 end
 
 rule "Creación Personajes Acto 0"
-	//agenda-group "Acto0"
+	agenda-group "Acto0"
 	when 
 		granja: Granja()
 		granjero: Granjero()
@@ -1222,3 +1208,64 @@ rule "Consulta si Sexo"
 end
 
 
+
+rule "Consulta si Lugar" 
+	salience 10 
+	when 
+		consulta: ConsultaSi()
+		lugar: Lugar(nombre == consulta.getValorAtributo())
+		p: Personaje(nombre == consulta.getNombre())
+	then 
+		modify(p){
+			setUbicacionActual(lugar)
+		}
+		insert (consulta.getConsulta());
+		
+		System.out.println("ENTRO EN CONSULTA SI LUGAR Y MODIFICO " + p.getNombre() + " en " + p.getUbicacionActual());
+end 
+
+
+rule "Consulta si Origen"
+	salience 10
+	when 
+		consulta: ConsultaSi()
+		eval (Origen.isValor(consulta.getValorAtributo()))
+ 		p: Personaje(nombre == consulta.getNombre())
+	then
+		modify(p){
+			setOrigen(Origen.get(consulta.getValorAtributo()))
+		}
+		insert (consulta.getConsulta());
+		
+		System.out.println("ENTRO EN CONSULTA SI ORIGEN Y MODIFICO " + p.getNombre() + " en " + p.getOrigen());
+end 
+
+rule "Consulta si EstadoSalud"
+	salience 10
+	when 
+		consulta: ConsultaSi()
+		eval (EstadoSalud.isValor(consulta.getValorAtributo()))
+ 		p: Personaje(nombre == consulta.getNombre())
+	then
+		modify(p){
+			setEstadoSalud(EstadoSalud.get(consulta.getValorAtributo()))
+		}
+		insert (consulta.getConsulta());
+		
+		System.out.println("ENTRO EN CONSULTA SI EstadoSalud Y MODIFICO " + p.getNombre() + " en " + p.getEstadoSalud());
+end 
+
+rule "Consulta si Profesion" 
+	salience 10 
+	when 
+		consulta: ConsultaSi()
+		profesion: Profesion(nombre == consulta.getValorAtributo())
+		p: PersonajeCuento(nombre == consulta.getNombre())
+	then 
+		modify(p){
+			setProfesion(profesion)
+		}
+		insert (consulta.getConsulta());
+		
+		System.out.println("ENTRO EN CONSULTA SI profesion Y MODIFICO " + p.getNombre() + " en " + p.getProfesion());
+end 

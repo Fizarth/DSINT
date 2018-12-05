@@ -22,6 +22,8 @@ public class testConsultaSi {
 		String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\input1.txt";
 		Archivo.setPath(filePath + ".output.txt");
 		
+	
+		
 		kSession.insert(conq);
 
 		kSession.fireAllRules();

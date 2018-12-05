@@ -1,5 +1,8 @@
 package utilidades;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum EstadoSalud {
 	ENFERMO, VIVO, BORRACHO, MUERTO, MEDIO_MUERTO, EN_PELIGRO, DEBIL, HERIDO, RECUPERADO, INCONSCIENTE;
 
@@ -29,5 +32,21 @@ public enum EstadoSalud {
 			return "no se sabe";
 		}
 
+	}
+	
+	private static final Map<String, EstadoSalud> lookup = new HashMap<>();
+
+	public static EstadoSalud get(String s) {
+		return lookup.get(s);
+	}
+
+	static {
+		for (EstadoSalud es : EstadoSalud.values()) {
+			lookup.put(es.getString(), es);
+		}
+	}
+
+	public static boolean isValor(String s) {
+		return lookup.containsKey(s);
 	}
 }
