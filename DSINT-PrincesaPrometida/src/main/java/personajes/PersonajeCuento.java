@@ -50,7 +50,7 @@ public class PersonajeCuento extends Personaje {
 				+ motivacion.getString() + ".";
 		if (tit != null)
 			inf += " Es un noble, su título es " + tit.getString() + ".";
-		return inf+"\n";
+		return inf;
 	}
 
 }

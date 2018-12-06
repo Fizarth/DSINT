@@ -155,7 +155,7 @@ public abstract class Personaje {
 		String cadena = nombre + " es un personaje " + tipoImportancia.getString() + ". Es de " + origen.getString() + " y " + ub
 				+ ". Es " + sexo.getString() + ", está " + estadoSalud.getString() + " y su estado civil es "
 				+ estadoCivil.getString() + "." + nombre + " " + relacionesPersonaje + ".";
-		return cadena+"\n";
+		return cadena;
 
 	}
 
