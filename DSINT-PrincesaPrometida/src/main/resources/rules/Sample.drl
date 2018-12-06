@@ -1035,7 +1035,8 @@ rule "Tortura extrema a Westley"
 
 
 end
-
+ 
+ 
 rule "Iñigo y Fezzik encuentran a Westley"
 	when
 		bl: BosqueLadrones()
