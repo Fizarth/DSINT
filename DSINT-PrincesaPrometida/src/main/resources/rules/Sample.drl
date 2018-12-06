@@ -863,14 +863,204 @@ end
 
 
 /*** ACTO 4 	Presentación	de	la	Nueva	Reina	hasta la	muerte de	Westley ****/
-
-rule "sueño Buttercup"
+/*
+rule "Creación de Personajes Acto4"
+	agenda-group "Acto4"
 	when
+		aa: Anciana()
+		ya: Yalin()
+		pa: PatioCastillo()
+		ca: Castillo()
+		ind: Indefinido()
+		gu: Guardia()
 	then
-end 
+		insert(new Anciana(pa,ind));
+		insert(new Yalin(ca, gu));
+		System.out.println("Acto4: Se crean los personajes");
+
+	
+end
+
+
+rule "Sueño Buttercup"
+	when
+	ca: Castillo()
+	pa: PatioCastillo()
+	
+	wes: Westley()
+	rey: Rey()
+	an: Anciana(ubicacionActual == pa)
+	conde: Conde(ubicacionActual == ca)
+	bu: Buttercup(ubicacionActual == ca)
+	pr: Principe (ubicacionActual == ca)
+	then
+	
+		modify(conde){
+			setUbicacionActual(pa);
+		} 
+		modify(bu){
+			setUbicacionActual(pa);
+		}
+		modify(pr){
+			setUbicacionActual(pa);
+		}
+		
+		
+		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " sueña que " + rey.getNombre() + " muere y se casa con " + pr.getNombre());
+		Archivo.getUnicaInstancia().addInf(an.getNombre() + " abuchea a " + bu.getNombre() + " por no casarse con " + wes.getNombre() + " y renunciar al amor verdadero");
+		
+	
+	
+end
+
+rule "Trato principe"
+	when
+	ca: Castillo()
+	pa: PatioCastillo()
+	pr: Principe (ubicacionActual == pa)
+	bu: Buttercup(ubicacionActual == pa)
+	conde: Conde(ubicacionActual == pa)
+		
+	then
+		modify(conde){
+			setUbicacionActual(ca);
+		} 
+		modify(bu){
+			setUbicacionActual(ca);
+		}
+		modify(pr){
+			setUbicacionActual(ca);
+		}
+		
+		
+		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " hace un trato con " + bu.getNombre() + " para casarse con ella");
+		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " planea matar a " + bu.getNombre() + " para incriminar a la nacion enemiga y declarar la guerra");
+	
+end
+
+rule "Tortura a Westley"
+	when
+	po: PozoDesesperacion()
+	wes: Westley(ubicacionActual == po)
+	conde: Conde(ubicacionActual == ca)
+	
+	then
+		modify(conde){
+			setUbicacionActual(po);
+		}
+	Archivo.getUnicaInstancia().addInf(conde.getNombre() + " tortura a " + wes.getNombre() + " en " + po.getNombre()); 
+	
+end
+
+
+rule "Pricipe ordena a Yalin"
+	when
+		ca: Castillo()
+		pr: Principe (ubicacionActual == ca)
+		ya: Yalin(ubicacionActual == ca)
+		bl: BosqueLadrones()
+	then
+		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " ordena a " + ya.getNombre() + " vaciar " + bl.getNombre());
+end
+
+rule "Reencuentro Iñigo y Fezzik"
+	when
+		// ubicacion actual ???? 
+		iñ: Inigo()
+		fe: Fezzik(ubicacionActual == null)
+		bl: BosqueLadrones()
+	then
+		modify(iñ){
+			setUbicacionActual(bl);
+		}
+		modify(fe){
+			setUbicacionActual(bl);
+			setEstadoSalud(EstadoSalud.BORRACHO);
+		}
+		
+		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " encuentra borracho a " + iñ.getNombre() + " en " + bl.getNombre());
+		
+end
+
+rule "Iñigo y Fezzik buscan a Westley"
+	when
+		bl: BosqueLadrones()
+		conde: Conde()
+		iñ: Inigo(ubicacionActual == bl)
+		fe: Fezzik(ubicacionActual == bl)
+	then
+		modify(iñ){
+			setEstadoSalud(EstadoSalud.RECUPERADO);
+		}
+		
+		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " ayuda a " + iñ.getNombre() + " a recuperarse");
+		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " se entera de quien es realmente " + conde.getNombre());
+
+end
+
+rule "Buttercup descubre mentira Principe"
+	when
+		ca: Castillo()
+		ap: AposentosPrincesa()
+		bu: ButterCup(UbicacionActual == ca)
+		pr: Principe(UbicacionActual == ca)
+	then
+		modify (bu){
+			setUbicacionActual(ap);
+		}
+		
+		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " descubre la mentira de " + pr.getNombre() + " en " + ca.getNombre());
+		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " insulta a " + pr.getNombre() + " y este la encierra en " + ap.getNombre());
+		
+
+end
+
+rule "Tortura extrema a Westley"
+	when
+		po: PozoDesesperacion()
+		ca: Castillo()
+		pr: Principe(UbicacionActual == ca)
+		wes: Westley(ubicacionActual == po)
+		conde: Conde(ubicacionActual == po)
+	then
+		modify (pr){
+			setUbicacionActual(po);
+		}
+		modify(wes){
+			setEstadoSalud(EstadoSalud.MUERTO);
+		}
+		
+		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " tortura de forma extrema a " + wes.getNombre() + " en " + po.getNombre());  
+
+
+
+end
+
+rule "Iñigo y Fezzik encuentran a Westley"
+	when
+		bl: BosqueLadrones()
+		po: PozoDesesperacion()
+		iñ: Inigo(ubicacionActual == bl)
+		fe: Fezzik(ubicacionActual == bl)
+		wes: Westley(ubicacionActual == po)
+		pi: PadreInigo()
+	then
+		modify(iñ){
+			setUbicacionActual(po);
+		}
+		modify(fe){
+			setUbicacionActual(po);
+		}
+		
+		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " y " + fe.getNombre + " se encuentran con el sirviente y lo interrogan hasta que " + fe.getNombre() + " lo golpea");
+		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " gracias a la ayuda de " + pi.getNombre() + " encuentran a " + iñ.getNombre()  + " en " + po.getNombre());
+end
+
+*/
 
 
 /*** ACTO 5 || ACTO FINAL  Llegan	a	casa	del	Milagroso	Max	hasta	el	final. ****/
+
 rule "Creación de Personajes Acto5"
 	agenda-group "Acto5"
 	when
