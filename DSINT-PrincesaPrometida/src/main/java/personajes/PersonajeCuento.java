@@ -46,7 +46,7 @@ public class PersonajeCuento extends Personaje {
 	@Override
 	public String toString() {
 		String inf = super.toString();
-		inf = "Este personaje pertecene al cuento." + inf + " Se dedica a " + profesion + " y tiene como motivación "
+		inf = "Este personaje pertecene al cuento. " + inf + " Se dedica a " + profesion + " y tiene como motivación "
 				+ motivacion.getString() + ".";
 		if (tit != null)
 			inf += " Es un noble, su título es " + tit.getString() + ".";

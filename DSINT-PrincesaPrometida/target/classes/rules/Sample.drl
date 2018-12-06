@@ -11,7 +11,7 @@ import profesiones.*;
 
 
 //Creación de la base
-rule "1 Creación Profesiones"
+rule "0.1 Creación Profesiones"
 agenda-group "Acto0"
 	then 
 		//insert(new BrigadaBrutal());
@@ -31,7 +31,7 @@ agenda-group "Acto0"
 		System.out.println("Profesiones 0");
 end 
 
-rule "2 Creación Lugares"
+rule "0.2 Creación Lugares"
 	then
 		//insert(new AcantiladosLocura());
 		//insert(new Bosque());
@@ -48,7 +48,7 @@ rule "2 Creación Lugares"
 		System.out.println("Lugares 0");	
 end 
 
-rule "3 Creación Animales"
+rule "0.3 Creación Animales"
 	when 
 		//mar: Mar()
 		granja: Granja()
@@ -68,7 +68,7 @@ rule "3 Creación Animales"
 		System.out.println("Animales 0");
 end
 
-rule "4 Creación Personajes Acto 0"
+rule "0.4 Creación Personajes Acto 0"
 	when 
 		hab: HabitacionN()
 	then
@@ -78,7 +78,7 @@ rule "4 Creación Personajes Acto 0"
 		System.out.println("Abuelo, Madre y Nieto");
 end
 
-rule "5 Visita familiar"
+rule "0.5 Visita familiar"
   when
  	hab: HabitacionN()
     nt: Nieto(ubicacionActual == hab, estadoSalud == EstadoSalud.ENFERMO)
@@ -107,10 +107,12 @@ rule "5 Visita familiar"
      	addRelacion(fm3);
    	}
    	
-  	Archivo.getUnicaInstancia().addInf(md.getNombre() + " está cuidando de " + nt.getNombre() +" que se encuentra " + nt.getEstadoSalud().getString() + " y llega su " +ab.getNombre() + " de visita." );
+  	Archivo.getUnicaInstancia().addInf(md.getNombre() + " está cuidando de " 
+  	+ nt.getNombre() +" que se encuentra " + nt.getEstadoSalud().getString() 
+  	+ " y llega su " +ab.getNombre() + " de visita." );
 end
 
-rule "6 Nieto está enfermo"
+rule "0.6 Nieto está enfermo"
 when
 	hab: HabitacionN()
     nt: Nieto(ubicacionActual == hab, estadoSalud == EstadoSalud.ENFERMO)
@@ -124,10 +126,10 @@ when
   		setUbicacionActual(null);
   	}
   	Archivo.getUnicaInstancia().addInf(md.getNombre()+" se despide y "
-  	+ ab.getNombre()+ " lee un cuendo a " + nt.getNombre()+".\n");
+  	+ ab.getNombre()+ " lee un cuendo a " + nt.getNombre()+".");
 end
 
-rule "7 Inicio cuento"
+rule "0.7 Inicio cuento"
 	when
 		hab: HabitacionN()
 		Nieto( ubicacionActual == hab )
@@ -138,30 +140,19 @@ rule "7 Inicio cuento"
 	then
 		insert(new Westley(granja, granjero));
 		insert(new Buttercup(granja, granjero));
+		Archivo.getUnicaInstancia().addInf(" El cuento es una historia de aventuras y amor.\n");
 end
-
-//Modificar esta relación
-rule "Relacion Conocer"
-    when
-        p1 : Personaje(ubicacionActual != null)
-        p2 : Personaje(nombre != p1.getNombre(), ubicacionActual == p1.getUbicacionActual() )
-        eval (Relacion.notExistsRelacion(p1,p2))
-    then
-
-        Relacion r = new ConoceA(p2);
-        Relacion r2 = new ConocidoDe(p1);
-        ArrayList<Relacion> listaR1 = p1.getRelacionesPersonaje();
-        listaR1.add(r);
-        modify(p1){
-        	setRelacionesPersonaje(listaR1);
-        }
-        
-        ArrayList<Relacion> listaR2 = p2.getRelacionesPersonaje();
-        listaR2.add(r2);
-        modify(p2){
-        	setRelacionesPersonaje(listaR2);
-        }
-        Archivo.getUnicaInstancia().addInf(p1.getNombre() + " conoce a " + p2.getNombre() + ".\n"); 
+rule "0.8 Amor en la Granja"
+	when
+		g: Granja()
+		gj: Granjero()
+		wt: Westley( ubicacionActual == g, profesion == gj )
+		bt: Buttercup( ubicacionActual == g, profesion == gj  )
+	then
+		Archivo.getUnicaInstancia().addInf(wt.getNombre() + " y " + bt.getNombre() + " son dos " 
+		+ bt.getProfesion().toString()+"s. Cuando " + bt.getNombre() + " le manda una tarea a " 
+		+wt.getNombre() + ", él siempre contesta \"Como desees\", que en realidad significa \"Te amo\". "  );
+		
 end
 
 rule "Westley quiere a Buttercup"
@@ -258,6 +249,31 @@ rule "Buttercup odia al pirata"
 	    }
 	    Archivo.getUnicaInstancia().addInf("Buttercup odia al pirata por la muerte de Westley y pierde su motivación.\n");
 end
+
+//Modificar esta relación
+rule "Relacion Conocer"
+    when
+        p1 : Personaje(ubicacionActual != null)
+        p2 : Personaje(nombre != p1.getNombre(), ubicacionActual == p1.getUbicacionActual() )
+        eval (Relacion.notExistsRelacion(p1,p2))
+    then
+
+        Relacion r = new ConoceA(p2);
+        Relacion r2 = new ConocidoDe(p1);
+        ArrayList<Relacion> listaR1 = p1.getRelacionesPersonaje();
+        listaR1.add(r);
+        modify(p1){
+        	setRelacionesPersonaje(listaR1);
+        }
+        
+        ArrayList<Relacion> listaR2 = p2.getRelacionesPersonaje();
+        listaR2.add(r2);
+        modify(p2){
+        	setRelacionesPersonaje(listaR2);
+        }
+        Archivo.getUnicaInstancia().addInf(p1.getNombre() + " conoce a " + p2.getNombre() + ".\n"); 
+end
+
 //Fin acto0
 
 // Inicio Acto1
@@ -1465,10 +1481,9 @@ rule "Consulta Quien"
 		con: ConsultaQuien()
 		p: Personaje (nombre == con.getNombre())
 	then
-		
 		System.out.println("ENTRO REGLA CONSULTA QUIEN");
 		System.out.println(p.toString());
-		Archivo.getUnicaInstancia().escribir(p.toString() + "\n");
+		Archivo.getUnicaInstancia().escribir(p.toString() + "\n\n");
 end
 
 rule "Consulta Quien No Existe"
