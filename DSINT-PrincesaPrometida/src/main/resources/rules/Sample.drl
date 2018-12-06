@@ -149,48 +149,26 @@ rule "0.8 Amor en la Granja"
 		gj: Granjero()
 		wt: Westley( ubicacionActual == g, profesion == gj )
 		bt: Buttercup( ubicacionActual == g, profesion == gj  )
+		eval(wt.noTieneRelacion(bt))
+    	eval(bt.noTieneRelacion(wt))
 	then
 		Archivo.getUnicaInstancia().addInf(wt.getNombre() + " y " + bt.getNombre() + " son dos " 
-		+ bt.getProfesion().toString()+"s. Cuando " + bt.getNombre() + " le manda una tarea a " 
+		+ bt.getProfesion().toString()+"s.");
+		
+		QuiereA q1 = new QuiereA(bt);
+		QuiereA q2 = new QuiereA(wt);
+		
+		 modify(wt){
+	      	addRelacion(q1),
+	      	setMotivacion(Motivacion.ESTAR_CON_BUTTERCUP);
+	    }
+	    
+	    modify(bt){
+	    	addRelacion(q2),
+	    	setMotivacion(Motivacion.ESTAR_CON_WESTLEY);
+	    }
+	    Archivo.getUnicaInstancia().addInf(" Cuando " + bt.getNombre() + " le manda una tarea a " 
 		+wt.getNombre() + ", él siempre contesta \"Como desees\", que en realidad significa \"Te amo\". "  );
-end
-
-rule "Westley quiere a Buttercup"
-  when
-  	g : Granja( )
-  	hab: HabitacionN(  )
-    wt: Westley( ubicacionActual == g)
-    bt: Buttercup( ubicacionActual == g)
-    Nieto(ubicacionActual == hab)
-    Abuelo(ubicacionActual == hab)
-  then
-    Relacion q1 = new QuiereA(bt);
-    ArrayList<Relacion> listaR = wt.getRelacionesPersonaje();
-    listaR.add(q1);
-    modify(wt){
-          setRelacionesPersonaje(listaR);
-    }
-    modify(wt){
-          setMotivacion(Motivacion.ESTAR_CON_BUTTERCUP);
-    }
-    Archivo.getUnicaInstancia().addInf("Westley quiere "+wt.getMotivacion().getString());
-end
-
-rule "Buttercup quiere a Westley"
-  when
-    g : Granja()
-    wt: Westley( ubicacionActual == g)
-    bt: Buttercup( ubicacionActual == g)
-  then
-    Relacion q1 = new QuiereA(wt);
-    ArrayList<Relacion> listaR = bt.getRelacionesPersonaje();
-    listaR.add(q1);
-    modify(bt){
-          setRelacionesPersonaje(listaR),
-          setMotivacion(Motivacion.ESTAR_CON_WESTLEY);
-    }
-   
-   Archivo.getUnicaInstancia().addInf("Buttercup se enamora de Wetsley.\n");
 end
 
 rule "Westley se va a hacer fortuna"
