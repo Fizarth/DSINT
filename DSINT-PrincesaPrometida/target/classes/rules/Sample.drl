@@ -225,7 +225,7 @@ rule "Buttercup odia al pirata"
 	    modify(pr){
 	          setRelacionesPersonaje(listaR2);
 	    }
-	    Archivo.getUnicaInstancia().addInf("Buttercup odia al pirata por la muerte de Westley y pierde su motivación.\n");
+	    Archivo.getUnicaInstancia().addInf("Buttercup odia al pirata por la muerte de Westley y pierde su motivación.");
 end
 
 //Modificar esta relación
@@ -249,7 +249,7 @@ rule "Relacion Conocer"
         modify(p2){
         	setRelacionesPersonaje(listaR2);
         }
-        Archivo.getUnicaInstancia().addInf(p1.getNombre() + " conoce a " + p2.getNombre() + ".\n"); 
+       // Archivo.getUnicaInstancia().addInf(p1.getNombre() + " conoce a " + p2.getNombre() + "."); 
 end
 
 //Fin acto0
@@ -636,13 +636,13 @@ end
 //ya no hay que modificarlo en el acto2
 
 /*** ACTO 2 El	príncipe	sigue	las	huellas	hasta	que	se	produce	el beso	de	amor	verdadero****/
-rule "2.1 Creación Lugares"
+rule "Creación Acto2"
 agenda-group "Acto2"
 	then
 		insert(new Colina());
 		System.out.println("Lugares 2");	
 end 
-rule "Pirata y Buttercup huyen"
+rule "2.1 Pirata y Buttercup huyen"
 	when 
 		camino : CaminoMontana()
 		v: Vizzini(estadoSalud == EstadoSalud.MUERTO)
@@ -659,7 +659,7 @@ rule "Pirata y Buttercup huyen"
 		Archivo.getUnicaInstancia().addInf("El pirata y Buttercup huyen hacia la colina");
 end
 
-rule "Principe rastrea a Buttercup"
+rule "2.2 Principe rastrea a Buttercup"
 	when 
 		ac: AcantiladosLocura()
 		pirata: Pirata(ubicacionActual != ac) //soolo llega cuando ya no esten alli.
@@ -671,10 +671,13 @@ rule "Principe rastrea a Buttercup"
 		modify(p){
 			setUbicacionActual(cm)
 		}
+		modify(conde){
+			setUbicacionActual(cm)
+		}
 		Archivo.getUnicaInstancia().addInf(p.getNombre() + " rastrea a su prometida hasta "+ cm.getNombre());
 end 
 
-rule "Buttercup descubre quien es su secuestrador"
+rule "2.3 Buttercup descubre quien es su secuestrador"
 	when 
 		colina: Colina()
 		but: Buttercup(ubicacionActual == colina)
@@ -685,7 +688,6 @@ rule "Buttercup descubre quien es su secuestrador"
 end
 
 rule "Principe alcanza a la princesa"
-//solo llegara cuando el pirata y la princesa esten alli.
 	when 
 		co: Colina()
 		cm: CaminoMontana()
@@ -700,7 +702,7 @@ rule "Principe alcanza a la princesa"
 		modify(conde){
 			setUbicacionActual(co)
 		}
-		Archivo.getUnicaInstancia().addInf(prin.getNombre() + " se encuentra en " + co.getNombre());
+		Archivo.getUnicaInstancia().addInf(prin.getNombre() + " alcanza a la princesa en " + co.getNombre());
 end
 
 rule "Como Desees en la colina"
@@ -716,7 +718,7 @@ rule "Como Desees en la colina"
 		modify(we){
 			setEstadoSalud(EstadoSalud.VIVO)
 		}
-		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " se tira por " + co.getNombre()+"\n");
+		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " se tira por " + co.getNombre());
 		Archivo.getUnicaInstancia().addInf("Se produce el beso de amor verdadero");
 		
 //no se que hacer con el principe ni el pirata xD
