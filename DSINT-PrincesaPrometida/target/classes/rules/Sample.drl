@@ -69,7 +69,6 @@ rule "3 Creación Animales"
 end
 
 rule "4 Creación Personajes Acto 0"
-	//agenda-group "Acto0"
 	when 
 		hab: HabitacionN()
 	then
@@ -82,12 +81,11 @@ end
 rule "5 Visita familiar"
   when
  	hab: HabitacionN()
-    nt: Nieto(ubicacionActual == hab)
-    ab: Abuelo(ubicacionActual == hab)
-    md: Madre(ubicacionActual == hab)
+    nt: Nieto(ubicacionActual == hab, estadoSalud == EstadoSalud.ENFERMO)
+    ab: Abuelo(ubicacionActual == hab, estadoSalud == EstadoSalud.VIVO)
+    md: Madre(ubicacionActual == hab, estadoSalud == EstadoSalud.VIVO)
     eval(nt.noTieneRelacion(ab))
-    eval(ab.noTieneRelacion(nt))
-    eval(md.noTieneRelacion(ab))
+    eval(ab.noTieneRelacion(md))
     eval(md.noTieneRelacion(nt))
   then
     FamiliarDe fm1 = new FamiliarDe(ab);
@@ -109,23 +107,26 @@ rule "5 Visita familiar"
      	addRelacion(fm3);
    	}
    	
-  	Archivo.getUnicaInstancia().addInf(md.getNombre() + " está cuidando de " + nt.getNombre() +
-  	" que se encuentra " + nt.getEstadoSalud().getString() + " y llega su " +ab.getNombre() + " de visita." );
+  	Archivo.getUnicaInstancia().addInf(md.getNombre() + " está cuidando de " + nt.getNombre() +" que se encuentra " + nt.getEstadoSalud().getString() + " y llega su " +ab.getNombre() + " de visita." );
 end
 
-rule "Nieto está enfermo"
+rule "6 Nieto está enfermo"
 when
-    nt: Nieto()
-    ab: Abuelo()
-    md: Madre()
+	hab: HabitacionN()
+    nt: Nieto(ubicacionActual == hab, estadoSalud == EstadoSalud.ENFERMO)
+    ab: Abuelo(ubicacionActual == hab, estadoSalud == EstadoSalud.VIVO)
+    md: Madre(ubicacionActual == hab, estadoSalud == EstadoSalud.VIVO)
+    eval(nt.tieneRelacion(ab))
+    eval(ab.tieneRelacion(md))
+    eval(md.tieneRelacion(nt))
   then
   	modify(md){
   		setUbicacionActual(null);
   	}
-  	Archivo.getUnicaInstancia().addInf("La madre se despide y el abuelo lee un cuendo al nieto enfermo.\n");
+  	Archivo.getUnicaInstancia().addInf(md.getNombre()+" se despide y "+ ab.getNombre()+ " lee un cuendo a " + nt.getNombre()+".\n");
 end
 
-rule "Inicio cuento"
+rule "7 Inicio cuento"
 	when
 		hab: HabitacionN()
 		Nieto( ubicacionActual == hab )
