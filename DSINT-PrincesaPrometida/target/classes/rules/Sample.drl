@@ -197,7 +197,7 @@ rule "Westley quiere a Buttercup"
     modify(wt){
           setMotivacion(Motivacion.ESTAR_CON_BUTTERCUP);
     }
-    Archivo.getUnicaInstancia().addInf("Westley se enamora de Buttercup.\n");
+    Archivo.getUnicaInstancia().addInf("Westley quiere "+wt.getMotivacion().getString());
 end
 
 rule "Buttercup quiere a Westley"
@@ -210,11 +210,10 @@ rule "Buttercup quiere a Westley"
     ArrayList<Relacion> listaR = bt.getRelacionesPersonaje();
     listaR.add(q1);
     modify(bt){
-          setRelacionesPersonaje(listaR);
-    }
-    modify(wt){
+          setRelacionesPersonaje(listaR),
           setMotivacion(Motivacion.ESTAR_CON_WESTLEY);
     }
+   
    Archivo.getUnicaInstancia().addInf("Buttercup se enamora de Wetsley.\n");
 end
 
