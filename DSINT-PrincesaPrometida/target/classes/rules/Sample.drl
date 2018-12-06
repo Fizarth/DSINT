@@ -236,19 +236,13 @@ rule "Relacion Conocer"
 
         Relacion r = new ConoceA(p2);
         Relacion r2 = new ConocidoDe(p1);
-        ArrayList<Relacion> listaR1 = p1.getRelacionesPersonaje();
-        listaR1.add(r);
         modify(p1){
-        	setRelacionesPersonaje(listaR1);
+        	addRelacion(r);
         }
-        
-        ArrayList<Relacion> listaR2 = p2.getRelacionesPersonaje();
-        listaR2.add(r2);
         modify(p2){
-        	setRelacionesPersonaje(listaR2);
+        	addRelacion(r2);
         } 
 end
-
 //Fin acto0
 
 // Inicio Acto1
