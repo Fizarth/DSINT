@@ -185,7 +185,7 @@ rule "0.9 Westley se va a hacer fortuna"
     		setUbicacionActual(m),
     		setProfesion(inf);
     	}
-     	Archivo.getUnicaInstancia().addInf("Como " + wt.getNombre()+ "no tiene dinero se marcha a " 
+     	Archivo.getUnicaInstancia().addInf("Como " + wt.getNombre()+ " no tiene dinero se marcha a " 
      	+ m.getNombre() + " para " + wt.getMotivacion().getString() +". ");
      	insert (new Pirata(m, pir));
 end
@@ -193,7 +193,7 @@ end
 rule "0.10 Westley muere"
     when
     	m: Mar()
-        wt: Westley(ubicacionActual == m)
+        wt: Westley(ubicacionActual == m, estadoSalud==EstadoSalud.VIVO, motivacion == Motivacion.GANAR_DINERO)
    		pir: Pirata(ubicacionActual == m)
     then
     	modify(wt){
@@ -203,31 +203,27 @@ rule "0.10 Westley muere"
      	+ " es asesinado por " + pir.getNombre()+". ");
 end
 
-rule "Buttercup odia al pirata"
+rule "0.11 Buttercup odia al pirata"
     when
     	g :Granja()
-    	exists (Westley(estadoSalud == EstadoSalud.MUERTO))
+    	m: Mar()
+    	Westley(estadoSalud == EstadoSalud.MUERTO, ubicacionActual == m)
     	bt: Buttercup( ubicacionActual == g, motivacion == Motivacion.ESTAR_CON_WESTLEY)
-    	pr: Pirata( )
+    	pr: Pirata( ubicacionActual == m )
     then
-    	Relacion od1 = new OdiaA(pr);
-    	Relacion od2 = new OdiadoPor(bt);
+    	OdiaA od1 = new OdiaA(pr);
+    	OdiadoPor od2 = new OdiadoPor(bt);
     	
-    	ArrayList<Relacion> listaR1 = bt.getRelacionesPersonaje();
-   		listaR1.add(od1);
 	    modify(bt){
-	          setRelacionesPersonaje(listaR1);
-	    }
-	    modify(bt){
+	          addRelacion(od1),
 	          setMotivacion(Motivacion.DESCONOCIDA);
 	    }
 	 
-    	ArrayList<Relacion> listaR2 = pr.getRelacionesPersonaje();
-   		listaR2.add(od2);
 	    modify(pr){
-	          setRelacionesPersonaje(listaR2);
+	          addRelacion(od2);
 	    }
-	    Archivo.getUnicaInstancia().addInf("Buttercup odia al pirata por la muerte de Westley y pierde su motivación.");
+	    Archivo.getUnicaInstancia().addInf(bt.getNombre()+ " " +bt.getRelacion(pr).toString() + 
+	    " por la muerte de Westley y pierde su motivación.");
 end
 
 //Modificar esta relación
@@ -257,7 +253,7 @@ end
 
 // Inicio Acto1
 rule "Inicio Acto1"
-	agenda-group "Acto1"
+agenda-group "Acto1"
 	then
 		insert(new Mercenario());
 		insert(new Gobernante());
