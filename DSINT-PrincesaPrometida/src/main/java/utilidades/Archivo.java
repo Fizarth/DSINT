@@ -9,7 +9,7 @@ public class Archivo {
 	private static Archivo unicaInstancia;
 	BufferedWriter bfwriter;
 	private static String path = null;
-	private String informacion;
+	private String informacion = "";
 	
 	
 	private Archivo() throws IOException {
