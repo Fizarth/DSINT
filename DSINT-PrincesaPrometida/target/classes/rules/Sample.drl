@@ -925,9 +925,9 @@ rule "Sueño Buttercup"
 		}	
 		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " sueña que " + rey.getNombre() + " muere y se casa con " + pr.getNombre());
 		Archivo.getUnicaInstancia().addInf(an.getNombre() + " abuchea a " + bu.getNombre() + " por no casarse con " + wes.getNombre() + " y renunciar al amor verdadero");	
-		Archivo.getUnicaInstancia().addInf("ENTRO");
+		
 end
-
+/*
 rule "Trato principe"
 	when
 	ca: Castillo()
@@ -971,7 +971,7 @@ rule "Tortura a Westley"
 		Archivo.getUnicaInstancia().addInf(conde.getNombre() + " tortura a " + wes.getNombre() + " en " + po.getNombre()); 
 	
 end
-/*
+
 
 rule "Pricipe ordena a Yalin"
 	when
