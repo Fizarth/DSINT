@@ -71,7 +71,16 @@ public abstract class Personaje {
 			if(relacion.getAfectado().equals(p)) return false;
 		}
 		return true;
-		
+	}
+	
+	public boolean esConocido(Personaje p) {
+		for (Relacion relacion : relacionesPersonaje) {
+			if(relacion.getAfectado().equals(p)) {
+				if(relacion.getNombre()=="conoce a" || relacion.getNombre()=="conocido de")
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public Relacion getRelacion(Personaje p) {

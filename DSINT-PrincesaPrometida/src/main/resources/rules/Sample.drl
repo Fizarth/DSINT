@@ -231,7 +231,7 @@ rule "Relacion Conocer"
     when
         p1 : Personaje(ubicacionActual != null)
         p2 : Personaje(nombre != p1.getNombre(), ubicacionActual == p1.getUbicacionActual() )
-        eval (Relacion.notExistsRelacion(p1,p2))
+        eval (p1.noTieneRelacion(p2))
     then
 
         Relacion r = new ConoceA(p2);
@@ -320,20 +320,25 @@ rule "1.6 El Conde"
 end
 
 /*TOCANDO ESTA*/
-rule "1.7 Rey y Principe son familia"
+rule "1.7 Rey y Príncipe son familia"
   when
   	g: Gobernante()
     pr: Principe(profesion == g)
     ry: Rey(profesion == g)
+    eval(pr.esConocido(ry))
   then
+  	Relacion r1 = pr.getRelacion(ry);
+  	Relacion r2 = ry.getRelacion(pr);
     FamiliarDe fm1 = new FamiliarDe(ry);
     FamiliarDe fm2 = new FamiliarDe(pr);
     
     modify(pr){
-      addRelacion(fm1);
+    	removeRelacion(r1),
+      	addRelacion(fm1);
     }
     modify(ry){
-      addRelacion(fm2);
+    	removeRelacion(r2),
+      	addRelacion(fm2);
     }
 end
 
@@ -341,29 +346,30 @@ rule "1.8 Principe y Conde amigos"
   when
     pr: Principe( )
     cd: Conde( )
+    eval(pr.esConocido(cd))
   then
+  	Relacion r1 = pr.getRelacion(cd);
+  	Relacion r2 = cd.getRelacion(pr);
     Relacion am1 = new AmigoDe(cd);
     Relacion am2 = new AmigoDe(pr);
-    ArrayList<Relacion> listaR = pr.getRelacionesPersonaje();
-    listaR.add(am1);
+    
     modify(pr){
-      setRelacionesPersonaje(listaR);
+    	removeRelacion(r1),
+      	addRelacion(am1);
     }
-    ArrayList<Relacion> listaR2 = cd.getRelacionesPersonaje();
-    listaR2.add(am2);
+    
     modify(cd){
-      setRelacionesPersonaje(listaR2);
-    }
-    modify(cd){
-      setMotivacion(Motivacion.SERVIR_PRINCIPE);
+    	removeRelacion(r2),
+      	addRelacion(am2),
+      	setMotivacion(Motivacion.SERVIR_PRINCIPE);
     }
 end
 
 rule "1.3 El príncipe quiere a Buttercup"
   when
-    pr: Principe( )
+    pr: Principe(estadoSalud == EstadoSalud.VIVO)
     bt: Buttercup( )
-    
+    eval(pr.noTieneRelacion(bt))
   then
     Relacion q1 = new QuiereA(bt);
     ArrayList<Relacion> listaR = pr.getRelacionesPersonaje();
@@ -378,9 +384,12 @@ end
 
 rule "1.4 Buttercup prometida del príncipe"
   when
+  	m: Mar()
     pr: Principe(motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
     bt: Buttercup( )
-    c: Castillo();
+    Westley( estadoSalud == EstadoSalud.MUERTO, ubicacionActual == m)
+    c: Castillo()
+    eval(bt.noTieneRelacion(pr))
   then
     Relacion p1 = new PrometidaDe(pr);
     Relacion p2 = new PrometidoDe(bt);
@@ -912,15 +921,17 @@ rule "3.9 promesa de vida"
 		Archivo.getUnicaInstancia().addInf(conde.getNombre() + "," + bu.getNombre() + " y " + pr.getNombre() + " van al  Castillo");
 end 
 
+//Westley en el pozo
+
+//Muerte del rey
 
 /*** ACTO 4 	Presentación	de	la	Nueva	Reina	hasta la	muerte de	Westley ****/
 
-rule "Creacion Acto4"
-	agenda-group "Acto4"
+rule "4.0 Creacion Acto4"
+agenda-group "Acto4"
 	then
 		insert(new Guardia());
 		insert(new PatioCastillo());
-		insert(new Indefinido());
 end
 
 rule "4.1 Creación de Personajes Acto4"

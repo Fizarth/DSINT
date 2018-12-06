@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
-	private static final String CONSULTAQUIENREGEX = "((Q|q)uien es [a-zA-Z ,.'-]+ hasta el (A|a)cto\\d+)";
+	private static final String CONSULTAQUIENREGEX = "((Q|q)uien es [a-zA-Záéíóú ,.'-]+ hasta el (A|a)cto\\d+)";
 	private static final String CONSULTAQUEREGEX = "((q|Q)ue ha pasado hasta el (a|A)cto\\d+)";
-	private static final String CONSULTASIREGEX = "(S|s)i [a-zA-Z ,.'-]+ ((es [a-zA-Z ,.'-]+)|(no existe))" + ", " + "(" + CONSULTAQUEREGEX +"|" + CONSULTAQUIENREGEX + ")";
+	private static final String CONSULTASIREGEX = "(S|s)i [a-zA-Záéíóú ,.'-]+ ((es [a-zA-Záéíóú ,.'-]+)|(no existe))" + ", " + "(" + CONSULTAQUEREGEX +"|" + CONSULTAQUIENREGEX + ")";
 			//"(S|s)i [a-zA-Z ,.'-]+ ((es [a-zA-Z ,.'-]+)|(no existe)), ((q|Q)ue ha pasado hasta el (a|A)cto\\d+)|((Q|q)uien es [a-zA-Z ,.'-]+ hasta el (A|a)cto\\d+)";
 	
 	private static final Pattern quienPattern = Pattern.compile(CONSULTAQUIENREGEX);
