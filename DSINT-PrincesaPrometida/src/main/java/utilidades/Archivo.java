@@ -39,7 +39,7 @@ public class Archivo {
 	}
 	
 	public void addInf(String s) {
-		this.informacion += s ;		
+		this.informacion += s +"\n";		
 	}
 	
 	public void escribirInf() throws IOException {
