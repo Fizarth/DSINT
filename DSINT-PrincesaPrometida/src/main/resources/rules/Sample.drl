@@ -1482,7 +1482,7 @@ rule "Consulta Quien"
 		con: ConsultaQuien()
 		p: Personaje (nombre == con.getNombre())
 	then
-		Archivo.getUnicaInstancia().escribir("Pregunta quien");
+		
 		System.out.println("ENTRO REGLA CONSULTA QUIEN");
 		System.out.println(p.toString());
 		Archivo.getUnicaInstancia().escribir(p.toString() + "\n");
@@ -1519,7 +1519,7 @@ rule "Consulta si Sexo"
   		modify(p){
    			setSexo(Sexo.get(consulta.getValorAtributo()));
   		}
- 		insert (consulta.getConsulta()); 
+ 		//insert (consulta.getConsulta()); 
   		System.out.println("SE PUEDE HACER ");
   		System.out.println( p.getNombre() +" es "+ p.getSexo());
 end
@@ -1536,7 +1536,7 @@ rule "Consulta si Lugar"
 		modify(p){
 			setUbicacionActual(lugar)
 		}
-		insert (consulta.getConsulta());
+		//insert (consulta.getConsulta());
 		
 		System.out.println("ENTRO EN CONSULTA SI LUGAR Y MODIFICO " + p.getNombre() + " en " + p.getUbicacionActual());
 end 
@@ -1552,7 +1552,7 @@ rule "Consulta si Origen"
 		modify(p){
 			setOrigen(Origen.get(consulta.getValorAtributo()))
 		}
-		insert (consulta.getConsulta());
+		//insert (consulta.getConsulta());
 		
 		System.out.println("ENTRO EN CONSULTA SI ORIGEN Y MODIFICO " + p.getNombre() + " en " + p.getOrigen());
 end 
@@ -1567,7 +1567,7 @@ rule "Consulta si EstadoSalud"
 		modify(p){
 			setEstadoSalud(EstadoSalud.get(consulta.getValorAtributo()))
 		}
-		insert (consulta.getConsulta());
+		//insert (consulta.getConsulta());
 		
 		System.out.println("ENTRO EN CONSULTA SI EstadoSalud Y MODIFICO " + p.getNombre() + " en " + p.getEstadoSalud());
 end 
@@ -1582,7 +1582,7 @@ rule "Consulta si Profesion"
 		modify(p){
 			setProfesion(profesion)
 		}
-		insert (consulta.getConsulta());
+		//insert (consulta.getConsulta());
 		
 		System.out.println("ENTRO EN CONSULTA SI profesion Y MODIFICO " + p.getNombre() + " en " + p.getProfesion());
 end 
