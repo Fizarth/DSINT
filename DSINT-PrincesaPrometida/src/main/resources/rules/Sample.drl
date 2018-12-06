@@ -887,13 +887,15 @@ end
 
 
 /*** ACTO 4 	Presentación	de	la	Nueva	Reina	hasta la	muerte de	Westley ****/
-/*Ya podi
+
 rule "Creacion Acto4"
 	agenda-group "Acto4"
 	then
 		insert(new Guardia());
+		insert(new PatioCastillo());
+		insert(new Indefinido());
 end
-*/
+
 rule "4.1 Creación de Personajes Acto4"
 	when
 		pa: PatioCastillo()
@@ -903,15 +905,14 @@ rule "4.1 Creación de Personajes Acto4"
 	then
 		insert(new Anciana(pa,ind));
 		insert(new Yalin(ca, gu));
-		Archivo.getUnicaInstancia().addInf("Acto 4");	
+		Archivo.getUnicaInstancia().addInf("\n Acto 4\n");	
 end
 
 
 rule "Sueño Buttercup"
 	when
 	ca: Castillo()
-	pa: PatioCastillo()
-	
+	pa: PatioCastillo()	
 	wes: Westley()
 	rey: Rey()
 	an: Anciana(ubicacionActual == pa)
@@ -932,10 +933,7 @@ rule "Sueño Buttercup"
 		
 		
 		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " sueña que " + rey.getNombre() + " muere y se casa con " + pr.getNombre());
-		Archivo.getUnicaInstancia().addInf(an.getNombre() + " abuchea a " + bu.getNombre() + " por no casarse con " + wes.getNombre() + " y renunciar al amor verdadero");
-		
-	
-	
+		Archivo.getUnicaInstancia().addInf(an.getNombre() + " abuchea a " + bu.getNombre() + " por no casarse con " + wes.getNombre() + " y renunciar al amor verdadero");	
 end
 
 rule "Trato principe"
@@ -966,6 +964,7 @@ end
 rule "Tortura a Westley"
 	when
 	po: PozoDesesperacion()
+	ca: Castillo()
 	wes: Westley(ubicacionActual == po)
 	conde: Conde(ubicacionActual == ca)
 	
@@ -973,10 +972,10 @@ rule "Tortura a Westley"
 		modify(conde){
 			setUbicacionActual(po);
 		}
-	Archivo.getUnicaInstancia().addInf(conde.getNombre() + " tortura a " + wes.getNombre() + " en " + po.getNombre()); 
+		Archivo.getUnicaInstancia().addInf(conde.getNombre() + " tortura a " + wes.getNombre() + " en " + po.getNombre()); 
 	
 end
-
+/*
 
 rule "Pricipe ordena a Yalin"
 	when
@@ -1082,7 +1081,7 @@ rule "Iñigo y Fezzik encuentran a Westley"
 		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " gracias a la ayuda de " + pi.getNombre() + " encuentran a " + iñ.getNombre()  + " en " + po.getNombre());
 end
 
-
+*/
 
 
 /*** ACTO 5 || ACTO FINAL  Llegan	a	casa	del	Milagroso	Max	hasta	el	final. ****/
