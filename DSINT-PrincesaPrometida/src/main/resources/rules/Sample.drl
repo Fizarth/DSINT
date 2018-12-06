@@ -159,7 +159,7 @@ rule "Relacion Conocer"
         modify(p2){
         	setRelacionesPersonaje(listaR2);
         }
-        Archivo.getUnicaInstancia().addInf(p1.getNombre() + " conoce a " + p2.getNombre() + ".\n"); 
+        //Archivo.getUnicaInstancia().addInf(p1.getNombre() + " conoce a " + p2.getNombre() + ".\n"); 
 end
 
 rule "Westley quiere a Buttercup"
@@ -259,8 +259,19 @@ end
 //Fin acto0
 
 // Inicio Acto1
-rule "Creación de Personajes Acto1"
+rule "Inicio Acto1"
 	agenda-group "Acto1"
+	then
+		insert(new Mercenario());
+		insert(new Gobernante());
+		insert(new Visir());
+		insert(new Castillo());
+		insert(new Espana());
+		insert(new Herrero());
+		insert(new Bosque());		
+end
+
+rule "Creación de Personajes Acto1"
 	when 
 		mercenario: Mercenario()
 		gobernante: Gobernante()
@@ -361,7 +372,7 @@ rule "Buttercup prometida del príncipe"
     modify(bt){
           setUbicacionActual(c);
     }
-    Archivo.getUnicaInstancia().addInf("El Príncipe y Buttercup se prometen y se anuncia la boda");
+    Archivo.getUnicaInstancia().addInf("El Príncipe y Buttercup se prometen y se anuncia la boda.");
 end
 
 rule "Buttercup sale a pasear"
@@ -373,7 +384,7 @@ rule "Buttercup sale a pasear"
 		modify(bt){
 			setUbicacionActual(b);
 		}
-	    Archivo.getUnicaInstancia().addInf("Buttercup sale a pasear al bosque");
+	    Archivo.getUnicaInstancia().addInf("Buttercup sale a pasear al bosque.");
 end			
 
 rule "Secuestro Buttercup"
@@ -408,7 +419,8 @@ rule "Huida por el mar"
 		mar: Mar()
 	then
 		modify(v){
-			setMotivacion(Motivacion.DECLARAR_GUERRA);
+			setMotivacion(Motivacion.DECLARAR_GUERRA),
+			setUbicacionActual(mar);
 		}
 		modify(princesa){
 			setUbicacionActual(mar);
@@ -417,9 +429,6 @@ rule "Huida por el mar"
 			setUbicacionActual(mar);
 		}
 		modify(f){
-			setUbicacionActual(mar);
-		}
-		modify(v){
 			setUbicacionActual(mar);
 		}
 		Archivo.getUnicaInstancia().addInf("Los mercenarios se llevan a Buttercup por el mar para llegar a la frontera de Guilder.");
