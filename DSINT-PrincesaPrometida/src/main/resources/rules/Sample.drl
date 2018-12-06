@@ -181,7 +181,7 @@ end
 
 rule "Westley quiere a Buttercup"
   when
-  	g : Lugar( nombre == "Granja" )
+  	g : Granja( )
   	//hab: HabitacionN(  )
     wt: Westley( ubicacionActual == g)
     bt: Buttercup( ubicacionActual == g)
@@ -202,7 +202,7 @@ end
 
 rule "Buttercup quiere a Westley"
   when
-    g : Lugar( nombre == "Granja" )
+    g : Granja()
     wt: Westley( ubicacionActual == g)
     bt: Buttercup( ubicacionActual == g)
   then
@@ -220,8 +220,8 @@ end
 
 rule "Westley se va a hacer fortuna"
     when
-    	l: Lugar(nombre == "Mar")
-   		lg: Lugar(nombre == "Granja");
+    	l:Mar()
+   		lg: Granja()
         p1: Westley( ubicacionActual == lg, motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
    		
     then
@@ -238,7 +238,7 @@ end
 
 rule "Westley muere"
     when
-    	lm: Lugar(nombre == "Mar")
+    	lm: Mar()
         p: Westley(ubicacionActual == lm)
    		p2: Pirata(ubicacionActual == lm)
     then
@@ -251,7 +251,7 @@ end
 
 rule "Buttercup odia al pirata"
     when
-    	g :Lugar(nombre == "Granja")
+    	g :Granja()
     	exists (Westley(estadoSalud == EstadoSalud.MUERTO))
     	bt: Buttercup( ubicacionActual == g, motivacion == Motivacion.ESTAR_CON_WESTLEY)
     	pr: Pirata( )
