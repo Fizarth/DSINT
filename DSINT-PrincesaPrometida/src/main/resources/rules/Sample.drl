@@ -887,12 +887,15 @@ end
 
 
 /*** ACTO 4 	Presentación	de	la	Nueva	Reina	hasta la	muerte de	Westley ****/
-/*
-rule "Creación de Personajes Acto4"
+/*Ya podi
+rule "Creacion Acto4"
 	agenda-group "Acto4"
+	then
+		insert(new Guardia());
+end
+*/
+rule "4.1 Creación de Personajes Acto4"
 	when
-		aa: Anciana()
-		ya: Yalin()
 		pa: PatioCastillo()
 		ca: Castillo()
 		ind: Indefinido()
@@ -900,9 +903,7 @@ rule "Creación de Personajes Acto4"
 	then
 		insert(new Anciana(pa,ind));
 		insert(new Yalin(ca, gu));
-		Archivo.getUnicaInstancia().addInf("Acto4: Se crean los personajes");
-
-	
+		Archivo.getUnicaInstancia().addInf("Acto 4");	
 end
 
 
@@ -998,7 +999,7 @@ rule "Reencuentro Iñigo y Fezzik"
 			setUbicacionActual(bl);
 		}
 		modify(fe){
-			setUbicacionActual(bl);
+			setUbicacionActual(bl),
 			setEstadoSalud(EstadoSalud.BORRACHO);
 		}
 		
@@ -1026,7 +1027,7 @@ rule "Buttercup descubre mentira Principe"
 	when
 		ca: Castillo()
 		ap: AposentosPrincesa()
-		bu: ButterCup(UbicacionActual == ca)
+		bu: Buttercup(UbicacionActual == ca)
 		pr: Principe(UbicacionActual == ca)
 	then
 		modify (bu){
@@ -1077,11 +1078,11 @@ rule "Iñigo y Fezzik encuentran a Westley"
 			setUbicacionActual(po);
 		}
 		
-		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " y " + fe.getNombre + " se encuentran con el sirviente y lo interrogan hasta que " + fe.getNombre() + " lo golpea");
+		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " y " + fe.getNombre() + " se encuentran con el sirviente y lo interrogan hasta que " + fe.getNombre() + " lo golpea");
 		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " gracias a la ayuda de " + pi.getNombre() + " encuentran a " + iñ.getNombre()  + " en " + po.getNombre());
 end
 
-*/
+
 
 
 /*** ACTO 5 || ACTO FINAL  Llegan	a	casa	del	Milagroso	Max	hasta	el	final. ****/
