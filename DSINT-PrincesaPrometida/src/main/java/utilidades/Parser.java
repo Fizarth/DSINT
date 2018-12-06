@@ -76,13 +76,18 @@ public class Parser {
 		if (i > 3) {
 			int j = 2;
 			while (j < i ) {
-				nombre.concat(palabras[j]);
-				nombre.concat(" ");
+				nombre+=palabras[j]+ " ";
+				j++;
 			}
+			
+			// eliminar ultimo " "
+			nombre = nombre.substring(0, nombre.length()-1);
 			
 		} else {
 			nombre = palabras[i-1];
 		}
+		
+		
 		
 		return new ConsultaQuien(nombre, Acto.get(palabras[palabras.length-1]));
 		
