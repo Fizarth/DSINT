@@ -378,8 +378,8 @@ end
 
 rule "Buttercup sale a pasear"
 	when
-		b: Lugar(nombre=="Bosque")
-		c: Lugar(nombre =="Castillo")
+		b: Bosque()
+		c: Castillo()
 		bt: Buttercup( ubicacionActual == c)
 	then
 		modify(bt){
