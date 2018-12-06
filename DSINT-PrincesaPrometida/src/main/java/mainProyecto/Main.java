@@ -20,9 +20,14 @@ public class Main {
 
 		// System.out.println(kContainer.verify().getMessages().toString());
 
+
 		//String filePath = "/home/norberto/input1.txt";
-		//String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\1.txt";
-		String filePath = "C:\\Users\\maris\\Desktop\\pruebasDsint\\prueba1.txt";
+		String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\que.txt";
+
+
+
+		//String filePath = "C:\\Users\\maris\\Desktop\\pruebasDsint\\prueba1.txt";
+
 		Archivo.setPath(filePath + ".output.txt");
 		
 		ArrayList<Consulta> consultas = null;
@@ -47,7 +52,7 @@ public class Main {
 			kSession.insert(consulta);
 			
 		
-			System.out.println(Archivo.getUnicaInstancia().getInformacion());
+			//System.out.println(Archivo.getUnicaInstancia().getInformacion());
 			
 			
 			kSession.fireAllRules();
