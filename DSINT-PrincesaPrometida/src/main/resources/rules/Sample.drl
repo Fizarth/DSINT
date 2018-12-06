@@ -83,7 +83,7 @@ rule "Creación Personajes Acto 0"
 		insert(new Nieto(hab));
 		insert (new Pirata(mar, pir));
 		
-		System.out.println("Acto0: Se crean los personajes");
+		Archivo.getUnicaInstancia().addInf("Acto0: Se crean los personajes");
 end
 
 //Inicio Acto0
@@ -101,8 +101,7 @@ rule "Nieto es"
     modify(nt){
       setRelacionesPersonaje(listant);
     }
-   System.out.println("El nieto es familiar del abuelo y la madre" );
-   Archivo.getUnicaInstancia().addInf("El nieto es familiar del abuelo y la madre\n");
+   Archivo.getUnicaInstancia().addInf("El nieto es familiar del abuelo y la madre" );
 end
 
 rule "Abuelo es"
@@ -120,7 +119,6 @@ rule "Abuelo es"
     modify(ab){
       setRelacionesPersonaje(listaab);
     }
-    System.out.println("Abuelo familia" );
     Archivo.getUnicaInstancia().addInf("El abuelo es familiar del nieto y de la madre.\n");
 end
 
@@ -138,7 +136,6 @@ rule "Madre es"
     modify(md){
           setRelacionesPersonaje(listamd);
     }
-    System.out.println("Madre es familiar del abuelo y nieto" );
     Archivo.getUnicaInstancia().addInf("La madre es familiar del abuelo y del nieto.\n");
 end
 
@@ -151,7 +148,6 @@ when
   	modify(md){
   		setUbicacionActual(null);
   	}
-  	System.out.println("Madre se despide y abuelo lee un cuento al nieto" );
   	Archivo.getUnicaInstancia().addInf("La madre se despide y el abuelo lee un cuendo al nieto enfermo.\n");
 end
 
@@ -230,9 +226,8 @@ rule "Westley se va a hacer fortuna"
     	modify(p1){
     		setUbicacionActual(l);
     	}
-     System.out.println(p1.getNombre() + " se va a " + l.getNombre() + " para " + p1.getMotivacion());
-     Archivo.getUnicaInstancia().addInf("Como " + p1.getNombre()+ "quería estar con Buttercup, se va al " + 
-     l.getNombre() + " para " + p1.getMotivacion().getString() +".\n");
+     	Archivo.getUnicaInstancia().addInf("Como " + p1.getNombre()+ "quería estar con Buttercup, se va al " + 
+     		l.getNombre() + " para " + p1.getMotivacion().getString() +".\n");
 end
 
 rule "Westley muere"
@@ -244,8 +239,7 @@ rule "Westley muere"
     	modify(p){
     		setEstadoSalud(EstadoSalud.MUERTO);
     	}
-     System.out.println(p.getNombre() + " esta " + p.getEstadoSalud().getString() +" asesinado por " + p2.getNombre());
-     Archivo.getUnicaInstancia().addInf(p.getNombre() + " esta " + p.getEstadoSalud().getString() +" asesinado por " + p2.getNombre()+".\n");
+     	Archivo.getUnicaInstancia().addInf(p.getNombre() + " esta " + p.getEstadoSalud().getString() +" asesinado por " + p2.getNombre()+".\n");
 end
 
 rule "Buttercup odia al pirata"
@@ -295,7 +289,7 @@ rule "Creación de Personajes Acto1"
 		insert(new Principe(castillo, gobernante));
 		insert(new Conde(castillo, visir));
 		insert(new PadreInigo(esp, herrero));
-		System.out.println("Acto1: Se crean los personajes");
+		Archivo.getUnicaInstancia().addInf("Acto1: Se crean los personajes");
 end
 
 
@@ -379,7 +373,7 @@ rule "Buttercup prometida del príncipe"
     modify(bt){
           setUbicacionActual(c);
     }
-    System.out.println("El Príncipe y Buttercup se prometen y se anuncia la boda");
+    Archivo.getUnicaInstancia().addInf("El Príncipe y Buttercup se prometen y se anuncia la boda");
 end
 
 rule "Buttercup sale a pasear"
@@ -391,7 +385,7 @@ rule "Buttercup sale a pasear"
 		modify(bt){
 			setUbicacionActual(b);
 		}
-		System.out.println("Buttercup sale a pasear al bosque");
+	    Archivo.getUnicaInstancia().addInf("Buttercup sale a pasear al bosque");
 end			
 
 rule "Secuestro Buttercup"
@@ -412,7 +406,7 @@ rule "Secuestro Buttercup"
 		modify(v){
 			setMotivacion(Motivacion.SECUESTRAR_PRINCESA);
 		}
-		System.out.println(v.getNombre() + "," + i.getNombre() + " y " + f.getNombre() + " secuestran a "+ princesa.getNombre());
+		Archivo.getUnicaInstancia().addInf(v.getNombre() + "," + i.getNombre() + " y " + f.getNombre() + " secuestran a "+ princesa.getNombre());
 end
 
 rule "Huida por el mar"
@@ -440,7 +434,7 @@ rule "Huida por el mar"
 		modify(v){
 			setUbicacionActual(mar);
 		}
-		System.out.println("Los mercenarios se llevan a Buttercup por el mar para llegar a la frontera de Guilder.");
+		Archivo.getUnicaInstancia().addInf("Los mercenarios se llevan a Buttercup por el mar para llegar a la frontera de Guilder.");
 end
 
 rule "Anguila ataca a buttercup"
@@ -452,7 +446,7 @@ rule "Anguila ataca a buttercup"
 		modify(bt){
 			setEstadoSalud(EstadoSalud.EN_PELIGRO);
 		}
-		System.out.println(bt.getNombre() + " intenta escapar y en el agua es atacada por " + a.getNombre() + 
+		Archivo.getUnicaInstancia().addInf(bt.getNombre() + " intenta escapar y en el agua es atacada por " + a.getNombre() + 
 		", ahora ella está " + bt.getEstadoSalud().getString() +".");
 end
 
@@ -469,7 +463,7 @@ rule "Fezzik salva a Buttercup"
 		modify(a){
 			setEstadoSalud(EstadoSalud.MUERTO);
 		}		
-		System.out.println(fz.getNombre()+" salva a " + bt.getNombre() + ", la anguila muere.");		
+		Archivo.getUnicaInstancia().addInf(fz.getNombre()+" salva a " + bt.getNombre() + ", la anguila muere.");		
 end
 
 rule "Llegada a los acantilados"
@@ -498,8 +492,8 @@ rule "Llegada a los acantilados"
 		modify(p){
 			setMotivacion(Motivacion.SECUESTRAR_PRINCESA)
 		}
-		System.out.println(v.getNombre() + "," + f.getNombre() + "," + i.getNombre() + "y" + bt.getNombre() + " llegan a " + acantilados.getNombre());
-		System.out.println(p.getNombre() + " quiere " + p.getMotivacion().getString());
+		Archivo.getUnicaInstancia().addInf(v.getNombre() + "," + f.getNombre() + "," + i.getNombre() + "y" + bt.getNombre() + " llegan a " + acantilados.getNombre());
+		Archivo.getUnicaInstancia().addInf(p.getNombre() + " quiere " + p.getMotivacion().getString());
 end
 
 rule "Pirata llega a los acantilados"
@@ -525,8 +519,8 @@ rule "Pirata llega a los acantilados"
 		modify(f){
 			setUbicacionActual(cm)
 		}
-		System.out.println(v.getNombre() + "," + f.getNombre() + " y " + bt.getNombre() + " huyen a " + cm.getNombre());
-		System.out.println( p.getNombre() + " llega a " + ac.getNombre());
+		Archivo.getUnicaInstancia().addInf(v.getNombre() + "," + f.getNombre() + " y " + bt.getNombre() + " huyen a " + cm.getNombre());
+		Archivo.getUnicaInstancia().addInf( p.getNombre() + " llega a " + ac.getNombre());
 end
 
 rule "Historia Domingo Montoya"
@@ -552,7 +546,7 @@ rule "Historia Domingo Montoya"
 		modify(i){
 			setMotivacion(Motivacion.VENGAR_PADRE);
 		}
-		System.out.println("Domingo Montoya está muerto y su hijo busca venganza");
+		Archivo.getUnicaInstancia().addInf("Domingo Montoya está muerto y su hijo busca venganza");
 end
 
 rule "Pirata vence a Iñigo"
@@ -569,7 +563,7 @@ rule "Pirata vence a Iñigo"
 		modify(p){
 			setUbicacionActual(cm)
 		}
-		System.out.println(p.getNombre() + " vence a " + i.getNombre() +" y sigue la persecución");
+		Archivo.getUnicaInstancia().addInf(p.getNombre() + " vence a " + i.getNombre() +" y sigue la persecución");
 		
 end 
 //Introducir Iñigo desaparecido
@@ -591,7 +585,7 @@ rule "Pirata vence a Fezzik"
 		modify(i){
 			setProfesion(des);
 		}
-		System.out.println(p.getNombre() + " vence a " + f.getNombre());
+		Archivo.getUnicaInstancia().addInf(p.getNombre() + " vence a " + f.getNombre());
 end
 
 rule "Principe llega a los acantilados"
@@ -619,7 +613,7 @@ rule "Principe llega a los acantilados"
 		modify(f){
 			setProfesion(des);
 		}
-		System.out.println("Príncipe llega a los acantilados para salvar a Buttercup");
+		Archivo.getUnicaInstancia().addInf("Príncipe llega a los acantilados para salvar a Buttercup");
 end 
 
 rule "Muere Vizzini"
@@ -631,7 +625,7 @@ rule "Muere Vizzini"
 		modify(v){
 			setEstadoSalud(EstadoSalud.MUERTO);
 		}
-		System.out.println("Vizzini está " + v.getEstadoSalud().getString() + " por " + p.getNombre());
+		Archivo.getUnicaInstancia().addInf("Vizzini está " + v.getEstadoSalud().getString() + " por " + p.getNombre());
 end
 //Las ubicaciones y empleos de Fezzik e Íñigo ya han sido modificadas en las reglas anteriores, 
 //ya no hay que modificarlo en el acto2
@@ -875,7 +869,7 @@ rule "Creación de Personajes Acto4"
 	then
 		insert(new Anciana(pa,ind));
 		insert(new Yalin(ca, gu));
-		System.out.println("Acto4: Se crean los personajes");
+		Archivo.getUnicaInstancia().addInf("Acto4: Se crean los personajes");
 
 	
 end
@@ -1073,7 +1067,7 @@ rule "Creación de Personajes Acto5"
 		insert(new Max(cs, cur ));
 		insert(new Valerie(cs, cur));
 		insert(new Obispo(ig, sac));
-		System.out.println("Acto5: Se crean los personajes");
+		Archivo.getUnicaInstancia().addInf("Acto5: Se crean los personajes");
 end
 
 rule "Comprar un milagro"
