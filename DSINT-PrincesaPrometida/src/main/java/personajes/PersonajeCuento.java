@@ -42,6 +42,11 @@ public class PersonajeCuento extends Personaje {
 	public void setTit(TituloNobiliario tit) {
 		this.tit = tit;
 	}
+	
+	public boolean noTieneTitulo() {
+		if(tit!=null) return false;
+		return true;
+	}
 
 	@Override
 	public String toString() {

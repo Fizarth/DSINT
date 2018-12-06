@@ -223,7 +223,7 @@ rule "0.11 Buttercup odia al pirata"
 	          addRelacion(od2);
 	    }
 	    Archivo.getUnicaInstancia().addInf(bt.getNombre()+ " " +bt.getRelacion(pr).toString() + 
-	    " por la muerte de Westley y pierde su motivación.");
+	    " por la muerte de Westley y pierde su motivación. ");
 end
 
 //Modificar esta relación
@@ -246,22 +246,26 @@ end
 //Fin acto0
 
 // Inicio Acto1
-rule "Inicio Acto1"
+rule "1.1 Lugares Acto1"
 agenda-group "Acto1"
+	then
+		insert(new Castillo());
+		insert(new Espana());
+		insert(new Bosque());
+		insert(new AcantiladosLocura());
+		insert(new CaminoMontana());
+end
+
+rule"1.2 Profesiones Acto1"
 	then
 		insert(new Mercenario());
 		insert(new Gobernante());
 		insert(new Visir());
-		insert(new Castillo());
-		insert(new Espana());
 		insert(new Herrero());
-		insert(new Bosque());
-		insert(new AcantiladosLocura());
-		insert(new CaminoMontana());
 		insert(new Desempleado());
 end
 
-rule "Creación de Personajes Acto1"
+rule "1.3 Creación de Personajes Acto1"
 	when 
 		mercenario: Mercenario()
 		gobernante: Gobernante()
@@ -280,30 +284,60 @@ rule "Creación de Personajes Acto1"
 		insert(new Conde(castillo, visir));
 		insert(new PadreInigo(esp, herrero));
 		insert(new AnguilaChillona(mar));
-		//Archivo.getUnicaInstancia().addInf("Acto1: Se crean los personajes");
 end
 
+rule "1.4 El Rey"
+	when
+		g: Gobernante()
+		r: Rey(profesion == g)
+		eval(r.noTieneTitulo())
+	then
+		modify(r){
+			setTit(TituloNobiliario.REY);
+		}
+end
 
-rule "1.1 Rey y Principe son familia"
+rule "1.5 El Príncipe"
+	when
+		g: Gobernante()
+		p: Principe(profesion == g)
+		eval(p.noTieneTitulo())
+	then
+		modify(p){
+			setTit(TituloNobiliario.PRINCIPE);
+		}
+		
+end
+rule "1.6 El Conde"
+	when
+		v: Visir()
+		c: Conde( profesion==v )
+		eval(c.noTieneTitulo())
+	then
+		modify(c){
+			setTit(TituloNobiliario.CONDE);
+		}
+end
+
+/*TOCANDO ESTA*/
+rule "1.7 Rey y Principe son familia"
   when
-    pr: Principe( )
-    ry: Rey( )
+  	g: Gobernante()
+    pr: Principe(profesion == g)
+    ry: Rey(profesion == g)
   then
-    Relacion fm1 = new FamiliarDe(ry);
-    Relacion fm2 = new FamiliarDe(pr);
-    ArrayList<Relacion> listaR = pr.getRelacionesPersonaje();
-    listaR.add(fm1);
+    FamiliarDe fm1 = new FamiliarDe(ry);
+    FamiliarDe fm2 = new FamiliarDe(pr);
+    
     modify(pr){
-      setRelacionesPersonaje(listaR);
+      addRelacion(fm1);
     }
-    ArrayList<Relacion> listaR2 = ry.getRelacionesPersonaje();
-    listaR2.add(fm2);
-    modify(pr){
-      setRelacionesPersonaje(listaR2);
+    modify(ry){
+      addRelacion(fm2);
     }
 end
 
-rule "1.2 Principe y Conde amigos"
+rule "1.8 Principe y Conde amigos"
   when
     pr: Principe( )
     cd: Conde( )
