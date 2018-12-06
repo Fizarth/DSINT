@@ -54,8 +54,31 @@ public abstract class Personaje {
 		this.relacionesPersonaje.add(rel);
 	}
 
-	public void deleteRelacion(Relacion rel) {
+	public void removeRelacion(Relacion rel) {
 		this.relacionesPersonaje.remove(rel);
+	}
+	
+	public boolean tieneRelacion(Personaje p) {
+		for (Relacion relacion : relacionesPersonaje) {
+			if(relacion.getAfectado().equals(p)) return true;
+		}
+		return false;
+		
+	}
+	
+	public boolean noTieneRelacion(Personaje p) {
+		for (Relacion relacion : relacionesPersonaje) {
+			if(relacion.getAfectado().equals(p)) return false;
+		}
+		return true;
+		
+	}
+	
+	public Relacion getRelacion(Personaje p) {
+		for (Relacion relacion : relacionesPersonaje) {
+			if(relacion.getAfectado().equals(p)) return relacion;
+		}
+		return null;
 	}
 
 	public EstadoCivil getEstadoCivil() {
@@ -129,10 +152,10 @@ public abstract class Personaje {
 			ub = "actualmente no sé donde se encuentra";
 		else
 			ub = "actualmente se encuentra en " + ubicacionActual.toString();
-		String cadena = nombre + " es un personaje " + tipoImportancia.getString() + ". Es de " + origen.getString() + "y " + ub
+		String cadena = nombre + " es un personaje " + tipoImportancia.getString() + ". Es de " + origen.getString() + " y " + ub
 				+ ". Es " + sexo.getString() + ", está " + estadoSalud.getString() + " y su estado civil es "
 				+ estadoCivil.getString() + "." + nombre + " " + relacionesPersonaje + ".";
-		return cadena;
+		return cadena+"\n";
 
 	}
 

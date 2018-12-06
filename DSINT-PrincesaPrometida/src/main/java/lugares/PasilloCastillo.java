@@ -2,7 +2,7 @@ package lugares;
 
 public class PasilloCastillo extends Lugar {
 
-	public PasilloCastillo(String nom) {
+	public PasilloCastillo() {
 		super("el pasillo del castillo");
 	}
 

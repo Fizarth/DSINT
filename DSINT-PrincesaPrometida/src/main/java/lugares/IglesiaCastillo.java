@@ -2,7 +2,7 @@ package lugares;
 
 public class IglesiaCastillo extends Lugar {
 
-	public IglesiaCastillo(String nom) {
+	public IglesiaCastillo() {
 		super("la iglesia del Castillo");
 	}
 

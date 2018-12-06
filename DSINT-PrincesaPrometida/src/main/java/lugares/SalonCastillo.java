@@ -2,7 +2,7 @@ package lugares;
 
 public class SalonCastillo extends Lugar {
 
-	public SalonCastillo(String nom) {
+	public SalonCastillo() {
 		super("el salón del castillo");
 		// TODO Auto-generated constructor stub
 	}

@@ -2,7 +2,7 @@ package lugares;
 
 public class BarcoPirata extends Lugar {
 
-	public BarcoPirata(String nom) {
+	public BarcoPirata() {
 		super("el barco del pirata");
 	}
 

@@ -15,6 +15,18 @@ public abstract class Relacion {
 		this.afectado = afectado;
 	}
 
+	public Personaje getAfectado() {
+		return afectado;
+	}
+
+	public void setAfectado(Personaje afectado) {
+		this.afectado = afectado;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
 	/***
 	 * devuelve la lista de relaciones que tiene p1 con p2, siendo p2 el afectado
 	 * 

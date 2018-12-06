@@ -12,131 +12,105 @@ import profesiones.*;
 
 //Creación de la base
 rule "Creación Profesiones"
+agenda-group "Acto0"
 	then 
-		insert(new BrigadaBrutal());
-		insert(new Curandero());
-		insert(new Desempleado());
-		insert(new Espadachin());
-		insert(new Gobernante());
+		//insert(new BrigadaBrutal());
+		//insert(new Curandero());
+		//insert(new Desempleado());
+		//insert(new Espadachin());
+		//insert(new Gobernante());
 		insert(new Granjero());
-		insert(new Guardia());
-		insert(new Herrero());
-		insert(new Indefinido());
-		insert(new Mercenario());
-		insert(new Pirateria());
-		insert(new Sacerdote());
-		insert(new Sirviente());
-		insert(new Visir());
+		//insert(new Guardia());
+		//insert(new Herrero());
+		//insert(new Indefinido());
+		//insert(new Mercenario());
+		//insert(new Pirateria());
+		//insert(new Sacerdote());
+		//insert(new Sirviente());
+		//insert(new Visir());
 		System.out.println("Creo las profesiones");
 end 
 
 rule "Creación Lugares"
 	then
-		insert(new AcantiladosLocura());
-		insert(new Bosque());
-		insert(new BosqueLadrones());
-		insert(new CaminoMontana());
-		insert(new CasaMilagrosoMax());
-		insert(new Castillo());
-		insert(new Espana());
+		//insert(new AcantiladosLocura());
+		//insert(new Bosque());
+		//insert(new BosqueLadrones());
+		//insert(new CaminoMontana());
+		//insert(new CasaMilagrosoMax());
+		//insert(new Castillo());
+		//insert(new Espana());
 		insert(new Granja());
 		insert(new HabitacionN());
-		insert(new Mar());
-		insert(new PantanoFuego());
-		insert(new PozoDesesperacion());	
+		//insert(new Mar());
+		//insert(new PantanoFuego());
+		//insert(new PozoDesesperacion());	
 		System.out.println("Creo los lugares");	
 end 
 
 rule "Creación Animales"
 	when 
-		mar: Mar()
+		//mar: Mar()
 		granja: Granja()
-		c: Castillo()
-		bl: BosqueLadrones()
-		pantano: PantanoFuego()
-		cM: CasaMilagrosoMax()
+		//c: Castillo()
+		//bl: BosqueLadrones()
+		//pantano: PantanoFuego()
+		//cM: CasaMilagrosoMax()
 	then
-		insert(new AnguilaChillona(mar));
+		//insert(new AnguilaChillona(mar));
 		insert(new Caballo(granja));
-		insert(new Cabra(cM));
+		//insert(new Cabra(cM));
 		insert(new Cerdo(granja));
-		insert(new Gallina(bl));
-		insert(new Perro(c));
-		insert(new RoedorAspectoGigantesco(pantano));
+		//insert(new Gallina(bl));
+		//insert(new Perro(c));
+		//insert(new RoedorAspectoGigantesco(pantano));
 		insert(new Vaca(granja));
 		System.out.println("Se han añadido los animales");
 end
 
 rule "Creación Personajes Acto 0"
-	agenda-group "Acto0"
+	//agenda-group "Acto0"
 	when 
-		granja: Granja()
-		granjero: Granjero()
 		hab: HabitacionN()
-		pir: Pirateria()
-		mar: Mar()
 	then
-		insert(new Westley(granja, granjero));
-		insert(new Buttercup(granja, granjero));
 		insert(new Abuelo(hab));
 		insert(new Madre(hab));
 		insert(new Nieto(hab));
-		insert (new Pirata(mar, pir));
-		
-		Archivo.getUnicaInstancia().addInf("Acto0: Se crean los personajes");
+		//Archivo.getUnicaInstancia().addInf("Acto0: Se crean los personajes");
 end
 
-//Inicio Acto0
-rule "Nieto es"
+rule "Visita familiar"
   when
-    nt: Nieto()
-    ab: Abuelo()
-    md:Madre() 
+ 	hab: HabitacionN()
+    nt: Nieto(ubicacionActual == hab)
+    ab: Abuelo(ubicacionActual == hab)
+    md: Madre(ubicacionActual == hab)
+    eval(nt.noTieneRelacion(ab))
+    eval(ab.noTieneRelacion(nt))
+    eval(md.noTieneRelacion(ab))
+    eval(md.noTieneRelacion(nt))
   then
-    Relacion fm1 = new FamiliarDe(ab);
-    Relacion fm2 = new FamiliarDe(md);
-    ArrayList<Relacion> listant = nt.getRelacionesPersonaje();
-    listant.add(fm1);
-    listant.add(fm2);
+    FamiliarDe fm1 = new FamiliarDe(ab);
+    FamiliarDe fm2 = new FamiliarDe(md);
+    FamiliarDe fm3 = new FamiliarDe(nt);
+    
     modify(nt){
-      setRelacionesPersonaje(listant);
+    	addRelacion(fm1),
+      	addRelacion(fm2);
     }
-   Archivo.getUnicaInstancia().addInf("El nieto es familiar del abuelo y la madre" );
-end
-
-rule "Abuelo es"
-  when
-    nt: Nieto()
-    ab: Abuelo()
-    md:Madre() 
-  then
-    Relacion fm1 = new FamiliarDe(nt);
-    Relacion fm2 = new FamiliarDe(md);
-    ArrayList<Relacion> listaab = ab.getRelacionesPersonaje();
-    listaab.add(fm1);
-    listaab.add(fm2);
-
+    
     modify(ab){
-      setRelacionesPersonaje(listaab);
+    	addRelacion(fm2),
+    	addRelacion(fm3);
     }
-    Archivo.getUnicaInstancia().addInf("El abuelo es familiar del nieto y de la madre.\n");
-end
-
-rule "Madre es"
-  when
-    nt: Nieto()
-    ab: Abuelo()
-    md:Madre()
-  then
-    Relacion fm1 = new FamiliarDe(ab);
-    Relacion fm2 = new FamiliarDe(nt);
-    ArrayList<Relacion> listamd = md.getRelacionesPersonaje();
-    listamd.add(fm1);
-    listamd.add(fm2);
+    
     modify(md){
-          setRelacionesPersonaje(listamd);
-    }
-    Archivo.getUnicaInstancia().addInf("La madre es familiar del abuelo y del nieto.\n");
+      	addRelacion(fm1),
+     	addRelacion(fm3);
+   	}
+   	
+  	Archivo.getUnicaInstancia().addInf(md.getNombre() + " está cuidando de " + nt.getNombre() +
+  	" que se encuentra " + nt.getEstadoSalud().getString() + " y llega su " +ab.getNombre() + " de visita." );
 end
 
 rule "Nieto está enfermo"
@@ -149,6 +123,19 @@ when
   		setUbicacionActual(null);
   	}
   	Archivo.getUnicaInstancia().addInf("La madre se despide y el abuelo lee un cuendo al nieto enfermo.\n");
+end
+
+rule "Inicio cuento"
+	when
+		hab: HabitacionN()
+		Nieto( ubicacionActual == hab )
+		Abuelo( ubicacionActual == hab )
+		Madre( ubicacionActual == null )
+		granja: Granja()
+		granjero: Granjero()
+	then
+		insert(new Westley(granja, granjero));
+		insert(new Buttercup(granja, granjero));
 end
 
 //Modificar esta relación
@@ -218,8 +205,9 @@ rule "Westley se va a hacer fortuna"
     	l:Mar()
    		lg: Granja()
         p1: Westley( ubicacionActual == lg, motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
-   		
+   		pir: Pirateria()
     then
+    	insert (new Pirata(l, pir));
     	modify(p1){
     		setMotivacion(Motivacion.GANAR_DINERO);
     	}
