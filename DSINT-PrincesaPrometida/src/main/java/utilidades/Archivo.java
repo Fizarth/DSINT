@@ -27,7 +27,7 @@ public class Archivo {
 	}
 	
 	public void escribir(String s) throws IOException {
-		 this.bfwriter.write(this.informacion);
+		 this.bfwriter.write(s);
 	}
 	
 	public void cerrarArchivo() throws IOException {

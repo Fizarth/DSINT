@@ -1480,8 +1480,9 @@ end
 rule "Consulta Quien" 
 	when 
 		con: ConsultaQuien()
-		p: Personaje (nombre == con.getNombre)
+		p: Personaje (nombre == con.getNombre())
 	then
+		Archivo.getUnicaInstancia().escribir("Pregunta quien");
 		System.out.println("ENTRO REGLA CONSULTA QUIEN");
 		System.out.println(p.toString());
 		Archivo.getUnicaInstancia().escribir(p.toString() + "\n");
