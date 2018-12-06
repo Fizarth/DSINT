@@ -22,7 +22,7 @@ public class Main {
 
 
 		//String filePath = "/home/norberto/input1.txt";
-		String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\1.txt";
+		String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\que.txt";
 
 
 
@@ -51,7 +51,7 @@ public class Main {
 			kSession.insert(consulta);
 			
 		
-			System.out.println(Archivo.getUnicaInstancia().getInformacion());
+			//System.out.println(Archivo.getUnicaInstancia().getInformacion());
 			
 			
 			kSession.fireAllRules();
