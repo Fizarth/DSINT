@@ -22,7 +22,7 @@ agenda-group "Acto0"
 		insert(new Granjero());
 		//insert(new Guardia());
 		//insert(new Herrero());
-		//insert(new Indefinido());
+		insert(new Indefinido());
 		//insert(new Mercenario());
 		insert(new Pirateria());
 		//insert(new Sacerdote());
@@ -147,8 +147,8 @@ rule "0.8 Amor en la Granja"
 	when
 		g: Granja()
 		gj: Granjero()
-		wt: Westley( ubicacionActual == g, profesion == gj )
-		bt: Buttercup( ubicacionActual == g, profesion == gj  )
+		wt: Westley( estadoSalud == EstadoSalud.VIVO, ubicacionActual == g, profesion == gj)
+		bt: Buttercup(estadoSalud==EstadoSalud.VIVO, ubicacionActual == g, profesion == gj )
 		eval(wt.noTieneRelacion(bt))
     	eval(bt.noTieneRelacion(wt))
 	then
@@ -177,14 +177,16 @@ rule "0.9 Westley se va a hacer fortuna"
    		g: Granja()
         wt: Westley( ubicacionActual == g, motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
    		pir: Pirateria()
+   		inf: Indefinido()
     then
     	
     	modify(wt){
     		setMotivacion(Motivacion.GANAR_DINERO),
-    		setUbicacionActual(m);
+    		setUbicacionActual(m),
+    		setProfesion(inf);
     	}
-     	Archivo.getUnicaInstancia().addInf("Como " + wt.getNombre()+ "no tiene dinero se marcha a " +
-    	m.getNombre() + " para " + wt.getMotivacion().getString() +". ");
+     	Archivo.getUnicaInstancia().addInf("Como " + wt.getNombre()+ "no tiene dinero se marcha a " 
+     	+ m.getNombre() + " para " + wt.getMotivacion().getString() +". ");
      	insert (new Pirata(m, pir));
 end
 
@@ -197,8 +199,8 @@ rule "0.10 Westley muere"
     	modify(wt){
     		setEstadoSalud(EstadoSalud.MUERTO);
     	}
-     	Archivo.getUnicaInstancia().addInf(wt.getNombre() + " está " + wt.getEstadoSalud().getString() 
-     	+" asesinado por " + pir.getNombre()+". ");
+     	Archivo.getUnicaInstancia().addInf("En " +m.getNombre()+ " " + wt.getNombre() 
+     	+ " es asesinado por " + pir.getNombre()+". ");
 end
 
 rule "Buttercup odia al pirata"
@@ -379,8 +381,9 @@ rule "1.5 Buttercup sale a pasear"
 	when
 		b: Bosque()
 		c: Castillo()
-		bt: Buttercup( ubicacionActual == c)
+		bt: Buttercup(ubicacionActual == c)
 		we: Westley(estadoSalud == EstadoSalud.MUERTO)
+		Principe( ubicacionActual == c, motivacion == Motivacion.ESTAR_CON_BUTTERCUP )
 	then
 		modify(bt){
 			setUbicacionActual(b);
