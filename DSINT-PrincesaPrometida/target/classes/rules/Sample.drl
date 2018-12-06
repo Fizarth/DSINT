@@ -182,11 +182,11 @@ end
 rule "Westley quiere a Buttercup"
   when
   	g : Lugar( nombre == "Granja" )
-  	hab: HabitacionN(  )
+  	//hab: HabitacionN(  )
     wt: Westley( ubicacionActual == g)
     bt: Buttercup( ubicacionActual == g)
-    Nieto(ubicacionActual == hab)
-    Abuelo(ubicacionActual == hab)
+    //Nieto(ubicacionActual == hab)
+    //Abuelo(ubicacionActual == hab)
   then
     Relacion q1 = new QuiereA(bt);
     ArrayList<Relacion> listaR = wt.getRelacionesPersonaje();
