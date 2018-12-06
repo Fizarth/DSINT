@@ -109,7 +109,7 @@ rule "0.5 Visita familiar"
    	
   	Archivo.getUnicaInstancia().addInf(md.getNombre() + " está cuidando de " 
   	+ nt.getNombre() +" que se encuentra " + nt.getEstadoSalud().getString() 
-  	+ " y llega su " +ab.getNombre() + " de visita." );
+  	+ " y llega su " +ab.getNombre() + " de visita. " );
 end
 
 rule "0.6 Nieto está enfermo"
@@ -126,7 +126,7 @@ when
   		setUbicacionActual(null);
   	}
   	Archivo.getUnicaInstancia().addInf(md.getNombre()+" se despide y "
-  	+ ab.getNombre()+ " lee un cuendo a " + nt.getNombre()+".");
+  	+ ab.getNombre()+ " lee un cuendo a " + nt.getNombre()+". ");
 end
 
 rule "0.7 Inicio cuento"
@@ -140,7 +140,7 @@ rule "0.7 Inicio cuento"
 	then
 		insert(new Westley(granja, granjero));
 		insert(new Buttercup(granja, granjero));
-		Archivo.getUnicaInstancia().addInf(" El cuento es una historia de aventuras y amor.\n");
+		Archivo.getUnicaInstancia().addInf("El cuento es una historia de aventuras y amor.\n");
 end
 
 rule "0.8 Amor en la Granja"
@@ -153,7 +153,7 @@ rule "0.8 Amor en la Granja"
     	eval(bt.noTieneRelacion(wt))
 	then
 		Archivo.getUnicaInstancia().addInf(wt.getNombre() + " y " + bt.getNombre() + " son dos " 
-		+ bt.getProfesion().toString()+"s.");
+		+ bt.getProfesion().toString()+"s. ");
 		
 		QuiereA q1 = new QuiereA(bt);
 		QuiereA q2 = new QuiereA(wt);
@@ -167,38 +167,38 @@ rule "0.8 Amor en la Granja"
 	    	addRelacion(q2),
 	    	setMotivacion(Motivacion.ESTAR_CON_WESTLEY);
 	    }
-	    Archivo.getUnicaInstancia().addInf(" Cuando " + bt.getNombre() + " le manda una tarea a " 
+	    Archivo.getUnicaInstancia().addInf("Cuando " + bt.getNombre() + " le manda una tarea a " 
 		+wt.getNombre() + ", él siempre contesta \"Como desees\", que en realidad significa \"Te amo\". "  );
 end
 
-rule "Westley se va a hacer fortuna"
+rule "0.9 Westley se va a hacer fortuna"
     when
-    	l:Mar()
-   		lg: Granja()
-        p1: Westley( ubicacionActual == lg, motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
+    	m: Mar()
+   		g: Granja()
+        wt: Westley( ubicacionActual == g, motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
    		pir: Pirateria()
     then
-    	insert (new Pirata(l, pir));
-    	modify(p1){
-    		setMotivacion(Motivacion.GANAR_DINERO);
+    	
+    	modify(wt){
+    		setMotivacion(Motivacion.GANAR_DINERO),
+    		setUbicacionActual(m);
     	}
-    	modify(p1){
-    		setUbicacionActual(l);
-    	}
-     	Archivo.getUnicaInstancia().addInf("Como " + p1.getNombre()+ " quería estar con Buttercup, se va al " + 
-     		l.getNombre() + " para " + p1.getMotivacion().getString() +".\n");
+     	Archivo.getUnicaInstancia().addInf("Como " + wt.getNombre()+ "no tiene dinero se marcha a " +
+    	m.getNombre() + " para " + wt.getMotivacion().getString() +". ");
+     	insert (new Pirata(m, pir));
 end
 
-rule "Westley muere"
+rule "0.10 Westley muere"
     when
-    	lm: Mar()
-        p: Westley(ubicacionActual == lm)
-   		p2: Pirata(ubicacionActual == lm)
+    	m: Mar()
+        wt: Westley(ubicacionActual == m)
+   		pir: Pirata(ubicacionActual == m)
     then
-    	modify(p){
+    	modify(wt){
     		setEstadoSalud(EstadoSalud.MUERTO);
     	}
-     	Archivo.getUnicaInstancia().addInf(p.getNombre() + " esta " + p.getEstadoSalud().getString() +" asesinado por " + p2.getNombre()+".\n");
+     	Archivo.getUnicaInstancia().addInf(wt.getNombre() + " está " + wt.getEstadoSalud().getString() 
+     	+" asesinado por " + pir.getNombre()+". ");
 end
 
 rule "Buttercup odia al pirata"
