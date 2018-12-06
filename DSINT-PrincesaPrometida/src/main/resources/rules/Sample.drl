@@ -693,10 +693,13 @@ rule "2.2 Principe rastrea a Buttercup"
 		modify(p){
 			setUbicacionActual(cm)
 		}
+		modify(conde){
+			setUbicacionActual(cm)
+		}
 		Archivo.getUnicaInstancia().addInf(p.getNombre() + " rastrea a su prometida hasta "+ cm.getNombre());
 end 
 
-rule "Buttercup descubre quien es su secuestrador"
+rule "2.3 Buttercup descubre quien es su secuestrador"
 	when 
 		colina: Colina()
 		but: Buttercup(ubicacionActual == colina)
@@ -707,7 +710,6 @@ rule "Buttercup descubre quien es su secuestrador"
 end
 
 rule "Principe alcanza a la princesa"
-//solo llegara cuando el pirata y la princesa esten alli.
 	when 
 		co: Colina()
 		cm: CaminoMontana()
@@ -722,7 +724,7 @@ rule "Principe alcanza a la princesa"
 		modify(conde){
 			setUbicacionActual(co)
 		}
-		Archivo.getUnicaInstancia().addInf(prin.getNombre() + " se encuentra en " + co.getNombre());
+		Archivo.getUnicaInstancia().addInf(prin.getNombre() + " alcanza a la princesa en " + co.getNombre());
 end
 
 rule "Como Desees en la colina"
@@ -738,7 +740,7 @@ rule "Como Desees en la colina"
 		modify(we){
 			setEstadoSalud(EstadoSalud.VIVO)
 		}
-		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " se tira por " + co.getNombre()+"\n");
+		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " se tira por " + co.getNombre());
 		Archivo.getUnicaInstancia().addInf("Se produce el beso de amor verdadero");
 		
 //no se que hacer con el principe ni el pirata xD
