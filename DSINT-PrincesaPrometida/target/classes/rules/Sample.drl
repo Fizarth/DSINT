@@ -123,7 +123,8 @@ when
   	modify(md){
   		setUbicacionActual(null);
   	}
-  	Archivo.getUnicaInstancia().addInf(md.getNombre()+" se despide y "+ ab.getNombre()+ " lee un cuendo a " + nt.getNombre()+".\n");
+  	Archivo.getUnicaInstancia().addInf(md.getNombre()+" se despide y "
+  	+ ab.getNombre()+ " lee un cuendo a " + nt.getNombre()+".\n");
 end
 
 rule "7 Inicio cuento"
@@ -215,7 +216,7 @@ rule "Westley se va a hacer fortuna"
     	modify(p1){
     		setUbicacionActual(l);
     	}
-     	Archivo.getUnicaInstancia().addInf("Como " + p1.getNombre()+ "quería estar con Buttercup, se va al " + 
+     	Archivo.getUnicaInstancia().addInf("Como " + p1.getNombre()+ " quería estar con Buttercup, se va al " + 
      		l.getNombre() + " para " + p1.getMotivacion().getString() +".\n");
 end
 
