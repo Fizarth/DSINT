@@ -11,7 +11,7 @@ import profesiones.*;
 
 
 //Creación de la base
-rule "Creación Profesiones"
+rule "1 Creación Profesiones"
 agenda-group "Acto0"
 	then 
 		//insert(new BrigadaBrutal());
@@ -24,14 +24,14 @@ agenda-group "Acto0"
 		//insert(new Herrero());
 		//insert(new Indefinido());
 		//insert(new Mercenario());
-		//insert(new Pirateria());
+		insert(new Pirateria());
 		//insert(new Sacerdote());
 		//insert(new Sirviente());
 		//insert(new Visir());
-		System.out.println("Creo las profesiones");
+		System.out.println("Profesiones 0");
 end 
 
-rule "Creación Lugares"
+rule "2 Creación Lugares"
 	then
 		//insert(new AcantiladosLocura());
 		//insert(new Bosque());
@@ -42,13 +42,13 @@ rule "Creación Lugares"
 		//insert(new Espana());
 		insert(new Granja());
 		insert(new HabitacionN());
-		//insert(new Mar());
+		insert(new Mar());
 		//insert(new PantanoFuego());
 		//insert(new PozoDesesperacion());	
-		System.out.println("Creo los lugares");	
+		System.out.println("Lugares 0");	
 end 
 
-rule "Creación Animales"
+rule "3 Creación Animales"
 	when 
 		//mar: Mar()
 		granja: Granja()
@@ -65,10 +65,10 @@ rule "Creación Animales"
 		//insert(new Perro(c));
 		//insert(new RoedorAspectoGigantesco(pantano));
 		insert(new Vaca(granja));
-		System.out.println("Se han añadido los animales");
+		System.out.println("Animales 0");
 end
 
-rule "Creación Personajes Acto 0"
+rule "4 Creación Personajes Acto 0"
 	//agenda-group "Acto0"
 	when 
 		hab: HabitacionN()
@@ -76,10 +76,10 @@ rule "Creación Personajes Acto 0"
 		insert(new Abuelo(hab));
 		insert(new Madre(hab));
 		insert(new Nieto(hab));
-		//Archivo.getUnicaInstancia().addInf("Acto0: Se crean los personajes");
+		System.out.println("Abuelo, Madre y Nieto");
 end
 
-rule "Visita familiar"
+rule "5 Visita familiar"
   when
  	hab: HabitacionN()
     nt: Nieto(ubicacionActual == hab)
