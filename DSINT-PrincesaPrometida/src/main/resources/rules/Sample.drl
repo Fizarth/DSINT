@@ -380,6 +380,7 @@ rule "1.5 Buttercup sale a pasear"
 		b: Bosque()
 		c: Castillo()
 		bt: Buttercup( ubicacionActual == c)
+		we: Westley(estadoSalud == EstadoSalud.MUERTO)
 	then
 		modify(bt){
 			setUbicacionActual(b);
@@ -639,6 +640,7 @@ rule "Creación Acto2"
 agenda-group "Acto2"
 	then
 		insert(new Colina());
+		insert(new Espadachin());
 		System.out.println("Lugares 2");	
 end 
 rule "2.1 Pirata y Buttercup huyen"
@@ -686,7 +688,7 @@ rule "2.3 Buttercup descubre quien es su secuestrador"
 	
 end
 
-rule "Principe alcanza a la princesa"
+rule "2.4 Principe alcanza a la princesa"
 	when 
 		co: Colina()
 		cm: CaminoMontana()
@@ -704,18 +706,21 @@ rule "Principe alcanza a la princesa"
 		Archivo.getUnicaInstancia().addInf(prin.getNombre() + " alcanza a la princesa en " + co.getNombre());
 end
 
-rule "Como Desees en la colina"
+rule "2.5 Como Desees en la colina"
 	when 
 		co: Colina()
 		we: Westley(estadoSalud == EstadoSalud.MUERTO)
 		bu: Buttercup(ubicacionActual == co)
 		pr: Principe (ubicacionActual == co)
 		pi: Pirata(ubicacionActual == co)
+		es: Espadachin()
 		
 	then 
 		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " empuja a " + pi.getNombre()+ " y grita: COMO DESEES.");
 		modify(we){
-			setEstadoSalud(EstadoSalud.VIVO)
+			setEstadoSalud(EstadoSalud.VIVO),
+			setUbicacionActual(co),
+			setProfesion(es);
 		}
 		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " se tira por " + co.getNombre());
 		Archivo.getUnicaInstancia().addInf("Se produce el beso de amor verdadero");
@@ -739,7 +744,21 @@ end
 
 /*** ACTO 3  Buttercup	y	Westley	llegan	al	pantano	hasta que	muere	el	rey****/
 
-rule "Adentrar en el pantano"
+rule "Creacion Acto3"
+	agenda-group "Acto3"
+	then 
+		insert(new PantanoFuego());
+		insert(new PozoDesesperacion());
+end 
+
+rule "3.1 Necesario Acto3"
+	when 
+		p: PantanoFuego()
+	then
+		insert(new RoedorAspectoGigantesco(p));
+end 
+
+rule "3.2 Adentrar en el pantano"
 	when 
 		co: Colina()
 		bu: Buttercup(ubicacionActual == co)
@@ -756,7 +775,7 @@ rule "Adentrar en el pantano"
 		Archivo.getUnicaInstancia().addInf(bu.getNombre() +" y " + we.getNombre() + " se adentran en " +pa.getNombre());
 end 
 
-rule "Primer Horror"
+rule "3.3 Primer Horror"
 	when
 		pa: PantanoFuego()
 		we: Westley(ubicacionActual == pa)
@@ -765,7 +784,7 @@ rule "Primer Horror"
 		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " +bu.getNombre() +" superan las erupciones de fuego, ya que son precedidas de un sonido de burbuja");
 end 
 
-rule "Leyenda del capitan Robert"
+rule "3.4 Leyenda del capitan Robert"
 	when
 		pa: PantanoFuego()
 		we: Westley(ubicacionActual == pa)
@@ -778,16 +797,16 @@ rule "Leyenda del capitan Robert"
 		}
 end 	
 
-rule "Segundo Horror" 
+rule "3.5 Segundo Horror" 
 	when 
 		pa: PantanoFuego()
 		we: Westley(ubicacionActual == pa)
 		bu: Buttercup(ubicacionActual == pa)
 	then 
-		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " +bu.getNombre() + "superan el segundo horror: las arenas resplandecientes, ya que saben que aspecto tienen");
+		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " +bu.getNombre() + " superan el segundo horror: las arenas resplandecientes, ya que saben que aspecto tienen");
 end
 
-rule "Tercer Horror"
+rule "3.6 Tercer Horror"
 	when 
 		pa: PantanoFuego()
 		we: Westley(ubicacionActual == pa)
@@ -801,7 +820,7 @@ rule "Tercer Horror"
 		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " + bu.getNombre() + " superan el tercer horror");
 end 
 
-rule "Principe va a la salida del pantano"
+rule "3.7 Principe va a la salida del pantano"
 	when 
 		pa: PantanoFuego()
 		co: Colina()
@@ -820,7 +839,7 @@ rule "Principe va a la salida del pantano"
 		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " va a " + pr.getUbicacionActual());
 end 
 
-rule "Salen del pantano de fuego"
+rule "3.8 Salen del pantano de fuego"
 	when 
 		pa: PantanoFuego()
 		bo: Bosque()
@@ -838,7 +857,7 @@ rule "Salen del pantano de fuego"
 		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " + bu.getNombre() + " salen de " + pa.getNombre() + " encontrandose con " + pr.getNombre());
 end 
 
-rule "promesa de vida"
+rule "3.9 promesa de vida"
 	when 
 		bo: Bosque()
 		ca: Castillo()
