@@ -7,10 +7,8 @@ import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
-import utilidades.Acto;
-import utilidades.Archivo;
-import utilidades.Consulta;
-import utilidades.Parser;
+
+import utilidades.*;
 
 public class Main {
 
@@ -39,10 +37,14 @@ public class Main {
 			// Init Session
 			kSession.fireAllRules();
 			
+			if (consulta instanceof ConsultaSi) {
+				kSession.insert(consulta);
+				consulta = ((ConsultaSi) consulta).getConsulta();
+			}
 			
 			
-			kSession.insert(consulta);
 			ejecutarHastaActo(consulta.getActo());
+			kSession.insert(consulta);
 			
 		
 			System.out.println(Archivo.getUnicaInstancia().getInformacion());
