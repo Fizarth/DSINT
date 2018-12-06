@@ -248,8 +248,7 @@ rule "Relacion Conocer"
         listaR2.add(r2);
         modify(p2){
         	setRelacionesPersonaje(listaR2);
-        }
-       // Archivo.getUnicaInstancia().addInf(p1.getNombre() + " conoce a " + p2.getNombre() + "."); 
+        } 
 end
 
 //Fin acto0
