@@ -911,16 +911,16 @@ end
 
 rule "Sueño Buttercup"
 	when
-	ca: Castillo()
-	pa: PatioCastillo()	
-	wes: Westley()
-	rey: Rey()
-	an: Anciana(ubicacionActual == pa)
-	conde: Conde(ubicacionActual == ca)
-	bu: Buttercup(ubicacionActual == ca)
-	pr: Principe (ubicacionActual == ca)
+		ca: Castillo()
+		pa: PatioCastillo()	
+		wes: Westley()
+		rey: Rey()
+		an: Anciana(ubicacionActual == pa)
+		conde: Conde(ubicacionActual == ca)
+		bu: Buttercup(ubicacionActual == ca)
+		pr: Principe (ubicacionActual == ca)
 	then
-	
+
 		modify(conde){
 			setUbicacionActual(pa);
 		} 
@@ -929,20 +929,21 @@ rule "Sueño Buttercup"
 		}
 		modify(pr){
 			setUbicacionActual(pa);
-		}
-		
-		
+		}	
 		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " sueña que " + rey.getNombre() + " muere y se casa con " + pr.getNombre());
 		Archivo.getUnicaInstancia().addInf(an.getNombre() + " abuchea a " + bu.getNombre() + " por no casarse con " + wes.getNombre() + " y renunciar al amor verdadero");	
+		Archivo.getUnicaInstancia().addInf("ENTRO");
 end
 
 rule "Trato principe"
 	when
 	ca: Castillo()
 	pa: PatioCastillo()
+	po: PozoDesesperacion()
 	pr: Principe (ubicacionActual == pa)
 	bu: Buttercup(ubicacionActual == pa)
 	conde: Conde(ubicacionActual == pa)
+	we: Westley(ubicacionActual == po)
 		
 	then
 		modify(conde){
@@ -954,7 +955,9 @@ rule "Trato principe"
 		modify(pr){
 			setUbicacionActual(ca);
 		}
-		
+		modify(we){
+			setEstadoSalud(EstadoSalud.EN_PELIGRO);
+		}
 		
 		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " hace un trato con " + bu.getNombre() + " para casarse con ella");
 		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " planea matar a " + bu.getNombre() + " para incriminar a la nacion enemiga y declarar la guerra");
@@ -965,7 +968,7 @@ rule "Tortura a Westley"
 	when
 	po: PozoDesesperacion()
 	ca: Castillo()
-	wes: Westley(ubicacionActual == po)
+	wes: Westley(ubicacionActual == po, estadoSalud == EstadoSalud.EN_PELIGRO)
 	conde: Conde(ubicacionActual == ca)
 	
 	then
