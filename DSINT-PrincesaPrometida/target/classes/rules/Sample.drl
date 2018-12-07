@@ -1161,6 +1161,8 @@ rule "Creación Personajes Acto5"
 		
 		f: Fezzik()
 		bb: BrigadaBrutal()
+		
+		not Max()
 	then
 		insert(new Max(cs, cur ));
 		insert(new Valerie(cs, cur));
