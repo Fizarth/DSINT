@@ -1,5 +1,7 @@
+/META-INF/
 /animales/
 /com/
+/dtables/
 /logback-test.xml
 /lugares/
 /mainProyecto/
@@ -8,9 +10,5 @@
 /profesiones/
 /relaciones/
 /rules/
-<<<<<<< HEAD
-/mainProyecto/
-=======
 /test/
 /utilidades/
->>>>>>> branch 'master' of https://github.com/Fizarth/DSINT

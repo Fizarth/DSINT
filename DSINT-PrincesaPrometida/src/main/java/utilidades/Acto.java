@@ -9,8 +9,7 @@ public enum Acto {
 	Acto2("Acto2"),
 	Acto3("Acto3"),
 	Acto4("Acto4"),
-	Acto5("Acto5"),
-	ActoFinal("ActoFinal");
+	Acto5("Acto5");
 	
 	private String acto;
 	

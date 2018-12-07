@@ -1144,9 +1144,10 @@ rule "Creacion Acto5"
 		insert(new BrigadaBrutal());
 		System.out.println("Acto 5");
 		Archivo.getUnicaInstancia().addInf("\nActo5\n");
+		System.out.println("que pasa");
 end 
 
-/*
+
 rule "Creación Personajes Acto5"
 	when
 		cur: Curandero()
@@ -1170,6 +1171,8 @@ rule "Creación Personajes Acto5"
 		modify(f){
 			setProfesion(bb);
 		}
+		
+		System.out.println("hola");
 		
 end
 
@@ -1200,6 +1203,7 @@ rule "Comprar un milagro"
 		System.out.println("Llegada a la casa del milagrero");
 end
 
+/*
 rule "Está Medio Muerto"
 	when
 		cs: CasaMilagrosoMax()
