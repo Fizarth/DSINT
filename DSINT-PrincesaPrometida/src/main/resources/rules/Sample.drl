@@ -1063,7 +1063,9 @@ rule "4.6 Reencuentro Iñigo y Fezzik"
 		}
 		
 		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " encuentra borracho a " + i.getNombre() + " en " + bl.getNombre());
-		
+		modify(ya){
+			setUbicacionActual(null);
+		}
 end
 
 
@@ -1088,13 +1090,17 @@ rule "4.8 Buttercup descubre mentira Principe"
 	when
 		ca: Castillo()
 		ap: AposentosPrincesa()
-		bu: Buttercup(UbicacionActual == ca)
-		pr: Principe(UbicacionActual == ca)
+		po: PozoDesesperacion()
+		bu: Buttercup(ubicacionActual == ca)
+		pr: Principe(ubicacionActual == ca)
+		Westley( ubicacionActual ==po )
 	then
 		modify (bu){
 			setUbicacionActual(ap);
 		}
-		
+		modify (pr){
+			setUbicacionActual(po);
+		}
 		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " descubre la mentira de " + pr.getNombre() + " en " + ca.getNombre());
 		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " insulta a " + pr.getNombre() + " y este la encierra en " + ap.getNombre());
 		
@@ -1105,24 +1111,22 @@ rule "4.9 Tortura extrema a Westley"
 	when
 		po: PozoDesesperacion()
 		ca: Castillo()
-		pr: Principe(UbicacionActual == ca)
+		pr: Principe(UbicacionActual == po)
 		wes: Westley(ubicacionActual == po)
 		conde: Conde(ubicacionActual == po)
 	then
 	//creo que no hace falta que el principe este en el pozo, si se pone luego tenemos que echarlo
-	//	modify (pr){
-	//		setUbicacionActual(po);
-	//	}
+		
 		modify(wes){
 			setEstadoSalud(EstadoSalud.MUERTO);
 		}
 		
-		
-		//entonces como sabia que el otro tnia 6 dedos?
-		// eso pasa en la regla 4.7
 		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " tortura de forma extrema a " + wes.getNombre() + " en " + po.getNombre());  
 		//hace falta mandar al conde al castillo
 		modify(conde){
+			setUbicacionActual(ca);
+		}
+		modify (pr){
 			setUbicacionActual(ca);
 		}
 
@@ -1146,9 +1150,6 @@ rule "4.10 Iñigo y Fezzik encuentran a Westley"
 		}
 		modify(fe){
 			setUbicacionActual(po);
-		}
-		modify(fe){
-			setProfesion(bb);
 		}
 		Archivo.getUnicaInstancia().addInf(i.getNombre() + " y " + fe.getNombre() + " se encuentran con el sirviente y lo interrogan hasta que " + fe.getNombre() + " lo golpea");
 		Archivo.getUnicaInstancia().addInf(i.getNombre() + " gracias a la ayuda de " + pi.getNombre() + " encuentran a " + wes.getNombre()  + " en " + po.getNombre());
@@ -1243,7 +1244,7 @@ rule "5.4 Discusión de matrimorio"
 	when
 		cs: CasaMilagrosoMax()
 		i: Inigo(ubicacionActual == cs)
-		w: Westley(ubicacionActual == cs, estadoSalud == EstadoSalud.MEDIO_MUERTO)
+		w: Westley(ubicacionActual == cs, estadoSalud == EstadoSalud.MEDIO_MUERTO, motivacion == Motivacion.AMOR_VERDADERO)
 		f: Fezzik(ubicacionActual == cs)
 		m: Max(ubicacionActual == cs, motivacion == Motivacion.GANAR_DINERO)
 		v: Valerie(ubicacionActual == cs)
@@ -1274,7 +1275,7 @@ rule "5.5 Causa noble"
 	when
 		cs: CasaMilagrosoMax()
 		i: Inigo(ubicacionActual == cs)
-		w: Westley(ubicacionActual == cs, estadoSalud == EstadoSalud.MEDIO_MUERTO)
+		w: Westley(ubicacionActual == cs, estadoSalud == EstadoSalud.MEDIO_MUERTO, motivacion == Motivacion.AMOR_VERDADERO)
 		f: Fezzik(ubicacionActual == cs)
 		m: Max(ubicacionActual == cs, motivacion == Motivacion.GANAR_DINERO)
 		v: Valerie(ubicacionActual == cs)
@@ -1307,10 +1308,12 @@ rule "5.6 Plan de asalto"
 	when
 		cs: CasaMilagrosoMax()
 		mc: MurallaCastillo()
+		pc: PuertaCastillo(  )
 		i: Inigo(ubicacionActual == cs)
 		w: Westley(ubicacionActual == cs, estadoSalud == EstadoSalud.MEDIO_MUERTO)
 		f: Fezzik(ubicacionActual == cs)
 		max: Max(motivacion == Motivacion.HUMILLAR_PRINCIPE)
+		ya : Yalin( ubicacionActual ==null )
 	then
 		modify(i){
 			setUbicacionActual(mc);
@@ -1319,10 +1322,12 @@ rule "5.6 Plan de asalto"
 			setUbicacionActual(mc);
 		}
 		modify(w){
-			setUbicacionActual(mc);
+			setUbicacionActual(mc),
+			setEstadoSalud(EstadoSalud.DEBIL),
+			setMotivacion(Motivacion.SALVAR_BUTTERCUP);
 		}
-		modify(w){
-			setEstadoSalud(EstadoSalud.DEBIL);
+		modify(ya){
+			setUbicacionActual(pc);
 		}
 	    //System.out.println("La píldora surge efecto y trazan el plan para entrar al castillo");
 	    Archivo.getUnicaInstancia().addInf("La pildora surge efecto y trazan un plan para entrar al castillo");
@@ -1333,17 +1338,11 @@ rule "5.7 La Boda oficial primera parte"
 		ig: IglesiaCastillo()
 		cast: Castillo()
 		ap: AposentosPrincesa()
-		mc: MurallaCastillo()
-		pc: PuertaCastillo()
-		i: Inigo(ubicacionActual == mc)
-		w: Westley(ubicacionActual == mc, estadoSalud==EstadoSalud.DEBIL)
-		f: Fezzik(ubicacionActual == mc)
 		r: Rey(ubicacionActual == cast)
 		b: Buttercup(ubicacionActual == ap) 
 		pr: Principe(ubicacionActual == cast)
 		cd: Conde(ubicacionActual == cast)
 		ob: Obispo(ubicacionActual == ig)
-		ya: Yalin(ubicacionActual == cast)
 	then
 		modify(r){
 			setUbicacionActual(ig);
@@ -1359,11 +1358,7 @@ rule "5.7 La Boda oficial primera parte"
 		}
 	   // System.out.println("Inicio de la boda");
 	   Archivo.getUnicaInstancia().addInf("Comienza la boda entre :"+b.getNombre() +" y "+  pr.getNombre());
-	   
-	   modify(ya){
-	   		setUbicacionActual(pc);
-	   }
-	   
+	    
 	   
 end
 
@@ -1449,7 +1444,7 @@ rule "5.11 La Boda oficial fin"
 		}
 		modify(pr){
 			setEstadoCivil(EstadoCivil.CASADO),
-			setUbicacionActual(cas);
+			setUbicacionActual(null);
 		}
 	    //System.out.println("Termina la boda");
 	    Archivo.getUnicaInstancia().addInf("Finalmente acaba la ceremonia y " + b.getNombre() + " y " +pr.getNombre() + " se casan.");
@@ -1488,11 +1483,6 @@ rule "Charla con el Rey"
 	when
 		cas : Castillo()
 		ap: AposentosPrincesa()
-		sc : SalonCastillo()
-		c: Conde(ubicacionActual == sc)
-		i: Inigo(ubicacionActual == sc)
-		w: Westley(ubicacionActual == null, estadoSalud == EstadoSalud.DEBIL)
-		f: Fezzik(ubicacionActual == null)
 		r: Rey(ubicacionActual == cas)
 		b: Buttercup(ubicacionActual == cas, estadoCivil == EstadoCivil.CASADO)
 		eval(b.esConocido(r))
@@ -1528,7 +1518,7 @@ rule "Enfrentamiento con el Conde"
 		c: Conde(ubicacionActual == sc)
 		i: Inigo(ubicacionActual == sc)
 	then
-	    System.out.println("El conde lanza un cuchillo que hiere a Iñigo");
+	    Archivo.getUnicaInstancia().addInf("El conde lanza un cuchillo que hiere a Iñigo");
 	    modify(i){
 			setEstadoSalud(EstadoSalud.HERIDO);
 		}   
@@ -1538,19 +1528,17 @@ rule "Reencuentro a tiempo"
 	when
 		ap : AposentosPrincesa()
 		b: Buttercup(ubicacionActual == ap, motivacion == Motivacion.SUICIDARSE)
-		w: Westley(ubicacionActual == null, estadoSalud == EstadoSalud.DEBIL)
+		w: Westley(ubicacionActual == null, estadoSalud == EstadoSalud.DEBIL, motivacion == Motivacion.SALVAR_BUTTERCUP)
 	then
-	    modify(w){
-			setUbicacionActual(ap);
-		}
-		System.out.println("Buttercup intenta suicidarse pero Westley la detiene");
+		Archivo.getUnicaInstancia().addInf("Buttercup intenta suicidarse pero Westley la detiene");
 		modify(b){
 			setMotivacion(Motivacion.ESTAR_CON_WESTLEY);
 		}
 		modify(w){
+		setUbicacionActual(ap),
 			setMotivacion(Motivacion.ESTAR_CON_BUTTERCUP);
 		}
-		System.out.println("Buttercup se lanza a darle amor a Westley, pero este está débil");
+		Archivo.getUnicaInstancia().addInf("Buttercup se lanza a darle amor a Westley, pero este está débil");
 end
 
 rule "Prepárate a morir"
@@ -1559,7 +1547,7 @@ rule "Prepárate a morir"
 		c: Conde(ubicacionActual == sc)
 		i: Inigo(ubicacionActual == sc, estadoSalud == EstadoSalud.HERIDO)
 	then
-	    System.out.println("Hola, me llamo Íñigo Montoya. Tú mataste a mi padre. Prepárate a morir");
+	    Archivo.getUnicaInstancia().addInf("Hola, me llamo Íñigo Montoya. Tú mataste a mi padre. Prepárate a morir");
 		modify(c){
 			setEstadoSalud(EstadoSalud.MUERTO);
 		}
@@ -1568,19 +1556,20 @@ end
 rule "Vacío legal"
 	when
 		ap : AposentosPrincesa()
-		b: Buttercup(ubicacionActual == ap, motivacion == Motivacion.ESTAR_CON_WESTLEY)
+		b: Buttercup(ubicacionActual == ap, motivacion == Motivacion.ESTAR_CON_WESTLEY, estadoCivil == EstadoCivil.CASADO)
 		w: Westley(ubicacionActual == ap, estadoSalud == EstadoSalud.DEBIL, motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
-		p: Principe(ubicacionActual == null)
+		p: Principe(ubicacionActual == null, estadoCivil == EstadoCivil.CASADO)
 	then
-		System.out.println("Buttercup y Westley llegan a la conclusión que al no decir \"Si quiero\" ella no se ha casado");
+		Archivo.getUnicaInstancia().addInf("Buttercup y Westley llegan a la conclusión que al no decir \"Si quiero\" ella no se ha casado");
 		modify(b){
 			setEstadoCivil(EstadoCivil.SOLTERO);
 		}
 		modify(p){
 			setEstadoCivil(EstadoCivil.SOLTERO);
 		}
-		System.out.println("El príncipe aparece");
+		Archivo.getUnicaInstancia().addInf("El príncipe aparece");
 	    modify(p){
+	    	setMotivacion(Motivacion.MATAR_WESTLEY),
 			setUbicacionActual(ap);
 		}
 end
@@ -1590,42 +1579,54 @@ rule "A sufrimiento"
 		ap : AposentosPrincesa()
 		b: Buttercup(ubicacionActual == ap, estadoCivil == EstadoCivil.SOLTERO)
 		w: Westley(ubicacionActual == ap)
-		p: Principe(ubicacionActual == ap, estadoCivil == EstadoCivil.SOLTERO)
+		p: Principe(ubicacionActual == ap, estadoCivil == EstadoCivil.SOLTERO, motivacion==Motivacion.MATAR_WESTLEY)
 	then
 		
-		System.out.println("Westley y el prícipe se van a enfrentar en un duelo \"a sufrimiento\" ");
+		Archivo.getUnicaInstancia().addInf("Westley y el prícipe se van a enfrentar en un duelo \"a sufrimiento\" ");
 		
-		System.out.println("Westley le explica al príncipe cómo lo va a mutiliar");
+		Archivo.getUnicaInstancia().addInf("Westley le explica al príncipe cómo lo va a mutiliar");
 		modify(w){
 			setEstadoSalud(EstadoSalud.RECUPERADO);
 		}
-		System.out.println("El príncipe se asusta y lo atan a la silla");
+		modify(p){
+			setMotivacion(Motivacion.SEGUIR_VIVO);
+		}
+		Archivo.getUnicaInstancia().addInf("El príncipe se asusta y lo atan a la silla");
 end
 
-rule "Huida"
+rule "Reunión final"
 	when
 		ap : AposentosPrincesa()
-		b: Buttercup(ubicacionActual == ap)
-		w: Westley(ubicacionActual == ap)
-		p: Principe(ubicacionActual == ap)
+		pC: PatioCastillo()
 		sc : SalonCastillo()
+		
+		b: Buttercup(ubicacionActual == ap, estadoCivil == EstadoCivil.SOLTERO)
+		w: Westley(ubicacionActual == ap, estadoSalud == EstadoSalud.RECUPERADO)
+		p: Principe(ubicacionActual == ap, motivacion == Motivacion.SEGUIR_VIVO)
 		i: Inigo(ubicacionActual == sc, estadoSalud == EstadoSalud.HERIDO)
 		f: Fezzik(ubicacionActual == null)
-		pC: PatioCastillo()
 	then
-		System.out.println("Íñigo aparece");
+		Archivo.getUnicaInstancia().addInf("Íñigo aparece");
 		modify(i){
 			setUbicacionActual(ap);
 		}
-		System.out.println("Westley realmente sigue débil");
+		Archivo.getUnicaInstancia().addInf("Westley realmente sigue débil");
 		modify(w){
 			setEstadoSalud(EstadoSalud.DEBIL);
 		}
-		System.out.println("Fezzik aparece con cuatro caballos");
+		Archivo.getUnicaInstancia().addInf("Fezzik aparece con cuatro caballos");
 		modify(f){
 			setUbicacionActual(pC);
 		}
 end
+
+/*rule "Huida del Castillo"
+
+end*/
+
+/*rule "Fin del cuento"
+
+end*/
 
 //Consultas
 rule "Consulta Quien" 

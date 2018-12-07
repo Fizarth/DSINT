@@ -3,7 +3,7 @@ package utilidades;
 public enum Motivacion {
 	TENER_TRABAJO, SALVAR_BUTTERCUP, VENGAR_PADRE, DECLARAR_GUERRA, GANAR_DINERO, SECUESTRAR_PRINCESA,
 	ESTAR_CON_WESTLEY, ESTAR_CON_BUTTERCUP, SERVIR_PRINCIPE, ESTUDIAR_DOLOR, HUMILLAR_PRINCIPE, AMOR_VERDADERO,
-	SUICIDARSE, DESCONOCIDA;
+	SUICIDARSE, MATAR_WESTLEY, SEGUIR_VIVO, DESCONOCIDA;
 
 	public String getString() {
 		switch (this) {
@@ -33,6 +33,10 @@ public enum Motivacion {
 			return "amor verdadero";
 		case SUICIDARSE:
 			return "suicidarse";
+		case MATAR_WESTLEY:
+			return "matar a Westley";
+		case SEGUIR_VIVO:
+			return "seguir con vida";
 		case DESCONOCIDA:
 			return "desconocida";
 		default:
