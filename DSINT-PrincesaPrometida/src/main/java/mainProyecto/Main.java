@@ -21,8 +21,9 @@ public class Main {
 		// System.out.println(kContainer.verify().getMessages().toString());
 
 
-		String filePath = "/home/norberto/input1.txt";
-		//String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\que.txt";
+		//String filePath = "/home/norberto/input1.txt";
+		
+		String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\que.txt";
 
 		//String filePath = "C:\\Users\\maris\\Desktop\\pruebasDsint\\prueba2.txt";
 		Archivo.setPath(filePath + ".output.txt");
