@@ -1146,7 +1146,7 @@ rule "Creacion Acto5"
 		Archivo.getUnicaInstancia().addInf("\nActo5\n");
 end 
 
-/*
+
 rule "Creación Personajes Acto5"
 	when
 		cur: Curandero()
@@ -1572,7 +1572,7 @@ rule "Huida"
 			setUbicacionActual(pC);
 		}
 end
-*/
+
 //Consultas
 rule "Consulta Quien" 
 	when 
