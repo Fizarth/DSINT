@@ -1080,8 +1080,6 @@ rule "4.7 Iñigo y Fezzik buscan a Westley"
 		
 		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " ayuda a " + i.getNombre() + " a recuperarse");
 		
-		//en niingun momento en los comntarios pone nada de que esten con wetsley ni qe lo saquen del pozo
-		// eso está en otra regla, en la ultima
 		Archivo.getUnicaInstancia().addInf(i.getNombre() + " se entera de quien es realmente " + conde.getNombre());
 
 end
@@ -1135,7 +1133,7 @@ rule "4.10 Iñigo y Fezzik encuentran a Westley"
 	when
 		bl: BosqueLadrones()
 		po: PozoDesesperacion()
-		i: Inigo(ubicacionActual == bl)
+		i: Inigo(ubicacionActual == bl, estadoSalud==EstadoSalud.RECUPERADO)
 		fe: Fezzik(ubicacionActual == bl)
 		wes: Westley(ubicacionActual == po)
 		pi: PadreInigo()
@@ -1143,6 +1141,7 @@ rule "4.10 Iñigo y Fezzik encuentran a Westley"
 		co: Conde(ubicacionActual != po) // como condicion que el conde no este en el pozo
 	then
 		modify(i){
+			setEstadoSalud(EstadoSalud.VIVO),
 			setUbicacionActual(po);
 		}
 		modify(fe){
@@ -1181,25 +1180,14 @@ rule "5.1 Creación Personajes Acto5"
 	when
 		cur: Curandero()
 		sac: Sacerdote()
-		//visir para qe?
-		visir: Visir()
 		ig: IglesiaCastillo()
 		cs: CasaMilagrosoMax()
 		//Auxiliar
-		
-		f: Fezzik()
-		bb: BrigadaBrutal()
-		
-		not Max()
 	then
 		insert(new Max(cs, cur ));
 		insert(new Valerie(cs, cur));
 		insert(new Obispo(ig, sac));
-		
-		
 		//Auxiliar.
-		
-		
 		System.out.println("hola");
 		
 end
@@ -1345,13 +1333,17 @@ rule "5.7 La Boda oficial primera parte"
 		ig: IglesiaCastillo()
 		cast: Castillo()
 		ap: AposentosPrincesa()
+		mc: MurallaCastillo()
+		pc: PuertaCastillo()
+		i: Inigo(ubicacionActual == mc)
+		w: Westley(ubicacionActual == mc, estadoSalud==EstadoSalud.DEBIL)
+		f: Fezzik(ubicacionActual == mc)
 		r: Rey(ubicacionActual == cast)
 		b: Buttercup(ubicacionActual == ap) 
 		pr: Principe(ubicacionActual == cast)
 		cd: Conde(ubicacionActual == cast)
 		ob: Obispo(ubicacionActual == ig)
 		ya: Yalin(ubicacionActual == cast)
-		pc: PuertaCastillo()
 	then
 		modify(r){
 			setUbicacionActual(ig);
