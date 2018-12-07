@@ -126,7 +126,7 @@ when
   		setUbicacionActual(null);
   	}
   	Archivo.getUnicaInstancia().addInf(md.getNombre()+" se despide y "
-  	+ ab.getNombre()+ " lee un cuendo a " + nt.getNombre()+". ");
+  	+ ab.getNombre()+ " lee un cuento a " + nt.getNombre()+". ");
 end
 
 rule "0.7 Inicio cuento"
@@ -993,6 +993,7 @@ rule "4.3 Trato principe"
 			setUbicacionActual(ca);
 		}
 		modify(pr){
+			setMotivacion(Motivacion.DECLARAR_GUERRA),
 			setUbicacionActual(ca);
 		}
 		modify(we){
@@ -1004,6 +1005,13 @@ rule "4.3 Trato principe"
 	
 end
 
+//REGLA SE DESCUBRE QUE PRINCIPE QUIERE MATAR A BUTTERCUP
+/*rule "4.3.1 Plan para declarar la guerra a Guilder"
+	when
+		
+	then
+		
+end*/
 
 rule "4.4 Tortura a Westley"
 	when
@@ -1024,26 +1032,34 @@ end
 rule "4.5 Pricipe ordena a Yalin"
 	when
 		ca: Castillo()
-		pr: Principe (ubicacionActual == ca)
-		ya: Yalin(ubicacionActual == ca)
 		bl: BosqueLadrones()
+		pr: Principe (ubicacionActual == ca, motivacion == Motivacion.DECLARAR_GUERRA)
+		ya: Yalin(ubicacionActual == ca)
 	then
 		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " ordena a " + ya.getNombre() + " vaciar " + bl.getNombre());
+		modify(ya){
+			setUbicacionActual(bl);
+		}
+		insert(new BrigadaBrutal());
 end
 
 rule "4.6 Reencuentro Iñigo y Fezzik"
 	when
-		// ubicacion actual ???? 
-		i: Inigo()
-		fe: Fezzik(ubicacionActual == null)
+		// ubicacion actual ????
 		bl: BosqueLadrones()
+		des: Desempleado( )
+		br: BrigadaBrutal()
+		i: Inigo(ubicacionActual == null, profesion==des)
+		fe: Fezzik(ubicacionActual == null)
+		ya: Yalin( ubicacionActual == bl )
 	then
 		modify(i){
-			setUbicacionActual(bl);
+			setUbicacionActual(bl),
+			setEstadoSalud(EstadoSalud.BORRACHO);
 		}
 		modify(fe){
 			setUbicacionActual(bl),
-			setEstadoSalud(EstadoSalud.BORRACHO);
+			setProfesion(br);			
 		}
 		
 		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " encuentra borracho a " + i.getNombre() + " en " + bl.getNombre());
@@ -1055,7 +1071,7 @@ rule "4.7 Iñigo y Fezzik buscan a Westley"
 	when
 		bl: BosqueLadrones()
 		conde: Conde()
-		i: Inigo(ubicacionActual == bl)
+		i: Inigo(ubicacionActual == bl, estadoSalud == EstadoSalud.BORRACHO)
 		fe: Fezzik(ubicacionActual == bl)
 	then
 		modify(i){
@@ -1102,7 +1118,7 @@ rule "4.9 Tortura extrema a Westley"
 		modify(wes){
 			setEstadoSalud(EstadoSalud.MUERTO);
 		}
-		insert(new BrigadaBrutal());
+		
 		
 		//entonces como sabia que el otro tnia 6 dedos?
 		// eso pasa en la regla 4.7
@@ -1480,31 +1496,38 @@ rule "Charla con el Rey"
 	when
 		cas : Castillo()
 		ap: AposentosPrincesa()
+		sc : SalonCastillo()
+		c: Conde(ubicacionActual == sc)
+		i: Inigo(ubicacionActual == sc)
+		w: Westley(ubicacionActual == null, estadoSalud == EstadoSalud.DEBIL)
+		f: Fezzik(ubicacionActual == null)
 		r: Rey(ubicacionActual == cas)
 		b: Buttercup(ubicacionActual == cas, estadoCivil == EstadoCivil.CASADO)
+		eval(b.esConocido(r))
 	then
-		System.out.println("Buttercup tiene aprecio por el Rey");
+		System.out.println("Charla con el Rey");
+		Archivo.getUnicaInstancia().addInf(b.getNombre()+" siente aprecio por " +r.getNombre()+". ");
+		Relacion r1 = b.getRelacion(r);
+		Relacion r2 = r.getRelacion(b);
 		Relacion am1 = new AmigoDe(r);
     	Relacion am2 = new AmigoDe(b);
     	
-    	ArrayList<Relacion> listaR1 = b.getRelacionesPersonaje();
-   		listaR1.add(am1);
 	    modify(b){
-	          setRelacionesPersonaje(listaR1);
-	    }
-    	ArrayList<Relacion> listaR2 = r.getRelacionesPersonaje();
-   		listaR2.add(am2);
-	    modify(r){
-	          setRelacionesPersonaje(listaR2);
+	    	removeRelacion(r1),
+	        addRelacion(am1),
+			setUbicacionActual(ap),
+			setMotivacion(Motivacion.SUICIDARSE);
 	    }
 	    
-	    System.out.println("Buttercup le dice al rey que lo ha hecho por él y que se suicidadrá en sus aposentos");
 	    modify(r){
+	    	removeRelacion(r2),
+	        addRelacion(am2),
 			setUbicacionActual(null);
-		}
-		modify(b){
-			setUbicacionActual(ap);
-		}
+	    }
+	    
+	    Archivo.getUnicaInstancia().addInf(b.getNombre()+" le dice a "+r.getNombre()
+	    +" que lo ha hecho por él y que se suicidadrá en sus aposentos");
+	   
 end
 
 rule "Enfrentamiento con el Conde"
@@ -1519,7 +1542,7 @@ rule "Enfrentamiento con el Conde"
 		}   
 end
 
-rule "Reencuentro"
+rule "Reencuentro a tiempo"
 	when
 		ap : AposentosPrincesa()
 		b: Buttercup(ubicacionActual == ap, motivacion == Motivacion.SUICIDARSE)
