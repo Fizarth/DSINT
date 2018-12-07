@@ -1572,7 +1572,7 @@ rule "Huida"
 			setUbicacionActual(pC);
 		}
 end
-
+*/
 //Consultas
 rule "Consulta Quien" 
 	when 
@@ -1682,4 +1682,3 @@ rule "Consulta si Profesion"
 		
 		System.out.println("ENTRO EN CONSULTA SI profesion Y MODIFICO " + p.getNombre() + " en " + p.getProfesion());
 end 
-*/
