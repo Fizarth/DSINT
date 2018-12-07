@@ -924,6 +924,10 @@ agenda-group "Acto4"
 	then
 		insert(new Guardia());
 		insert(new PatioCastillo());
+		// insertar bosque de ladrones??
+		insert(new BosqueLadrones());
+		// insertar Aposentos princesa??
+		insert(new AposentosPrincesa());
 end
 
 rule "4.1 Creación de Personajes Acto4"
@@ -996,7 +1000,8 @@ rule "Trato principe"
 		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " planea matar a " + bu.getNombre() + " para incriminar a la nacion enemiga y declarar la guerra");
 	
 end
-/*
+
+
 rule "Tortura a Westley"
 	when
 	po: PozoDesesperacion()
@@ -1012,7 +1017,7 @@ rule "Tortura a Westley"
 	
 end
 
-
+// no funciona?? (Arreglado) -> BOsque de ladrones insertado en consulta 4
 rule "Pricipe ordena a Yalin"
 	when
 		ca: Castillo()
@@ -1041,6 +1046,7 @@ rule "Reencuentro Iñigo y Fezzik"
 		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " encuentra borracho a " + iñ.getNombre() + " en " + bl.getNombre());
 		
 end
+
 
 rule "Iñigo y Fezzik buscan a Westley"
 	when
@@ -1114,10 +1120,10 @@ rule "Iñigo y Fezzik encuentran a Westley"
 		}
 		
 		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " y " + fe.getNombre() + " se encuentran con el sirviente y lo interrogan hasta que " + fe.getNombre() + " lo golpea");
-		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " gracias a la ayuda de " + pi.getNombre() + " encuentran a " + iñ.getNombre()  + " en " + po.getNombre());
+		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " gracias a la ayuda de " + pi.getNombre() + " encuentran a " + wes.getNombre()  + " en " + po.getNombre());
 end
 
-*/
+
 
 
 /*** ACTO 5 || ACTO FINAL  Llegan	a	casa	del	Milagroso	Max	hasta	el	final. ****/
