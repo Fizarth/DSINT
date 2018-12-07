@@ -28,7 +28,7 @@ agenda-group "Acto0"
 		//insert(new Sacerdote());
 		//insert(new Sirviente());
 		//insert(new Visir());
-		System.out.println("Profesiones 0");
+		System.out.println("Acto 0");
 end 
 
 rule "0.2 Creación Lugares"
@@ -45,7 +45,7 @@ rule "0.2 Creación Lugares"
 		insert(new Mar());
 		//insert(new PantanoFuego());
 		//insert(new PozoDesesperacion());	
-		System.out.println("Lugares 0");	
+		//System.out.println("Lugares 0");	
 end 
 
 rule "0.3 Creación Animales"
@@ -65,7 +65,7 @@ rule "0.3 Creación Animales"
 		//insert(new Perro(c));
 		//insert(new RoedorAspectoGigantesco(pantano));
 		insert(new Vaca(granja));
-		System.out.println("Animales 0");
+		//System.out.println("Animales 0");
 end
 
 rule "0.4 Creación Personajes Acto 0"
@@ -75,7 +75,7 @@ rule "0.4 Creación Personajes Acto 0"
 		insert(new Abuelo(hab));
 		insert(new Madre(hab));
 		insert(new Nieto(hab));
-		System.out.println("Abuelo, Madre y Nieto");
+		//System.out.println("Abuelo, Madre y Nieto");
 end
 
 rule "0.5 Visita familiar"
@@ -254,6 +254,7 @@ agenda-group "Acto1"
 		insert(new Bosque());
 		insert(new AcantiladosLocura());
 		insert(new CaminoMontana());
+		System.out.println("Acto1");
 end
 
 rule"1.2 Profesiones Acto1"
@@ -473,7 +474,7 @@ rule "1.8 Anguila ataca a buttercup"
 		modify(bt){
 			setEstadoSalud(EstadoSalud.EN_PELIGRO);
 		}
-		System.out.println("ATACA ANGUILA");
+		
 		Archivo.getUnicaInstancia().addInf(bt.getNombre() + " intenta escapar y en el agua es atacada por " + a.getNombre() + ", ahora ella está " + bt.getEstadoSalud().getString() +".");
 end
 
@@ -669,7 +670,7 @@ agenda-group "Acto2"
 	then
 		insert(new Colina());
 		insert(new Espadachin());
-		System.out.println("Lugares 2");	
+		System.out.println("Acto2");	
 end 
 rule "2.1 Pirata y Buttercup huyen"
 	when 
@@ -777,6 +778,7 @@ rule "Creacion Acto3"
 	then 
 		insert(new PantanoFuego());
 		insert(new PozoDesesperacion());
+		System.out.println("Acto3");
 end 
 
 rule "3.1 Necesario Acto3"
@@ -919,7 +921,7 @@ end
 
 /*** ACTO 4 	Presentación	de	la	Nueva	Reina	hasta la	muerte de	Westley ****/
 
-rule "4.0 Creacion Acto4"
+rule "Creacion Acto4"
 agenda-group "Acto4"
 	then
 		insert(new Guardia());
@@ -928,6 +930,7 @@ agenda-group "Acto4"
 		insert(new BosqueLadrones());
 		// insertar Aposentos princesa??
 		insert(new AposentosPrincesa());
+		System.out.println("Acto 4");
 end
 
 rule "4.1 Creación de Personajes Acto4"
@@ -1128,19 +1131,44 @@ end
 
 /*** ACTO 5 || ACTO FINAL  Llegan	a	casa	del	Milagroso	Max	hasta	el	final. ****/
 
-rule "Creación de Personajes Acto5"
+
+rule "Creacion Acto5"
 	agenda-group "Acto5"
+	then
+		insert(new Curandero());
+		insert(new Sacerdote());
+		insert(new IglesiaCastillo());
+		insert(new CasaMilagrosoMax());
+		insert(new BrigadaBrutal());
+		System.out.println("Acto 5");
+		Archivo.getUnicaInstancia().addInf("\nActo5\n");
+end 
+
+/*
+rule "Creación Personajes Acto5"
 	when
 		cur: Curandero()
 		sac: Sacerdote()
+		//visir para qe?
 		visir: Visir()
 		ig: IglesiaCastillo()
 		cs: CasaMilagrosoMax()
+		
+		//Auxiliar
+		
+		f: Fezzik()
+		bb: BrigadaBrutal()
 	then
 		insert(new Max(cs, cur ));
 		insert(new Valerie(cs, cur));
 		insert(new Obispo(ig, sac));
-		Archivo.getUnicaInstancia().addInf("Acto5: Se crean los personajes");
+		
+		
+		//Auxiliar.
+		modify(f){
+			setProfesion(bb);
+		}
+		
 end
 
 rule "Comprar un milagro"
@@ -1166,6 +1194,7 @@ rule "Comprar un milagro"
 	    modify(m){
 	          setMotivacion(Motivacion.GANAR_DINERO);
 	    }
+		Archivo.getUnicaInstancia().addInf(i.getNombre() + " y " + f.getNombre()+ " llevan a " + w.getNombre() + " a " +cs.getNombre());
 		System.out.println("Llegada a la casa del milagrero");
 end
 
@@ -1651,3 +1680,4 @@ rule "Consulta si Profesion"
 		
 		System.out.println("ENTRO EN CONSULTA SI profesion Y MODIFICO " + p.getNombre() + " en " + p.getProfesion());
 end 
+*/
