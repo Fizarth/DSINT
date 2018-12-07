@@ -1034,11 +1034,11 @@ end
 rule "4.6 Reencuentro Iñigo y Fezzik"
 	when
 		// ubicacion actual ???? 
-		iñ: Inigo()
+		i: Inigo()
 		fe: Fezzik(ubicacionActual == null)
 		bl: BosqueLadrones()
 	then
-		modify(iñ){
+		modify(i){
 			setUbicacionActual(bl);
 		}
 		modify(fe){
@@ -1046,7 +1046,7 @@ rule "4.6 Reencuentro Iñigo y Fezzik"
 			setEstadoSalud(EstadoSalud.BORRACHO);
 		}
 		
-		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " encuentra borracho a " + iñ.getNombre() + " en " + bl.getNombre());
+		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " encuentra borracho a " + i.getNombre() + " en " + bl.getNombre());
 		
 end
 
@@ -1055,18 +1055,18 @@ rule "4.7 Iñigo y Fezzik buscan a Westley"
 	when
 		bl: BosqueLadrones()
 		conde: Conde()
-		iñ: Inigo(ubicacionActual == bl)
+		i: Inigo(ubicacionActual == bl)
 		fe: Fezzik(ubicacionActual == bl)
 	then
-		modify(iñ){
+		modify(i){
 			setEstadoSalud(EstadoSalud.RECUPERADO);
 		}
 		
-		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " ayuda a " + iñ.getNombre() + " a recuperarse");
+		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " ayuda a " + i.getNombre() + " a recuperarse");
 		
 		//en niingun momento en los comntarios pone nada de que esten con wetsley ni qe lo saquen del pozo
 		// eso está en otra regla, en la ultima
-		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " se entera de quien es realmente " + conde.getNombre());
+		Archivo.getUnicaInstancia().addInf(i.getNombre() + " se entera de quien es realmente " + conde.getNombre());
 
 end
 
@@ -1119,14 +1119,14 @@ rule "4.10 Iñigo y Fezzik encuentran a Westley"
 	when
 		bl: BosqueLadrones()
 		po: PozoDesesperacion()
-		iñ: Inigo(ubicacionActual == bl)
+		i: Inigo(ubicacionActual == bl)
 		fe: Fezzik(ubicacionActual == bl)
 		wes: Westley(ubicacionActual == po)
 		pi: PadreInigo()
 		bb: BrigadaBrutal()
 		co: Conde(ubicacionActual != po) // como condicion que el conde no este en el pozo
 	then
-		modify(iñ){
+		modify(i){
 			setUbicacionActual(po);
 		}
 		modify(fe){
@@ -1135,8 +1135,8 @@ rule "4.10 Iñigo y Fezzik encuentran a Westley"
 		modify(fe){
 			setProfesion(bb);
 		}
-		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " y " + fe.getNombre() + " se encuentran con el sirviente y lo interrogan hasta que " + fe.getNombre() + " lo golpea");
-		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " gracias a la ayuda de " + pi.getNombre() + " encuentran a " + wes.getNombre()  + " en " + po.getNombre());
+		Archivo.getUnicaInstancia().addInf(i.getNombre() + " y " + fe.getNombre() + " se encuentran con el sirviente y lo interrogan hasta que " + fe.getNombre() + " lo golpea");
+		Archivo.getUnicaInstancia().addInf(i.getNombre() + " gracias a la ayuda de " + pi.getNombre() + " encuentran a " + wes.getNombre()  + " en " + po.getNombre());
 end
 
 
@@ -1456,7 +1456,7 @@ rule "5.12 Encuentro con el Conde"
 		w: Westley(ubicacionActual == pas)
 		f: Fezzik(ubicacionActual == pas)
 	then
-	    //System.out.println("Iñigo mata a los guardias y el conde sale huyendo");
+	    //System.out.println("iigo mata a los guardias y el conde sale huyendo");
 	    Archivo.getUnicaInstancia().addInf(i.getNombre() + " mata a los guardias y " + c.getNombre() + " sale huyendo.");
 	    modify(i){
 			setUbicacionActual(sc);
