@@ -1095,9 +1095,10 @@ rule "4.9 Tortura extrema a Westley"
 		wes: Westley(ubicacionActual == po)
 		conde: Conde(ubicacionActual == po)
 	then
-		modify (pr){
-			setUbicacionActual(po);
-		}
+	//creo que no hace falta que el principe este en el pozo, si se pone luego tenemos que echarlo
+	//	modify (pr){
+	//		setUbicacionActual(po);
+	//	}
 		modify(wes){
 			setEstadoSalud(EstadoSalud.MUERTO);
 		}
@@ -1106,6 +1107,11 @@ rule "4.9 Tortura extrema a Westley"
 		//entonces como sabia que el otro tnia 6 dedos?
 		// eso pasa en la regla 4.7
 		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " tortura de forma extrema a " + wes.getNombre() + " en " + po.getNombre());  
+		//hace falta mandar al conde al castillo
+		modify(conde){
+			setUbicacionActual(ca);
+		}
+
 end
  
  
@@ -1118,6 +1124,7 @@ rule "4.10 Iñigo y Fezzik encuentran a Westley"
 		wes: Westley(ubicacionActual == po)
 		pi: PadreInigo()
 		bb: BrigadaBrutal()
+		co: Conde(ubicacionActual != po) // como condicion que el conde no este en el pozo
 	then
 		modify(iñ){
 			setUbicacionActual(po);
@@ -1145,14 +1152,16 @@ rule "Creacion Acto5"
 		insert(new Sacerdote());
 		insert(new IglesiaCastillo());
 		insert(new CasaMilagrosoMax());
-		
+		insert(new MurallaCastillo());
+		insert(new PasilloCastillo());
+		insert(new PuertaCastillo());
+		insert(new SalonCastillo());
 		System.out.println("Acto 5");
 		Archivo.getUnicaInstancia().addInf("\nActo5\n");
-		System.out.println("que pasa");
 end 
 
 
-rule "Creación Personajes Acto5"
+rule "5.1 Creación Personajes Acto5"
 	when
 		cur: Curandero()
 		sac: Sacerdote()
@@ -1179,7 +1188,7 @@ rule "Creación Personajes Acto5"
 		
 end
 
-rule "Comprar un milagro"
+rule "5.2 Comprar un milagro"
 	when
 		pd: PozoDesesperacion()
 		cs: CasaMilagrosoMax()
@@ -1203,11 +1212,11 @@ rule "Comprar un milagro"
 	          setMotivacion(Motivacion.GANAR_DINERO);
 	    }
 		Archivo.getUnicaInstancia().addInf(i.getNombre() + " y " + f.getNombre()+ " llevan a " + w.getNombre() + " a " +cs.getNombre());
-		System.out.println("Llegada a la casa del milagrero");
+		//System.out.println("Llegada a la casa del milagrero");
 end
 
 
-rule "Está Medio Muerto"
+rule "5.3 Está Medio Muerto"
 	when
 		cs: CasaMilagrosoMax()
 		i: Inigo(ubicacionActual == cs)
@@ -1222,10 +1231,11 @@ rule "Está Medio Muerto"
 		modify(w){
 	          setMotivacion(Motivacion.AMOR_VERDADERO);
 	    }
-		System.out.println("Se descubre que está medio muerto");
+	    Archivo.getUnicaInstancia().addInf(m.getNombre() + " informa de que " + w.getNombre()+ " esta " + w.getEstadoSalud().getString()); 
+		//System.out.println("Se descubre que está medio muerto");
 end
 
-rule "Discusión de matrimorio"
+rule "5.4 Discusión de matrimorio"
 	when
 		cs: CasaMilagrosoMax()
 		i: Inigo(ubicacionActual == cs)
@@ -1252,10 +1262,11 @@ rule "Discusión de matrimorio"
 	    modify(v){
 	      setRelacionesPersonaje(listV);
 	    }
-		System.out.println("Max y Valerie tienen una discusión");
+		//System.out.println("Max y Valerie tienen una discusión");
+		Archivo.getUnicaInstancia().addInf(m.getNombre() +" discute con su mujer " +v.getNombre());
 end
 
-rule "Causa noble"
+rule "5.5 Causa noble"
 	when
 		cs: CasaMilagrosoMax()
 		i: Inigo(ubicacionActual == cs)
@@ -1265,7 +1276,8 @@ rule "Causa noble"
 		v: Valerie(ubicacionActual == cs)
 		princ: Principe()
 	then
-		System.out.println("Si Westley revive el príncipe sufrirá humillaciones a mansalba");
+		//System.out.println("Si Westley revive el príncipe sufrirá humillaciones a mansalba");
+		Archivo.getUnicaInstancia().addInf("Informan a " + m.getNombre() + " de que si " + w.getNombre() +" revive, humillará a " + princ.getNombre());
 		Relacion od1 = new OdiaA(princ);
     	Relacion od2 = new OdiadoPor(m);
     	
@@ -1282,16 +1294,19 @@ rule "Causa noble"
 	    modify(m){
 	          setMotivacion(Motivacion.HUMILLAR_PRINCIPE);
 	    }
-	    System.out.println("Max hace la píldora");
+	    
+	    //System.out.println("Max hace la píldora");
+	    Archivo.getUnicaInstancia().addInf(m.getNombre() + " hace la pildora.");
 end
 
-rule "Plan de asalto"
+rule "5.6 Plan de asalto"
 	when
 		cs: CasaMilagrosoMax()
 		mc: MurallaCastillo()
 		i: Inigo(ubicacionActual == cs)
 		w: Westley(ubicacionActual == cs, estadoSalud == EstadoSalud.MEDIO_MUERTO)
 		f: Fezzik(ubicacionActual == cs)
+		max: Max(motivacion == Motivacion.HUMILLAR_PRINCIPE)
 	then
 		modify(i){
 			setUbicacionActual(mc);
@@ -1305,18 +1320,22 @@ rule "Plan de asalto"
 		modify(w){
 			setEstadoSalud(EstadoSalud.DEBIL);
 		}
-	    System.out.println("La píldora surge efecto y trazan el plan para entrar al castillo");
+	    //System.out.println("La píldora surge efecto y trazan el plan para entrar al castillo");
+	    Archivo.getUnicaInstancia().addInf("La pildora surge efecto y trazan un plan para entrar al castillo");
 end
 
-rule "La Boda oficial primera parte"
+rule "5.7 La Boda oficial primera parte"
 	when
 		ig: IglesiaCastillo()
 		cast: Castillo()
+		ap: AposentosPrincesa()
 		r: Rey(ubicacionActual == cast)
-		b: Buttercup(ubicacionActual == cast)
+		b: Buttercup(ubicacionActual == ap) 
 		pr: Principe(ubicacionActual == cast)
 		cd: Conde(ubicacionActual == cast)
 		ob: Obispo(ubicacionActual == ig)
+		ya: Yalin(ubicacionActual == cast)
+		pc: PuertaCastillo()
 	then
 		modify(r){
 			setUbicacionActual(ig);
@@ -1330,10 +1349,17 @@ rule "La Boda oficial primera parte"
 		modify(cd){
 			setUbicacionActual(ig);
 		}
-	    System.out.println("Inicio de la boda");
+	   // System.out.println("Inicio de la boda");
+	   Archivo.getUnicaInstancia().addInf("Comienza la boda entre :"+b.getNombre() +" y "+  pr.getNombre());
+	   
+	   modify(ya){
+	   		setUbicacionActual(pc);
+	   }
+	   
+	   
 end
 
-rule "Inicio del plan"
+rule "5.8 Inicio del plan"
 	when
 		pc: PuertaCastillo()
 		mc: MurallaCastillo()
@@ -1351,10 +1377,11 @@ rule "Inicio del plan"
 		modify(w){
 			setUbicacionActual(pc);
 		}
-	    System.out.println("Inicio del plan para entrar al castillo");
+	    //System.out.println("Inicio del plan para entrar al castillo");
+	    Archivo.getUnicaInstancia().addInf("Comienza el plan para entrar en el castillo");
 end
 
-rule "La Boda oficial segunda parte"
+rule "5.9 La Boda oficial segunda parte"
 	when
 		ig: IglesiaCastillo()
 		pc : PasilloCastillo()
@@ -1367,10 +1394,11 @@ rule "La Boda oficial segunda parte"
 		modify(cd){
 			setUbicacionActual(pc);
 		}
-	    System.out.println("el conde abandona la boda con algunos guardias");
+	    //System.out.println("el conde abandona la boda con algunos guardias");
+	    Archivo.getUnicaInstancia().addInf(cd.getNombre() + " abandona la boda con algunos guardias.");
 end
 
-rule "Entrada al Castillo"
+rule "5.10 Entrada al Castillo"
 	when
 		pc: PuertaCastillo()
 		pas : PasilloCastillo()
@@ -1379,7 +1407,7 @@ rule "Entrada al Castillo"
 		w: Westley(ubicacionActual == pc)
 		f: Fezzik(ubicacionActual == pc)
 	then
-	    System.out.println("Los guardias se asustan y Yalin les da la llave para entrar");
+	   // System.out.println("Los guardias se asustan y Yalin les da la llave para entrar");
 	    modify(i){
 			setUbicacionActual(pas);
 		}
@@ -1389,9 +1417,11 @@ rule "Entrada al Castillo"
 		modify(w){
 			setUbicacionActual(pas);
 		}
+		//Abria que poner pork salen los guardias corriendo o algo?
+		Archivo.getUnicaInstancia().addInf("Los guardias se asustan y Yalin les da llave para entrar");
 end
 
-rule "La Boda oficial fin"
+rule "5.11 La Boda oficial fin"
 	when
 		ig: IglesiaCastillo()
 		pc : PasilloCastillo()
@@ -1401,25 +1431,23 @@ rule "La Boda oficial fin"
 		pr: Principe(ubicacionActual == ig)
 		ob: Obispo(ubicacionActual == ig)
 	then
-		modify(pr){
-			setUbicacionActual(cas);
-		}
+		
 		modify(r){
 			setUbicacionActual(cas);
 		}
 		modify(b){
+			setEstadoCivil(EstadoCivil.CASADO),
 			setUbicacionActual(cas);
 		}
-		modify(b){
-			setEstadoCivil(EstadoCivil.CASADO);
-		}
 		modify(pr){
-			setEstadoCivil(EstadoCivil.CASADO);
+			setEstadoCivil(EstadoCivil.CASADO),
+			setUbicacionActual(cas);
 		}
-	    System.out.println("Termina la boda");
+	    //System.out.println("Termina la boda");
+	    Archivo.getUnicaInstancia().addInf("Finalmente acaba la ceremonia y " + b.getNombre() + " y " +pr.getNombre() + " se casan.");
 end
 
-rule "Encuentro con el Conde"
+rule "5.12 Encuentro con el Conde"
 	when
 		pas : PasilloCastillo()
 		sc : SalonCastillo()
@@ -1428,14 +1456,18 @@ rule "Encuentro con el Conde"
 		w: Westley(ubicacionActual == pas)
 		f: Fezzik(ubicacionActual == pas)
 	then
-	    System.out.println("Iñigo mata a los guardias y el conde sale huyendo");
+	    //System.out.println("Iñigo mata a los guardias y el conde sale huyendo");
+	    Archivo.getUnicaInstancia().addInf(i.getNombre() + " mata a los guardias y " + c.getNombre() + " sale huyendo.");
 	    modify(i){
 			setUbicacionActual(sc);
 		} 
 		modify(c){
 			setUbicacionActual(sc);
 		} 
-		System.out.println("Westley desaparece");
+		//System.out.println("Westley desaparece");
+		// y fezzik?
+		Archivo.getUnicaInstancia().addInf(w.getNombre() + " desaparece.");
+		
 	    modify(w){
 			setUbicacionActual(null);
 		}   
