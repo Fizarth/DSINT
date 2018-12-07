@@ -1553,7 +1553,7 @@ rule "Consulta Quien No Existe"
 		not Personaje (nombre == con.getNombre)
 	then
 		System.out.println("No sé quien es " + con.getNombre() + " en el acto " + con.getActo());
-		Archivo.getUnicaInstancia().escribir("No sé quien es " + con.getNombre() + " en el acto " + con.getActo()+ "\n");
+		Archivo.getUnicaInstancia().escribir("No sé quien es " + con.getNombre() + " en el acto " + con.getActo()+ "\n\n");
 end
 
 rule "Consulta Que"

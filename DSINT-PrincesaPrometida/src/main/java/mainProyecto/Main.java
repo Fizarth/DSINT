@@ -21,10 +21,10 @@ public class Main {
 		// System.out.println(kContainer.verify().getMessages().toString());
 
 
-		//String filePath = "/home/norberto/input1.txt";
+		String filePath = "/home/norberto/input1.txt";
 		//String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\que.txt";
 
-		String filePath = "C:\\Users\\maris\\Desktop\\pruebasDsint\\prueba2.txt";
+		//String filePath = "C:\\Users\\maris\\Desktop\\pruebasDsint\\prueba2.txt";
 		Archivo.setPath(filePath + ".output.txt");
 		
 		ArrayList<Consulta> consultas = null;
@@ -36,6 +36,11 @@ public class Main {
 		}
 
 		for (Consulta consulta : consultas) {
+			if (consulta instanceof ConsultaInvalida) {
+				Archivo.getUnicaInstancia().escribir("No entiendo la pregunta acerca de la película\n\n");
+				continue;
+			}
+			
 			// Init Session
 			kSession.fireAllRules();
 			

@@ -34,6 +34,10 @@ public enum Acto {
 	
 	
 	public static Acto get(String actoS) {
+		if (actoS == "ActoFinal")
+			actoS = "Acto5";
+		
+		
 		return lookup.get(actoS);
 	}
 	
