@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
 
 public class Parser {
 	
-	private static final String CONSULTAQUIENREGEX = "((Q|q)uien es [a-zA-Záéíóúñ ,.'-]+ hasta el Acto\\d+)";
-	private static final String CONSULTAQUEREGEX = "((q|Q)ue ha pasado hasta el Acto\\d+)";
+	private static final String CONSULTAQUIENREGEX = "((Q|q)uien es [a-zA-Záéíóúñ ,.'-]+ hasta el Acto(\\d+|Final))";
+	private static final String CONSULTAQUEREGEX = "((q|Q)ue ha pasado hasta el Acto(\\d+|Final))";
 	private static final String CONSULTASIREGEX = "(S|s)i [a-zA-Záéíóú ,.'-]+ ((es [a-zA-Záéíóú ,.'-]+)|(no existe))" + ", " + "(" + CONSULTAQUEREGEX +"|" + CONSULTAQUIENREGEX + ")";
 			
 	

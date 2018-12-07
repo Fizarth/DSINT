@@ -33,7 +33,7 @@ public enum Acto {
 	
 	
 	public static Acto get(String actoS) {
-		if (actoS == "ActoFinal")
+		if (actoS.equals("ActoFinal"))
 			actoS = "Acto5";
 		
 		
