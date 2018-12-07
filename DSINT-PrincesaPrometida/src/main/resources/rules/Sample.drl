@@ -1065,6 +1065,7 @@ rule "4.7 Iñigo y Fezzik buscan a Westley"
 		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " ayuda a " + iñ.getNombre() + " a recuperarse");
 		
 		//en niingun momento en los comntarios pone nada de que esten con wetsley ni qe lo saquen del pozo
+		// eso está en otra regla, en la ultima
 		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " se entera de quien es realmente " + conde.getNombre());
 
 end
@@ -1102,6 +1103,7 @@ rule "4.9 Tortura extrema a Westley"
 		}
 		
 		//entonces como sabia que el otro tnia 6 dedos?
+		// eso pasa en la regla 4.7
 		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " tortura de forma extrema a " + wes.getNombre() + " en " + po.getNombre());  
 end
  
