@@ -1101,6 +1101,7 @@ rule "4.9 Tortura extrema a Westley"
 		modify(wes){
 			setEstadoSalud(EstadoSalud.MUERTO);
 		}
+		insert(new BrigadaBrutal());
 		
 		//entonces como sabia que el otro tnia 6 dedos?
 		// eso pasa en la regla 4.7
@@ -1116,6 +1117,7 @@ rule "4.10 Iñigo y Fezzik encuentran a Westley"
 		fe: Fezzik(ubicacionActual == bl)
 		wes: Westley(ubicacionActual == po)
 		pi: PadreInigo()
+		bb: BrigadaBrutal()
 	then
 		modify(iñ){
 			setUbicacionActual(po);
@@ -1123,7 +1125,9 @@ rule "4.10 Iñigo y Fezzik encuentran a Westley"
 		modify(fe){
 			setUbicacionActual(po);
 		}
-		
+		modify(fe){
+			setProfesion(bb);
+		}
 		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " y " + fe.getNombre() + " se encuentran con el sirviente y lo interrogan hasta que " + fe.getNombre() + " lo golpea");
 		Archivo.getUnicaInstancia().addInf(iñ.getNombre() + " gracias a la ayuda de " + pi.getNombre() + " encuentran a " + wes.getNombre()  + " en " + po.getNombre());
 end
@@ -1141,7 +1145,7 @@ rule "Creacion Acto5"
 		insert(new Sacerdote());
 		insert(new IglesiaCastillo());
 		insert(new CasaMilagrosoMax());
-		insert(new BrigadaBrutal());
+		
 		System.out.println("Acto 5");
 		Archivo.getUnicaInstancia().addInf("\nActo5\n");
 		System.out.println("que pasa");
@@ -1156,7 +1160,6 @@ rule "Creación Personajes Acto5"
 		visir: Visir()
 		ig: IglesiaCastillo()
 		cs: CasaMilagrosoMax()
-		
 		//Auxiliar
 		
 		f: Fezzik()
@@ -1168,9 +1171,7 @@ rule "Creación Personajes Acto5"
 		
 		
 		//Auxiliar.
-		modify(f){
-			setProfesion(bb);
-		}
+		
 		
 		System.out.println("hola");
 		
@@ -1203,7 +1204,7 @@ rule "Comprar un milagro"
 		System.out.println("Llegada a la casa del milagrero");
 end
 
-/*
+
 rule "Está Medio Muerto"
 	when
 		cs: CasaMilagrosoMax()
