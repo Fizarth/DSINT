@@ -2,7 +2,6 @@ package test;
 
 import lugares.Bosque;
 import personajes.Abuelo;
-import utilidades.Modificable;
 
 public class PruebaClase {
 

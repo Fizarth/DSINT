@@ -13,7 +13,7 @@ public class Parser {
 	
 	private static final String CONSULTAQUIENREGEX = "((Q|q)uien es [a-zA-Záéíóúñ ,.'-]+ hasta el Acto([0-9]|Final))";
 	private static final String CONSULTAQUEREGEX = "((q|Q)ue ha pasado hasta el Acto([0-9]|Final))";
-	private static final String CONSULTASIREGEX = "(S|s)i [a-zA-Záéíóú ,.'-]+ ((es [a-zA-Záéíóú ,.'-]+)|(no existe))" + ", " + "(" + CONSULTAQUEREGEX +"|" + CONSULTAQUIENREGEX + ")";
+	private static final String CONSULTASIREGEX = "(S|s)i [a-zA-Záéíóúñ ,.'-]+ ((es [a-zA-Záéíóú ,.'-]+)|(no existe))" + ", " + "(" + CONSULTAQUEREGEX +"|" + CONSULTAQUIENREGEX + ")";
 			
 	
 	private static final Pattern quienPattern = Pattern.compile(CONSULTAQUIENREGEX);
@@ -138,8 +138,10 @@ public class Parser {
 		// Tratar parte <condicion>
 		
 		for (i = 1; !(palabras[i].equals("es") || palabras[i].equals("no")); i++) {
-			nombre +=palabras[i];
+			nombre +=palabras[i] + " ";
 		}
+		// eliminar ultimo " "
+		nombre = nombre.substring(0, nombre.length()-1);
 		
 		
 		//  condicion <nombre> no existe

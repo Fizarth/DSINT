@@ -1695,7 +1695,7 @@ rule "Consulta si EstadoSalud"
 			setEstadoSalud(EstadoSalud.get(consulta.getValorAtributo()))
 		}
 		//insert (consulta.getConsulta());
-		
+		System.out.println("ee");
 		System.out.println("ENTRO EN CONSULTA SI EstadoSalud Y MODIFICO " + p.getNombre() + " en " + p.getEstadoSalud());
 end 
 

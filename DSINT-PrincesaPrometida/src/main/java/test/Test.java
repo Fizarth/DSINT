@@ -12,7 +12,6 @@ import relaciones.FamiliarDe;
 import relaciones.QuiereA;
 import relaciones.Relacion;
 import utilidades.Consulta;
-import utilidades.Modificable;
 import utilidades.Parser;
 import utilidades.Sexo;
 
