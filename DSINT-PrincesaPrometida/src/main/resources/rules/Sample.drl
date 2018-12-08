@@ -10,7 +10,7 @@ import profesiones.*;
 
 
 //Creación de la base
-rule "0.1 Creación Profesiones"
+rule "0.01 Creación Profesiones"
 agenda-group "Acto0"
 	then 
 		insert(new Granjero());
@@ -18,7 +18,7 @@ agenda-group "Acto0"
 		insert(new Pirateria());
 end 
 
-rule "0.2 Creación Lugares"
+rule "0.02 Creación Lugares"
 	then
 		insert(new Granja());
 		insert(new HabitacionN());
@@ -26,7 +26,7 @@ rule "0.2 Creación Lugares"
 		insert(new BarcoPirata());	
 end 
 
-rule "0.3 Creación Animales"
+rule "0.03 Creación Animales"
 	when 
 		granja: Granja()
 	then
@@ -35,7 +35,7 @@ rule "0.3 Creación Animales"
 		insert(new Vaca(granja));
 end
 
-rule "0.4 Creación Personajes Acto 0"
+rule "0.04 Creación Personajes Acto 0"
 	when 
 		hab: HabitacionN()
 	then
@@ -44,7 +44,7 @@ rule "0.4 Creación Personajes Acto 0"
 		insert(new Nieto(hab));
 end
 
-rule "0.5 Visita familiar"
+rule "0.05 Visita familiar"
   when
  	hab: HabitacionN()
     nt: Nieto(ubicacionActual == hab, estadoSalud == EstadoSalud.ENFERMO)
@@ -78,7 +78,7 @@ rule "0.5 Visita familiar"
   	+ " y llega su " +ab.getNombre() + " de visita. " );
 end
 
-rule "0.6 Nieto está enfermo"
+rule "0.06 Nieto está enfermo"
 when
 	hab: HabitacionN()
     nt: Nieto(ubicacionActual == hab, estadoSalud == EstadoSalud.ENFERMO)
@@ -95,7 +95,7 @@ when
   	+ ab.getNombre()+ " lee un cuento a " + nt.getNombre()+". ");
 end
 
-rule "0.7 Inicio cuento"
+rule "0.07 Inicio cuento"
 	when
 		hab: HabitacionN()
 		Nieto( ubicacionActual == hab )
@@ -109,7 +109,7 @@ rule "0.7 Inicio cuento"
 		Archivo.getUnicaInstancia().addInf("El cuento es una historia de aventuras y amor.\n");
 end
 
-rule "0.8 Amor en la Granja"
+rule "0.08 Amor en la Granja"
 	when
 		g: Granja()
 		gj: Granjero()
@@ -137,7 +137,7 @@ rule "0.8 Amor en la Granja"
 		+wt.getNombre() + ", él siempre contesta \"Como desees\", que en realidad significa \"Te amo\". "  );
 end
 
-rule "0.9 Westley se va a hacer fortuna"
+rule "0.09 Westley se va a hacer fortuna"
     when
     	m: Mar()
    		g: Granja()
@@ -183,19 +183,19 @@ rule "0.11 Buttercup odia al pirata"
     	OdiadoPor od2 = new OdiadoPor(bt);
     	
 	    modify(bt){
-	          addRelacion(od1),
-	          setMotivacion(Motivacion.DESCONOCIDA);
+	        addRelacion(od1),
+	        setMotivacion(Motivacion.DESCONOCIDA);
 	    }
 	 
 	    modify(pr){
-	          addRelacion(od2);
+	    	setUbicacionActual(b),
+	        addRelacion(od2);
 	    }
 	    Archivo.getUnicaInstancia().addInf(bt.getNombre()+ " " +bt.getRelacion(pr).toString() + 
 	    " por la muerte de Westley y pierde su motivación. ");
 end
 
-//Modificar esta relación
-rule "Relacion Conocer"
+rule "0.12 Relacion Conocer"
     when
         p1 : Personaje(ubicacionActual != null)
         p2 : Personaje(nombre != p1.getNombre(), ubicacionActual == p1.getUbicacionActual() )
@@ -214,18 +214,19 @@ end
 //Fin acto0
 
 // Inicio Acto1
-rule "1.1 Lugares Acto1"
+rule "1.01 Lugares Acto1"
 agenda-group "Acto1"
 	then
+		insert(new BarcoMercenarios());
 		insert(new Castillo());
 		insert(new Espana());
 		insert(new Bosque());
 		insert(new AcantiladosLocura());
 		insert(new CaminoMontana());
-		System.out.println("Acto1");
+		insert(new CaminoRocoso());
 end
 
-rule"1.2 Profesiones Acto1"
+rule"1.02 Profesiones Acto1"
 	then
 		insert(new Mercenario());
 		insert(new Gobernante());
@@ -234,7 +235,7 @@ rule"1.2 Profesiones Acto1"
 		insert(new Desempleado());
 end
 
-rule "1.3 Creación de Personajes Acto1"
+rule "1.03 Creación de Personajes Acto1"
 	when 
 		mercenario: Mercenario()
 		gobernante: Gobernante()
@@ -465,13 +466,14 @@ end
 rule "1.10 Llegada a los acantilados"
 	when
 		m: Mar( )
+		b:BarcoPirata()
 		acantilados: AcantiladosLocura(  )
 		an: AnguilaChillona(ubicacionActual == m , estadoSalud == EstadoSalud.MUERTO)
 		v: Vizzini( ubicacionActual == m)
 		bt: Buttercup(ubicacionActual == m)
 		f: Fezzik( ubicacionActual == m)
 		i: Inigo( ubicacionActual == m)
-		p: Pirata( ubicacionActual == m )
+		p: Pirata( ubicacionActual == b )
 	then
 		modify(i){
 			setUbicacionActual(acantilados)
@@ -494,10 +496,10 @@ end
 
 rule "1.11 Pirata llega a los acantilados"
 	when
-		m:Mar()
+		b: BarcoPirata()
 		cm: CaminoMontana()
 		ac: AcantiladosLocura()
-		p: Pirata( ubicacionActual == m )
+		p: Pirata( ubicacionActual == b )
 		i: Inigo( ubicacionActual == ac )
 		v: Vizzini(ubicacionActual == ac, estadoSalud == EstadoSalud.VIVO)
 		bt: Buttercup(ubicacionActual == ac, estadoSalud == EstadoSalud.VIVO)
