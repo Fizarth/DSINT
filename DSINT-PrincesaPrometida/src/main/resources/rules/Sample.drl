@@ -72,7 +72,7 @@ rule "0.05 Visita familiar"
       	addRelacion(fm1),
      	addRelacion(fm3);
    	}
-   	
+   	System.out.println("achoeh");
   	Archivo.getUnicaInstancia().addInf(md.getNombre() + " está cuidando de " 
   	+ nt.getNombre() +" que se encuentra " + nt.getEstadoSalud().getString() 
   	+ " y llega su " +ab.getNombre() + " de visita. " );

@@ -21,11 +21,11 @@ public class Main {
 		// System.out.println(kContainer.verify().getMessages().toString());
 
 
-		//String filePath = "/home/norberto/input1.txt";
+		String filePath = "/home/norberto/input1.txt";
 		
 		//String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\que.txt";
 
-		String filePath = "C:\\Users\\maris\\Desktop\\pruebasDsint\\prueba1.txt";
+		//String filePath = "C:\\Users\\maris\\Desktop\\pruebasDsint\\prueba1.txt";
 		Archivo.setPath(filePath + ".output.txt");
 		
 		ArrayList<Consulta> consultas = null;
@@ -42,8 +42,7 @@ public class Main {
 				continue;
 			}
 			
-			// Init Session
-			kSession.fireAllRules();
+			
 			
 			if (consulta instanceof ConsultaSi) {
 				kSession.insert(consulta);
