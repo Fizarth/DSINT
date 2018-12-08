@@ -3,7 +3,7 @@ package lugares;
 public class Colina extends Lugar {
 
 	public Colina() {
-		super("La colina");
+		super("la colina");
 	}
 
 }

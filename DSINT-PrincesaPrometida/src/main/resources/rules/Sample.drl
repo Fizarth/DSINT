@@ -109,27 +109,48 @@ rule "0.07 Inicio cuento"
 		Archivo.getUnicaInstancia().addInf("El cuento es una historia de aventuras y amor.\n");
 end
 
-rule "0.08 Amor en la Granja"
+rule "0.08 Relacion Conocer"
+    when
+        p1 : Personaje(ubicacionActual != null)
+        p2 : Personaje(nombre != p1.getNombre(), ubicacionActual == p1.getUbicacionActual() )
+        eval (p1.noTieneRelacion(p2))
+    then
+
+        Relacion r = new ConoceA(p2);
+        Relacion r2 = new ConocidoDe(p1);
+        modify(p1){
+        	addRelacion(r);
+        }
+        modify(p2){
+        	addRelacion(r2);
+        } 
+end
+
+rule "0.09 Amor en la Granja"
 	when
 		g: Granja()
 		gj: Granjero()
 		wt: Westley( estadoSalud == EstadoSalud.VIVO, ubicacionActual == g, profesion == gj )
 		bt: Buttercup( estadoSalud==EstadoSalud.VIVO, ubicacionActual == g, profesion == gj )
-		eval(wt.noTieneRelacion(bt))
-    	eval(bt.noTieneRelacion(wt))
+		eval(wt.esConocido(bt))
+    	eval(bt.esConocido(wt))
 	then
 		Archivo.getUnicaInstancia().addInf(wt.getNombre() + " y " + bt.getNombre() + " son dos " 
 		+ bt.getProfesion().toString()+"s. ");
 		
+		Relacion r1 = wt.getRelacion(bt);
+		Relacion r2 = bt.getRelacion(wt);
 		QuiereA q1 = new QuiereA(bt);
 		QuiereA q2 = new QuiereA(wt);
 		
 		 modify(wt){
+		 	removeRelacion(r1),
 	      	addRelacion(q1),
 	      	setMotivacion(Motivacion.ESTAR_CON_BUTTERCUP);
 	    }
 	    
 	    modify(bt){
+	    	removeRelacion(r2),
 	    	addRelacion(q2),
 	    	setMotivacion(Motivacion.ESTAR_CON_WESTLEY);
 	    }
@@ -137,7 +158,7 @@ rule "0.08 Amor en la Granja"
 		+wt.getNombre() + ", él siempre contesta \"Como desees\", que en realidad significa \"Te amo\". "  );
 end
 
-rule "0.09 Westley se va a hacer fortuna"
+rule "0.10 Westley se va a hacer fortuna"
     when
     	m: Mar()
    		g: Granja()
@@ -156,7 +177,7 @@ rule "0.09 Westley se va a hacer fortuna"
      	insert (new Pirata(m, pir));
 end
 
-rule "0.10 Westley muere"
+rule "0.11 Westley muere"
     when
     	m: Mar()
     	p: Pirateria()
@@ -170,7 +191,7 @@ rule "0.10 Westley muere"
      	+ " es asesinado por " + pir.getNombre()+". ");
 end
 
-rule "0.11 Buttercup odia al pirata"
+rule "0.12 Buttercup odia al pirata"
     when
     	g :Granja()
     	m: Mar()
@@ -195,22 +216,7 @@ rule "0.11 Buttercup odia al pirata"
 	    " por la muerte de Westley y pierde su motivación. ");
 end
 
-rule "0.12 Relacion Conocer"
-    when
-        p1 : Personaje(ubicacionActual != null)
-        p2 : Personaje(nombre != p1.getNombre(), ubicacionActual == p1.getUbicacionActual() )
-        eval (p1.noTieneRelacion(p2))
-    then
 
-        Relacion r = new ConoceA(p2);
-        Relacion r2 = new ConocidoDe(p1);
-        modify(p1){
-        	addRelacion(r);
-        }
-        modify(p2){
-        	addRelacion(r2);
-        } 
-end
 //Fin acto0
 
 // Inicio Acto1
@@ -1626,7 +1632,7 @@ rule "Consulta Que"
 		System.out.print("En el acto " + con.getActo().getNumActo() + "." + " ");
 		Archivo.getUnicaInstancia().escribir("En el acto " + con.getActo().getNumActo() + "." + "\n");
 		Archivo.getUnicaInstancia().escribirInf();
-		Archivo.getUnicaInstancia().escribir("Fin pregunta que\n\n");
+		Archivo.getUnicaInstancia().escribir("\n\n");
 		//System.out.println(Archivo.getUnicaInstancia().getpath());
 end
 

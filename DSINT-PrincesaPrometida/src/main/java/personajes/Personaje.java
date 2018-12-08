@@ -163,7 +163,7 @@ public abstract class Personaje {
 			ub = "actualmente se encuentra en " + ubicacionActual.toString();
 		String cadena = nombre + " es un personaje " + tipoImportancia.getString() + ". Es de " + origen.getString() + " y " + ub
 				+ ". Es " + sexo.getString() + ", está " + estadoSalud.getString() + " y su estado civil es "
-				+ estadoCivil.getString() + "." + nombre + " " + relacionesPersonaje + ".";
+				+ estadoCivil.getString() + ". " + nombre + " " + relacionesPersonaje + ".";
 		return cadena;
 
 	}
