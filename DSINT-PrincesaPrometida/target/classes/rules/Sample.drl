@@ -1,6 +1,5 @@
 package com.sample
- 
-import com.sample.DroolsTest.Message;
+
 import animales.*;
 import lugares.*;
 import personajes.*;
@@ -14,58 +13,26 @@ import profesiones.*;
 rule "0.1 Creación Profesiones"
 agenda-group "Acto0"
 	then 
-		//insert(new BrigadaBrutal());
-		//insert(new Curandero());
-		//insert(new Desempleado());
-		//insert(new Espadachin());
-		//insert(new Gobernante());
 		insert(new Granjero());
-		//insert(new Guardia());
-		//insert(new Herrero());
 		insert(new Indefinido());
-		//insert(new Mercenario());
 		insert(new Pirateria());
-		//insert(new Sacerdote());
-		//insert(new Sirviente());
-		//insert(new Visir());
-		System.out.println("Acto 0");
 end 
 
 rule "0.2 Creación Lugares"
 	then
-		//insert(new AcantiladosLocura());
-		//insert(new Bosque());
-		//insert(new BosqueLadrones());
-		//insert(new CaminoMontana());
-		//insert(new CasaMilagrosoMax());
-		//insert(new Castillo());
-		//insert(new Espana());
 		insert(new Granja());
 		insert(new HabitacionN());
 		insert(new Mar());
-		//insert(new PantanoFuego());
-		//insert(new PozoDesesperacion());	
-		//System.out.println("Lugares 0");	
+		insert(new BarcoPirata());	
 end 
 
 rule "0.3 Creación Animales"
 	when 
-		//mar: Mar()
 		granja: Granja()
-		//c: Castillo()
-		//bl: BosqueLadrones()
-		//pantano: PantanoFuego()
-		//cM: CasaMilagrosoMax()
 	then
-		//insert(new AnguilaChillona(mar));
 		insert(new Caballo(granja));
-		//insert(new Cabra(cM));
 		insert(new Cerdo(granja));
-		//insert(new Gallina(bl));
-		//insert(new Perro(c));
-		//insert(new RoedorAspectoGigantesco(pantano));
 		insert(new Vaca(granja));
-		//System.out.println("Animales 0");
 end
 
 rule "0.4 Creación Personajes Acto 0"
@@ -75,7 +42,6 @@ rule "0.4 Creación Personajes Acto 0"
 		insert(new Abuelo(hab));
 		insert(new Madre(hab));
 		insert(new Nieto(hab));
-		//System.out.println("Abuelo, Madre y Nieto");
 end
 
 rule "0.5 Visita familiar"
@@ -147,8 +113,8 @@ rule "0.8 Amor en la Granja"
 	when
 		g: Granja()
 		gj: Granjero()
-		wt: Westley( estadoSalud == EstadoSalud.VIVO, ubicacionActual == g, profesion == gj)
-		bt: Buttercup(estadoSalud==EstadoSalud.VIVO, ubicacionActual == g, profesion == gj )
+		wt: Westley( estadoSalud == EstadoSalud.VIVO, ubicacionActual == g, profesion == gj )
+		bt: Buttercup( estadoSalud==EstadoSalud.VIVO, ubicacionActual == g, profesion == gj )
 		eval(wt.noTieneRelacion(bt))
     	eval(bt.noTieneRelacion(wt))
 	then
@@ -186,15 +152,16 @@ rule "0.9 Westley se va a hacer fortuna"
     		setProfesion(inf);
     	}
      	Archivo.getUnicaInstancia().addInf("Como " + wt.getNombre()+ " no tiene dinero se marcha a " 
-     	+ m.getNombre() + " para " + wt.getMotivacion().getString() +". ");
+     	+ m.getNombre() + " para hacer fortuna. ");
      	insert (new Pirata(m, pir));
 end
 
 rule "0.10 Westley muere"
     when
     	m: Mar()
+    	p: Pirateria()
         wt: Westley(ubicacionActual == m, estadoSalud==EstadoSalud.VIVO, motivacion == Motivacion.GANAR_DINERO)
-   		pir: Pirata(ubicacionActual == m)
+   		pir: Pirata(ubicacionActual == m, estadoSalud==EstadoSalud.VIVO, profesion == p)
     then
     	modify(wt){
     		setEstadoSalud(EstadoSalud.MUERTO);
@@ -207,6 +174,7 @@ rule "0.11 Buttercup odia al pirata"
     when
     	g :Granja()
     	m: Mar()
+    	b: BarcoPirata()
     	Westley(estadoSalud == EstadoSalud.MUERTO, ubicacionActual == m)
     	bt: Buttercup( ubicacionActual == g, motivacion == Motivacion.ESTAR_CON_WESTLEY)
     	pr: Pirata( ubicacionActual == m )
