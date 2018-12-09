@@ -2033,6 +2033,7 @@ rule "Consulta Quien No Existe"
 end
 
 rule "Consulta Que"
+salience 10
 	when
 		con: ConsultaQue()
 	then
@@ -2043,6 +2044,7 @@ rule "Consulta Que"
 end
 
 rule "Consulta si Sexo"
+salience 10
  	when 
   		consulta : ConsultaSi()
   		eval (consulta.getValorAtributo() != null)
@@ -2055,6 +2057,7 @@ rule "Consulta si Sexo"
 end
 
 rule "Consulta si Lugar" 
+salience 10
 	when 
 		consulta: ConsultaSi()
 		lugar: Lugar(nombre == consulta.getValorAtributo())
@@ -2066,6 +2069,7 @@ rule "Consulta si Lugar"
 end 
 
 rule "Consulta si Origen"
+salience 10
 	when 
 		consulta: ConsultaSi()
 		eval (Origen.isValor(consulta.getValorAtributo()))
@@ -2077,6 +2081,7 @@ rule "Consulta si Origen"
 end 
 
 rule "Consulta si EstadoSalud"
+salience 10
 	when 
 		consulta: ConsultaSi()
 		eval (EstadoSalud.isValor(consulta.getValorAtributo()))
@@ -2087,7 +2092,8 @@ rule "Consulta si EstadoSalud"
 		}
 end 
 
-rule "Consulta si Profesion" 
+rule "Consulta si Profesion"
+salience 10 
 	when 
 		consulta: ConsultaSi()
 		profesion: Profesion(nombre == consulta.getValorAtributo())
@@ -2100,6 +2106,7 @@ rule "Consulta si Profesion"
 end
 
 rule "Consulta si no existe" 
+salience 10
 	when 
 		consulta: ConsultaSi(valorAtributo == null)
 	then 
