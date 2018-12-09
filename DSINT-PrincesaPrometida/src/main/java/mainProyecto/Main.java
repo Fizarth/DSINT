@@ -43,7 +43,7 @@ public class Main {
 			}
 			
 			
-			
+			CharacterDeletor.getInstance().clear();
 			if (consulta instanceof ConsultaSi) {
 				kSession.insert(consulta);
 				consulta = ((ConsultaSi) consulta).getConsulta();

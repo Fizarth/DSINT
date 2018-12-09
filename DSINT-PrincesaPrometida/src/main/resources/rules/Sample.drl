@@ -130,6 +130,8 @@ rule "0.07 Inicio cuento"
 		Madre( ubicacionActual == null )
 		granja: Granja()
 		granjero: Granjero()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Westley"))
+		eval (!CharacterDeletor.getInstance().shouldDelete("Buttercup"))
 	then
 		insert(new Westley(granja, granjero));
 		insert(new Buttercup(granja, granjero));
@@ -209,6 +211,7 @@ rule "0.10 Westley se va a hacer fortuna"
         wt: Westley( ubicacionActual == g, motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
    		pir: Pirateria()
    		inf: Indefinido()
+   		eval (!CharacterDeletor.getInstance().shouldDelete("Robert el Pirata"))
     then
     	
     	modify(wt){
@@ -284,7 +287,7 @@ rule"1.02 Profesiones Acto1"
 		insert(new Herrero());
 		insert(new Desempleado());
 end
-
+/*
 rule "1.03 Creación de Personajes Acto1"
 	when 
 		mercenario: Mercenario()
@@ -305,6 +308,135 @@ rule "1.03 Creación de Personajes Acto1"
 		insert(new PadreInigo(esp, herrero));
 		insert(new AnguilaChillona(mar));
 end
+*/
+rule "Creacion Vizzini"
+	when
+		mercenario: Mercenario()
+		gobernante: Gobernante()
+		visir: Visir()
+		castillo: Castillo()
+		esp : Espana()
+		herrero: Herrero()
+		bosque: Bosque()
+		mar: Mar()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Vizzini"))
+	then
+		insert(new Vizzini(bosque, mercenario ));
+end
+
+rule "Creacion Iñigo"
+	when
+		mercenario: Mercenario()
+		gobernante: Gobernante()
+		visir: Visir()
+		castillo: Castillo()
+		esp : Espana()
+		herrero: Herrero()
+		bosque: Bosque()
+		mar: Mar()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Iñigo Montoya"))
+	then
+		insert(new Inigo(bosque, mercenario));
+end
+
+
+rule "Creacion Fezzik"
+	when
+		mercenario: Mercenario()
+		gobernante: Gobernante()
+		visir: Visir()
+		castillo: Castillo()
+		esp : Espana()
+		herrero: Herrero()
+		bosque: Bosque()
+		mar: Mar()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Fezzik"))
+	then
+		insert(new Fezzik(bosque, mercenario));
+end
+
+
+rule "Creacion Rey"
+	when
+		mercenario: Mercenario()
+		gobernante: Gobernante()
+		visir: Visir()
+		castillo: Castillo()
+		esp : Espana()
+		herrero: Herrero()
+		bosque: Bosque()
+		mar: Mar()
+		eval (!CharacterDeletor.getInstance().shouldDelete("El Rey"))
+	then
+		insert(new Rey(castillo, gobernante));
+end
+
+
+rule "Creacion Principe"
+	when
+		mercenario: Mercenario()
+		gobernante: Gobernante()
+		visir: Visir()
+		castillo: Castillo()
+		esp : Espana()
+		herrero: Herrero()
+		bosque: Bosque()
+		mar: Mar()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Principe Humperdink"))
+	then
+		insert(new Principe(castillo, gobernante));
+end
+
+
+rule "Creacion Conde"
+	when
+		mercenario: Mercenario()
+		gobernante: Gobernante()
+		visir: Visir()
+		castillo: Castillo()
+		esp : Espana()
+		herrero: Herrero()
+		bosque: Bosque()
+		mar: Mar()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Tyrone Rugen"))
+	then
+		insert(new Conde(castillo, visir));
+end
+
+rule "Creacion Padre Iñigo"
+	when
+		mercenario: Mercenario()
+		gobernante: Gobernante()
+		visir: Visir()
+		castillo: Castillo()
+		esp : Espana()
+		herrero: Herrero()
+		bosque: Bosque()
+		mar: Mar()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Domingo Montoya"))
+	then
+		insert(new PadreInigo(esp, herrero));
+end
+
+
+rule "Creacion Anguila Chillona"
+	when
+		mercenario: Mercenario()
+		gobernante: Gobernante()
+		visir: Visir()
+		castillo: Castillo()
+		esp : Espana()
+		herrero: Herrero()
+		bosque: Bosque()
+		mar: Mar()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Anguila Chillona"))
+	then
+		insert(new AnguilaChillona(mar));
+end
+
+
+
+
 
 rule "1.04 El Rey"
 	when
@@ -1025,7 +1157,7 @@ agenda-group "Acto4"
 		insert(new AposentosPrincesa());
 		System.out.println("Acto 4");
 end
-
+/*
 rule "4.1 Creación de Personajes Acto4"
 	when
 		pa: PatioCastillo()
@@ -1037,6 +1169,32 @@ rule "4.1 Creación de Personajes Acto4"
 		insert(new Yalin(ca, gu));
 		Archivo.getUnicaInstancia().addInf("\n Acto 4\n");	
 end
+*/
+
+rule "Creacion Anciana"
+	when
+		pa: PatioCastillo()
+		ca: Castillo()
+		ind: Indefinido()
+		gu: Guardia()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Anciana Abucheadora"))
+	then
+		insert(new Anciana(pa,ind));
+		Archivo.getUnicaInstancia().addInf("\n Acto 4\n");	
+end
+
+
+rule "Creacion Yalin"
+	when
+		pa: PatioCastillo()
+		ca: Castillo()
+		ind: Indefinido()
+		gu: Guardia()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Yalin"))
+	then
+		insert(new Yalin(ca, gu));
+end
+
 
 
 rule "4.2 Sueño Buttercup"
@@ -1270,7 +1428,7 @@ rule "Creacion Acto5"
 		Archivo.getUnicaInstancia().addInf("\nActo5\n");
 end 
 
-
+/*
 rule "5.1 Creación Personajes Acto5"
 	when
 		cur: Curandero()
@@ -1288,6 +1446,50 @@ rule "5.1 Creación Personajes Acto5"
 		
 	
 end
+*/
+
+
+rule "Creacion Valerie"
+	when
+		cur: Curandero()
+		sac: Sacerdote()
+		ig: IglesiaCastillo()
+		cs: CasaMilagrosoMax()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Valerie"))
+	then
+		
+		insert(new Valerie(cs, cur)); 
+end
+
+
+rule "Creacion Obispo"
+	when
+		cur: Curandero()
+		sac: Sacerdote()
+		ig: IglesiaCastillo()
+		cs: CasaMilagrosoMax()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Obispo Gangoso"))
+	then
+		
+		insert(new Obispo(ig, sac));
+end
+
+
+
+rule "Creacion Max"
+	when
+		cur: Curandero()
+		sac: Sacerdote()
+		ig: IglesiaCastillo()
+		cs: CasaMilagrosoMax()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Milagroso Max"))
+	then
+		
+		insert(new Max(cs, cur ));
+end
+
+
+
 
 rule "5.2 Comprar un milagro"
 	when
