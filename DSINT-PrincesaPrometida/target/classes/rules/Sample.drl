@@ -400,9 +400,9 @@ rule "1.6 Secuestro Buttercup"
 		mar: Mar()
 		princesa: Buttercup(ubicacionActual == b)
 		mer: Mercenario()
-		v: Vizzini(ubicacionActual == b, profesion == mer)
-		i: Inigo(ubicacionActual == b, profesion == mer)
-		f: Fezzik(ubicacionActual == b, profesion == mer)
+		v: Vizzini(ubicacionActual == b, profesion == mer, estadoSalud == EstadoSalud.VIVO)
+		i: Inigo(ubicacionActual == b, profesion == mer, estadoSalud == EstadoSalud.VIVO)
+		f: Fezzik(ubicacionActual == b, profesion == mer, estadoSalud == EstadoSalud.VIVO)
 	then
 		modify(i){
 			setUbicacionActual(mar),
@@ -419,7 +419,7 @@ rule "1.6 Secuestro Buttercup"
 		modify(princesa){
 			setUbicacionActual(mar);
 		}
-		Archivo.getUnicaInstancia().addInf(v.getNombre() + "," + i.getNombre() + " y " 
+		Archivo.getUnicaInstancia().addInf(v.getNombre() + ", " + i.getNombre() + " y " 
 		+ f.getNombre() + " secuestran a "+ princesa.getNombre()+". ");
 end
 
@@ -447,7 +447,7 @@ rule "1.7 Huida por el mar"
 			setUbicacionActual(bm);
 		}
 		Archivo.getUnicaInstancia().addInf("Los mercenarios se llevan a "+princesa.getNombre()+
-		" por " +mar.getNombre()+" para llegar a la frontera de Guilder.");
+		" por " +mar.getNombre()+" para llegar a la frontera de Guilder. ");
 		
 end
 
@@ -463,15 +463,16 @@ rule "1.8 Anguila ataca a buttercup"
 		}
 		
 		Archivo.getUnicaInstancia().addInf(bt.getNombre() + 
-		" intenta escapar y en el agua es atacada por " + a.getNombre() 
-		+ ", ahora ella está " + bt.getEstadoSalud().getString() +".");
+		" intenta escapar y en el agua es atacada por una " + a.getNombre() 
+		+ ", ahora ella está " + bt.getEstadoSalud().getString() +". ");
 end
 
 rule "1.9 Fezzik salva a Buttercup"
 	when 
 		m: Mar()
-		bt: Buttercup( estadoSalud == EstadoSalud.EN_PELIGRO, ubicacionActual == m )
-		fz: Fezzik( ubicacionActual == m )
+		bm: BarcoMercenarios()
+		bt: Buttercup( estadoSalud == EstadoSalud.EN_PELIGRO, ubicacionActual == bm )
+		fz: Fezzik( ubicacionActual == bm )
 		a: AnguilaChillona( ubicacionActual== m)
 	then
 		modify(bt){
@@ -480,19 +481,20 @@ rule "1.9 Fezzik salva a Buttercup"
 		modify(a){
 			setEstadoSalud(EstadoSalud.MUERTO);
 		}		
-		Archivo.getUnicaInstancia().addInf(fz.getNombre()+" salva a " + bt.getNombre() + ", la anguila muere.");		
+		Archivo.getUnicaInstancia().addInf(fz.getNombre()+" salva a " + bt.getNombre() + 
+		" y "+ a.getNombre() + " muere. ");		
 end
 
 rule "1.10 Llegada a los acantilados"
 	when
-		m: Mar( )
+		bm: BarcoMercenarios()
 		b:BarcoPirata()
 		acantilados: AcantiladosLocura(  )
-		an: AnguilaChillona(ubicacionActual == m , estadoSalud == EstadoSalud.MUERTO)
-		v: Vizzini( ubicacionActual == m)
-		bt: Buttercup(ubicacionActual == m)
-		f: Fezzik( ubicacionActual == m)
-		i: Inigo( ubicacionActual == m)
+		AnguilaChillona(estadoSalud == EstadoSalud.MUERTO)
+		v: Vizzini( ubicacionActual == bm)
+		bt: Buttercup(ubicacionActual == bm)
+		f: Fezzik( ubicacionActual == bm)
+		i: Inigo( ubicacionActual == bm)
 		p: Pirata( ubicacionActual == b )
 	then
 		modify(i){
@@ -510,67 +512,80 @@ rule "1.10 Llegada a los acantilados"
 		modify(p){
 			setMotivacion(Motivacion.SECUESTRAR_PRINCESA)
 		}
-		Archivo.getUnicaInstancia().addInf(v.getNombre() + "," + f.getNombre() + "," + i.getNombre() + "y" + bt.getNombre() + " llegan a " + acantilados.getNombre());
-		Archivo.getUnicaInstancia().addInf(p.getNombre() + " quiere " + p.getMotivacion().getString());
+		Archivo.getUnicaInstancia().addInf(v.getNombre() + ", " + f.getNombre() + ", " 
+		+ i.getNombre() + " y " + bt.getNombre() + " llegan a " + acantilados.getNombre()+". ");
+		Archivo.getUnicaInstancia().addInf("Aparece "+ p.getNombre() + " que quiere " 
+		+ p.getMotivacion().getString()+". ");
 end
 
 rule "1.11 Pirata llega a los acantilados"
 	when
 		b: BarcoPirata()
-		cm: CaminoMontana()
+		cr: CaminoRocoso()
 		ac: AcantiladosLocura()
-		p: Pirata( ubicacionActual == b )
+		p: Pirata( ubicacionActual == b, estadoSalud == EstadoSalud.VIVO)
 		i: Inigo( ubicacionActual == ac )
 		v: Vizzini(ubicacionActual == ac, estadoSalud == EstadoSalud.VIVO)
 		bt: Buttercup(ubicacionActual == ac, estadoSalud == EstadoSalud.VIVO)
 		f: Fezzik(ubicacionActual == ac, estadoSalud == EstadoSalud.VIVO)
 	then
+		EnemigoDe e1 = new EnemigoDe(p);
+		EnemigoDe e2 = new EnemigoDe(i);
+		EnemigoDe e3 = new EnemigoDe(f);
+		EnemigoDe e4 = new EnemigoDe(v);
 		modify(p){
-			setUbicacionActual(ac)
+			addRelacion(e2),
+			addRelacion(e3),
+			addRelacion(e4),
+			setUbicacionActual(ac);
 		}
 		modify(bt){
-			setUbicacionActual(cm)
+			setUbicacionActual(cr);
+		}
+		modify(i){
+			addRelacion(e1);
 		}
 		modify(v){
-			setUbicacionActual(cm)
+			addRelacion(e1),
+			setUbicacionActual(cr);
 		}
 		modify(f){
-			setUbicacionActual(cm)
+			addRelacion(e1),
+			setUbicacionActual(cr);
 		}
-		Archivo.getUnicaInstancia().addInf(v.getNombre() + "," + f.getNombre() + " y " + bt.getNombre() + " huyen a " + cm.getNombre());
-		Archivo.getUnicaInstancia().addInf( p.getNombre() + " llega a " + ac.getNombre());
+		Archivo.getUnicaInstancia().addInf(v.getNombre() + ", " + f.getNombre() + " y " 
+		+ bt.getNombre() + " siguen hacia " + cr.getNombre() +". ");
+		Archivo.getUnicaInstancia().addInf(i.getNombre() + " se queda para enfrentar a "
+		+ p.getNombre() +". ");
+		Archivo.getUnicaInstancia().addInf(p.getNombre() + " llega a " + ac.getNombre()+". ");
 end
 
 rule "1.12 Historia Domingo Montoya"
 	when
 		ac: AcantiladosLocura()
+		h: Herrero(  )
 		p: Pirata( ubicacionActual == ac )
-		i: Inigo( ubicacionActual == ac )
-		pi: PadreInigo(estadoSalud == EstadoSalud.MUERTO)
+		i: Inigo( ubicacionActual == ac, motivacion == Motivacion.GANAR_DINERO)
+		pi: PadreInigo(estadoSalud == EstadoSalud.MUERTO, profesion == h)
+		eval(i.noTieneRelacion(pi))
 	then
 		Relacion fm1 = new FamiliarDe(pi);
 	    Relacion fm2 = new FamiliarDe(i);
-	    ArrayList<Relacion> listaR = i.getRelacionesPersonaje();
-	    listaR.add(fm1);
-	    
+	   
 	    modify(i){
-	      setRelacionesPersonaje(listaR);
+	     	addRelacion(fm1);
 	    }
-	    ArrayList<Relacion> listaR2 = pi.getRelacionesPersonaje();
-	    listaR2.add(fm2);
 	    modify(pi){
-	      setRelacionesPersonaje(listaR2);
+	      	addRelacion(fm2);
 	    }
-		modify(i){
-			setMotivacion(Motivacion.VENGAR_PADRE);
-		}
-		Archivo.getUnicaInstancia().addInf("Domingo Montoya está muerto y su hijo " + i.getNombre() + " busca venganza");
+		Archivo.getUnicaInstancia().addInf(pi.getNombre() +" fue asesinado y su hijo " 
+		+ i.getNombre() + " busca al hombre que tiene seis dedos para vengarse. ");
 end
 
 rule "1.13 Pirata vence a Iñigo"
 	when
 		ac: AcantiladosLocura()
-		cm: CaminoMontana()
+		cr: CaminoRocoso()
 		mercenario: Mercenario()
 		p: Pirata(ubicacionActual == ac)
 		i: Inigo(ubicacionActual == ac, profesion == mercenario, estadoSalud == EstadoSalud.VIVO)
@@ -579,7 +594,7 @@ rule "1.13 Pirata vence a Iñigo"
 			setEstadoSalud(EstadoSalud.INCONSCIENTE)
 		}
 		modify(p){
-			setUbicacionActual(cm)
+			setUbicacionActual(cr)
 		}
 		Archivo.getUnicaInstancia().addInf(p.getNombre() + " vence a " + i.getNombre() +" y sigue la persecución");
 		
@@ -587,11 +602,12 @@ end
 
 rule "1.14 Pirata vence a Fezzik"
 	when
+		cr: CaminoRocoso()
 		cm : CaminoMontana()
 		ac: AcantiladosLocura()
 		des: Desempleado()
-		p: Pirata(ubicacionActual == cm)
-		f: Fezzik(ubicacionActual == cm, estadoSalud == EstadoSalud.VIVO)
+		p: Pirata(ubicacionActual == cr)
+		f: Fezzik(ubicacionActual == cr, estadoSalud == EstadoSalud.VIVO)
 		i: Inigo(estadoSalud == EstadoSalud.INCONSCIENTE, ubicacionActual == ac)
 	then
 		modify(f){
@@ -607,27 +623,29 @@ end
 rule "1.15 Principe llega a los acantilados"
 	when
 		ac: AcantiladosLocura()
+		cr: CaminoRocoso()
 		cm: CaminoMontana()
 		des: Desempleado()
-		p: Pirata(ubicacionActual == cm)
-		f: Fezzik(ubicacionActual == cm, estadoSalud == EstadoSalud.INCONSCIENTE)
+		p: Pirata(ubicacionActual == cr)
+		f: Fezzik(ubicacionActual == cr, estadoSalud == EstadoSalud.INCONSCIENTE)
 		pr: Principe(motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
 		cd: Conde()
 	then
 		modify(pr){
-			setUbicacionActual(ac)
+			setUbicacionActual(ac);
 		}
 		modify(cd){
-			setUbicacionActual(ac)
+			setUbicacionActual(ac);
 		}
 		modify(pr){
 			setMotivacion(Motivacion.SALVAR_BUTTERCUP);
 		}
 		modify(f){
-			setUbicacionActual(null),
-			setEstadoSalud(EstadoSalud.INCONSCIENTE);
+			setUbicacionActual(null);
 		}
-		
+		modify(p){
+			setUbicacionActual(cm);
+		}
 		Archivo.getUnicaInstancia().addInf("Príncipe llega a los acantilados para salvar a Buttercup");
 end 
 
