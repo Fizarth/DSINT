@@ -986,14 +986,18 @@ rule "3.01 Creacion Acto3"
 	then 
 		insert(new PantanoFuego());
 		insert(new PozoDesesperacion());
+		insert(new Sirviente());
 		System.out.println("Acto3");
 end
 
-rule "3.02 Animal Acto3"
+rule "3.02 Animal y personaje Acto3"
 	when 
 		p: PantanoFuego()
+		po : PozoDesesperacion()
+		s: Sirviente()
 	then
 		insert(new RoedorAspectoGigantesco(p));
+		insert(new Albino(p, s));
 end
 
 rule "3.03 Principe llega  a Colina"
@@ -1009,16 +1013,16 @@ rule "3.03 Principe llega  a Colina"
 		modify(c){
 			setUbicacionActual(co);
 		}
-		Archivo.getUnicaInstancia().addInf(" El príncipe llega a la colina buscando a Buttercup y su secuestrador.");
+		Archivo.getUnicaInstancia().addInf(p.getNombre()+" llega a la colina buscando a Buttercup y su secuestrador. ");
 end
 
-rule "3.04 Adentrar en el pantano"
+rule "3.04 Adentrar en el pantano y Primer Horror"
 	when 
 		coa: ColinaAbajo()
 		co: Colina()
 		bu: Buttercup(ubicacionActual == coa)
 		pa: PantanoFuego()
-		we: Westley(estadoSalud == EstadoSalud.VIVO,ubicacionActual == coa)
+		we: Westley(ubicacionActual == coa)
 		pr: Principe(ubicacionActual == co)
 	then
 		modify(bu){
@@ -1027,92 +1031,78 @@ rule "3.04 Adentrar en el pantano"
 		modify(we){
 			setUbicacionActual(pa);
 		}
-		Archivo.getUnicaInstancia().addInf(bu.getNombre() +" y " + we.getNombre() + " se adentran en " +pa.getNombre());
-end 
+		Archivo.getUnicaInstancia().addInf(bu.getNombre() +" y " + we.getNombre() + " se adentran en " +pa.getNombre()+ ". ");
+		Archivo.getUnicaInstancia().addInf("El primer horror son unas erupciones de fuego que salen del suelo. ");
+		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " +bu.getNombre() 
+		+" las consiguen superar, ya que son precedidas de un sonido de burbujas. ");
+end  
 
-rule "3.3 Primer Horror"
+rule "3.05 Leyenda del capitan Robert y Segundo Horror"
 	when
 		pa: PantanoFuego()
 		we: Westley(ubicacionActual == pa)
 		bu: Buttercup(ubicacionActual == pa)
-	then
-		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " +bu.getNombre() +" superan las erupciones de fuego, ya que son precedidas de un sonido de burbuja");
-end 
-
-rule "3.4 Leyenda del capitan Robert"
-	when
-		pa: PantanoFuego()
-		we: Westley(ubicacionActual == pa)
-		bu: Buttercup(ubicacionActual == pa)
-		es: Espadachin()
+		p: Pirata(estadoSalud == EstadoSalud.VIVO)
 	then 
-		Archivo.getUnicaInstancia().addInf(we.getNombre() + " cuenta a " + bu.getNombre() + " como el capitan Robert le hace ayudante");
-		modify(we)}{
-			setProfesion(es);
-		}
+		Archivo.getUnicaInstancia().addInf(we.getNombre() + " cuenta a " + bu.getNombre() +
+		 " como "+p.getNombre()+" le hace su ayudante y luego pasa a fingir que él es Robert. ");
+		 modify(bu){
+		 	setEstadoSalud(EstadoSalud.EN_PELIGRO);
+		 }
+		 Archivo.getUnicaInstancia().addInf(bu.getNombre() + " es tragada por arenas movedizas, está "+ 
+		 bu.getEstadoSalud().getString()+ ", pero " +we.getNombre()+" la salva. Han superado el segundo horror: "+
+		 "las arenas resplandecientes, ahora saben que aspecto tienen. ");
 end 	
 
-rule "3.5 Segundo Horror" 
+rule "3.06 Tercer Horror"
 	when 
 		pa: PantanoFuego()
 		we: Westley(ubicacionActual == pa)
-		bu: Buttercup(ubicacionActual == pa)
-	then 
-		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " +bu.getNombre() + " superan el segundo horror: las arenas resplandecientes, ya que saben que aspecto tienen");
-end
-
-rule "3.6 Tercer Horror"
-	when 
-		pa: PantanoFuego()
-		we: Westley(ubicacionActual == pa)
-		bu: Buttercup(ubicacionActual == pa)
-		rag: Animal(ubicacionActual == pa)		
-	then 
+		bu: Buttercup(ubicacionActual == pa, estadoSalud == EstadoSalud.EN_PELIGRO)
+		rag: RoedorAspectoGigantesco( ubicacionActual == pa)		
+	then
+		modify(bu){
+		 	setEstadoSalud(EstadoSalud.VIVO);
+		 }
+		Archivo.getUnicaInstancia().addInf("Son atacados por un " +rag.getNombre()+". ");
+		modify(we){
+		 	setEstadoSalud(EstadoSalud.HERIDO);
+		}
 		modify(rag){
 			setEstadoSalud(EstadoSalud.MUERTO);
 		}
-		Archivo.getUnicaInstancia().addInf(we.getNombre() + " mata a " + rag.getNombre());
-		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " + bu.getNombre() + " superan el tercer horror");
+		Archivo.getUnicaInstancia().addInf(we.getNombre() + " mata a " + rag.getNombre()+", pero queda " +we.getEstadoSalud().getString()+". ");
+		Archivo.getUnicaInstancia().addInf("Con esto superan el tercer horror. ");
 end 
 
-rule "3.7 Principe va a la salida del pantano"
+rule "3.07 Emboscada a la salida del pantano"
 	when 
 		pa: PantanoFuego()
 		co: Colina()
-		we: Westley(ubicacionActual == pa)
+		bo: Bosque()
+		we: Westley(ubicacionActual == pa, estadoSalud ==EstadoSalud.HERIDO)
 		bu: Buttercup(ubicacionActual == pa)
 		pr: Principe (ubicacionActual == co)
-		bo: Bosque()
 		conde: Conde(ubicacionActual == co)
-	then 
-		modify(pr){
-			setUbicacionActual(bo);
-		}
-		modify(conde){
-			setUbicacionActual(bo);
-		}
-		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " va a " + pr.getUbicacionActual());
-end 
-
-rule "3.8 Salen del pantano de fuego"
-	when 
-		pa: PantanoFuego()
-		bo: Bosque()
-		we: Westley(ubicacionActual == pa)
-		bu: Buttercup(ubicacionActual == pa)
-		rag: Animal(ubicacionActual == pa, estadoSalud == EstadoSalud.MUERTO)
-		pr: Principe(ubicacionActual == bo)
-	then 
+		rag: RoedorAspectoGigantesco( estadoSalud == EstadoSalud.MUERTO)
+	then
 		modify(bu){
 			setUbicacionActual(bo);
 		}
 		modify(we){
 			setUbicacionActual(bo);
 		}
-		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " + bu.getNombre() + " salen de " + pa.getNombre() + " encontrandose con " + pr.getNombre());
+		modify(pr){
+			setUbicacionActual(bo);
+		}
+		modify(conde){
+			setUbicacionActual(bo);
+		}
+		Archivo.getUnicaInstancia().addInf(we.getNombre() + " y " + bu.getNombre() + " salen de " + 
+		pa.getNombre() + ", pero son emboscados por " + pr.getNombre()+". ");
 end 
 
-rule "3.9 promesa de vida"
+rule "3.08 promesa de vida"
 	when 
 		bo: Bosque()
 		ca: Castillo()
@@ -1122,27 +1112,79 @@ rule "3.9 promesa de vida"
 		conde: Conde(ubicacionActual == bo)
 		po: PozoDesesperacion()
 	then 
-		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " se entrega, con la condicion de que " + we.getNombre() + " seguira " + we.getEstadoSalud());
+		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " se entrega, con la condicion de que " +
+		 we.getNombre() + " seguirá con vida. ");
+		 Relacion c = pr.getRelacion(we);
+		 Relacion c1 = conde.getRelacion(we);
+		 Relacion c2 = we.getRelacion(conde);
+		 Relacion c3 = we.getRelacion(pr);
+		 EnemigoDe r1 = new EnemigoDe(we);
+		 EnemigoDe r2 = new EnemigoDe(pr);
+		 EnemigoDe r3 = new EnemigoDe(conde);
+		 
 		modify(we){
+			removeRelacion(c2),
+			removeRelacion(c3),
+			addRelacion(r2),
+			addRelacion(r3),
+			setEstadoSalud(EstadoSalud.INCONSCIENTE),
 			setUbicacionActual(po);
 		} 
 		modify(bu){
 			setUbicacionActual(ca);
 		}
 		modify(pr){
+			removeRelacion(c),
+			addRelacion(r1),
 			setUbicacionActual(ca);
 		}
 		modify(conde){
+			removeRelacion(c1),
+			addRelacion(r1),
 			setUbicacionActual(ca);
 		}
 		
-		Archivo.getUnicaInstancia().addInf(we.getNombre() + " descubre que " + conde.getNombre() + " tiene 6 dedos");
-		Archivo.getUnicaInstancia().addInf(conde.getNombre() + "," + bu.getNombre() + " y " + pr.getNombre() + " van al  Castillo");
+		Archivo.getUnicaInstancia().addInf(we.getNombre() + " descubre que " + conde.getNombre() + " tiene 6 dedos. ");
+		Archivo.getUnicaInstancia().addInf("El conde deja "+ we.getEstadoSalud().getString() + "a "+ we.getNombre()+". ");
+		Archivo.getUnicaInstancia().addInf(conde.getNombre() + "," + bu.getNombre() + " y " + pr.getNombre() + " se dirigen a "+
+		ca.getNombre()+". ");
+		
 end 
 
-//Westley en el pozo
-
+rule "3.09 Pozo de la Desesperación"
+	when 
+		ca: Castillo()
+		po: PozoDesesperacion()
+		s: Sirviente(  )
+		we: Westley(ubicacionActual == po, estadoSalud == EstadoSalud.INCONSCIENTE)
+		al: Albino( ubicacionActual == po , profesion == s)
+		
+	then 
+		Archivo.getUnicaInstancia().addInf(we.getNombre() + " se despierta encerrado en " + po.getNombre() +". ");
+		modify(we){
+			setEstadoSalud(EstadoSalud.RECUPERADO);
+		} 
+		modify(al){
+			setMotivacion(Motivacion.SERVIR_PRINCIPE);
+		} 
+		
+		Archivo.getUnicaInstancia().addInf("El albino " +al.getNombre()+" le explica a Westley la tortura que le espera. ");
+		
+end 
 //Muerte del rey
+rule "3.10 La muerte del Rey"
+	when 
+		ca: Castillo()
+		po: PozoDesesperacion()
+		we: Westley(ubicacionActual == po, estadoSalud == EstadoSalud.RECUPERADO)
+		rey: Rey( ubicacionActual == ca , estadoSalud == EstadoSalud.VIVO)
+	then 
+		modify(rey){
+			setEstadoSalud(EstadoSalud.MUERTO);
+		} 
+		
+		Archivo.getUnicaInstancia().addInf("Se conoce la noticia de la muerte de "+rey.getNombre()+". \n");
+end
 
 /*** ACTO 4 	Presentación	de	la	Nueva	Reina	hasta la	muerte de	Westley ****/
 
@@ -1151,11 +1193,8 @@ agenda-group "Acto4"
 	then
 		insert(new Guardia());
 		insert(new PatioCastillo());
-		// insertar bosque de ladrones??
 		insert(new BosqueLadrones());
-		// insertar Aposentos princesa??
 		insert(new AposentosPrincesa());
-		System.out.println("Acto 4");
 end
 /*
 rule "4.1 Creación de Personajes Acto4"
