@@ -25,7 +25,7 @@ public class Main {
 		
 		//String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\que.txt";
 
-		String filePath = "C:\\Users\\maris\\Desktop\\pruebasDsint\\prueba2.txt";
+		String filePath = "C:\\Users\\maris\\Desktop\\pruebasDsint\\pruebaActo1.txt";
 		Archivo.setPath(filePath + ".output.txt");
 		
 		ArrayList<Consulta> consultas = null;

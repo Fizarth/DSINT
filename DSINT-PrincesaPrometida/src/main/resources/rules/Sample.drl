@@ -72,7 +72,6 @@ rule "0.05 Visita familiar"
       	addRelacion(fm1),
      	addRelacion(fm3);
    	}
-   	System.out.println("achoeh");
   	Archivo.getUnicaInstancia().addInf(md.getNombre() + " está cuidando de " 
   	+ nt.getNombre() +" que se encuentra " + nt.getEstadoSalud().getString() 
   	+ " y llega su " +ab.getNombre() + " de visita. " );
@@ -589,10 +588,19 @@ rule "1.13 Pirata vence a Iñigo"
 	when
 		ac: AcantiladosLocura()
 		cr: CaminoRocoso()
+		cm : CaminoMontana()
 		mercenario: Mercenario()
+		v: Vizzini(ubicacionActual == cr)
+		bt: Buttercup(ubicacionActual == cr)
 		p: Pirata(ubicacionActual == ac)
 		i: Inigo(ubicacionActual == ac, profesion == mercenario, estadoSalud == EstadoSalud.VIVO)
 	then
+		modify(bt){
+			setUbicacionActual(cm);
+		}
+		modify(v){
+			setUbicacionActual(cm);
+		}
 		modify(i){
 			setEstadoSalud(EstadoSalud.INCONSCIENTE)
 		}
@@ -620,6 +628,7 @@ rule "1.14 Pirata vence a Fezzik"
 			setEstadoSalud(EstadoSalud.INCONSCIENTE)
 		}
 		modify(i){
+			setProfesion(des),
 			setUbicacionActual(null);
 		}
 		modify(p){
@@ -646,6 +655,7 @@ rule "1.15 Príncipe llega a los acantilados"
 			setUbicacionActual(ac);
 		}
 		modify(f){
+			setProfesion(des),
 			setUbicacionActual(null);
 		}
 		Archivo.getUnicaInstancia().addInf(pr.getNombre() +" y " + cd.getNombre()+ 
@@ -657,23 +667,17 @@ rule "1.16 Muere Vizzini"
 		cm : CaminoMontana()
 		p: Pirata(ubicacionActual == cm, estadoSalud == EstadoSalud.VIVO)
 		v: Vizzini(ubicacionActual == cm, estadoSalud == EstadoSalud.VIVO)
-		des: Desempleado()
-		i: Inigo(estadoSalud == EstadoSalud.INCONSCIENTE)
-		f: Fezzik(estadoSalud == EstadoSalud.INCONSCIENTE)
-	then 
+		Buttercup(ubicacionActual == cm)
+		Fezzik(estadoSalud == EstadoSalud.INCONSCIENTE)
+	then
+		 Archivo.getUnicaInstancia().addInf(p.getNombre()+" alcanza a " + v.getNombre() +
+		 " y se enfrentan a un duelo de lógica. ");
 		modify(v){
 			setEstadoSalud(EstadoSalud.MUERTO);
 		}
-		modify(i){
-			setProfesion(des);
-		}
-		modify(f){
-			setProfesion(des);
-		}
-		Archivo.getUnicaInstancia().addInf("Vizzini está " + v.getEstadoSalud().getString() + " por " + p.getNombre());
+		Archivo.getUnicaInstancia().addInf(v.getNombre()+ " termina " + 
+		v.getEstadoSalud().getString() + " por el venero. \n");
 end
-//Las ubicaciones y empleos de Fezzik e Íñigo ya han sido modificadas en las reglas anteriores, 
-//ya no hay que modificarlo en el acto2
 
 /*** ACTO 2 El	príncipe	sigue	las	huellas	hasta	que	se	produce	el beso	de	amor	verdadero****/
 rule "Creación Acto2"
