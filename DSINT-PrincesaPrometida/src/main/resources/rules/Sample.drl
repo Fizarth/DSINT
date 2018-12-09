@@ -1694,9 +1694,22 @@ rule "Huida del Castillo"
 		Archivo.getUnicaInstancia().addInf("Al amanecer todos estaban a salvo.\n");
 end
 
-/*rule "Fin del cuento"
-
-end*/
+rule "Fin del cuento"
+	when
+		Buttercup(ubicacionActual == null)
+		Westley(ubicacionActual == null, estadoSalud == EstadoSalud.DEBIL)
+		Inigo(ubicacionActual == null, estadoSalud == EstadoSalud.HERIDO)
+		Fezzik(ubicacionActual == null)
+		ab: Abuelo(estadoSalud == EstadoSalud.VIVO)
+		ni: Nieto(estadoSalud == EstadoSalud.ENFERMO)
+	then
+		Archivo.getUnicaInstancia().addInf("El "+ab.getNombre() + " termina de narrar el cuento y "+
+		ni.getNombre()+" se va a dormir. Antes de despedirse el niño le pide a su abuelo que "+
+		"vuelva a leerle el cuento al día siguiente. El abuelo contesta \"como desees\". \n");
+		modify(ab){
+			setUbicacionActual(null);
+		}
+end
 
 //Consultas
 rule "Consulta Quien" 
