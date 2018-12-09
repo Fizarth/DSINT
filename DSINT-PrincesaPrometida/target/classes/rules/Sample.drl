@@ -390,7 +390,7 @@ rule "1.5 Buttercup sale a pasear"
 		modify(bt){
 			setUbicacionActual(b);
 		}
-	    Archivo.getUnicaInstancia().addInf("Buttercup sale a pasear al bosque.");
+	    Archivo.getUnicaInstancia().addInf(bt.getNombre()+ " sale a pasear por " + b.getNombre());
 end			
 
 rule "1.6 Secuestro Buttercup"
