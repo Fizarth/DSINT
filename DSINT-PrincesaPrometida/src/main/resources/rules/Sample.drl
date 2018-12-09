@@ -1348,19 +1348,27 @@ rule "4.6 Reencuentro Iñigo y Fezzik"
 		des: Desempleado( )
 		br: BrigadaBrutal()
 		i: Inigo(ubicacionActual == null, profesion==des)
-		fe: Fezzik(ubicacionActual == null)
+		fe: Fezzik(ubicacionActual == null, profesion==des)
 		ya: Yalin( ubicacionActual == bl )
 	then
+		Relacion r1 = fe.getRelacion(i);
+		Relacion r2 = i.getRelacion(fe);
+		AmigoDe a1 = new AmigoDe(fe);
+		AmigoDe a2 = new AmigoDe(i);
 		modify(i){
+			removeRelacion(r2),
+			addRelacion(a1),
 			setUbicacionActual(bl),
 			setEstadoSalud(EstadoSalud.BORRACHO);
 		}
 		modify(fe){
+			removeRelacion(r1),
+			addRelacion(a2),
 			setUbicacionActual(bl),
 			setProfesion(br);			
 		}
 		
-		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " encuentra borracho a " + i.getNombre() + " en " + bl.getNombre());
+		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " encuentra borracho a " + i.getNombre() + " en " + bl.getNombre()+". ");
 		modify(ya){
 			setUbicacionActual(null);
 		}
@@ -1370,19 +1378,25 @@ end
 rule "4.7 Iñigo y Fezzik buscan a Westley"
 	when
 		bl: BosqueLadrones()
-		conde: Conde()
+		br: BrigadaBrutal()
+		es:Espadachin(  )
+		conde: Conde(estadoSalud == EstadoSalud.VIVO)
 		i: Inigo(ubicacionActual == bl, estadoSalud == EstadoSalud.BORRACHO)
-		fe: Fezzik(ubicacionActual == bl)
+		PadreInigo( estadoSalud == EstadoSalud.MUERTO)
+		fe: Fezzik(ubicacionActual == bl, profesion ==br)
 	then
+		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " ayuda a " + i.getNombre() + " a recuperarse. ");
+		
+		Archivo.getUnicaInstancia().addInf(i.getNombre() + " se entera de quien es el hombre de seis dedos, el conde " +
+		conde.getNombre()+". ");
+		EnemigoDe e1= new EnemigoDe(conde);
 		modify(i){
+			addRelacion(e1),
+			setProfesion(es),
 			setMotivacion(Motivacion.VENGAR_PADRE),
 			setEstadoSalud(EstadoSalud.RECUPERADO);
 		}
-		
-		Archivo.getUnicaInstancia().addInf(fe.getNombre() + " ayuda a " + i.getNombre() + " a recuperarse");
-		
-		Archivo.getUnicaInstancia().addInf(i.getNombre() + " se entera de quien es realmente " + conde.getNombre());
-
+		Archivo.getUnicaInstancia().addInf("Deciden rescatar a Westley para que les ayude a entrar al castillo. ");
 end
 
 rule "4.8 Buttercup descubre mentira Principe"
@@ -1390,9 +1404,12 @@ rule "4.8 Buttercup descubre mentira Principe"
 		ca: Castillo()
 		ap: AposentosPrincesa()
 		po: PozoDesesperacion()
-		bu: Buttercup(ubicacionActual == ca)
-		pr: Principe(ubicacionActual == ca)
-		Westley( ubicacionActual ==po )
+		br: BrigadaBrutal()
+		i: Inigo(motivacion == Motivacion.VENGAR_PADRE)
+		fe: Fezzik(profesion ==br)
+		bu: Buttercup(ubicacionActual == ap)
+		pr: Principe(ubicacionActual == ca, motivacion==Motivacion.DECLARAR_GUERRA)
+		Westley( ubicacionActual ==po, estadoSalud == EstadoSalud.EN_PELIGRO)
 	then
 		modify (bu){
 			setUbicacionActual(ap);
@@ -1400,8 +1417,8 @@ rule "4.8 Buttercup descubre mentira Principe"
 		modify (pr){
 			setUbicacionActual(po);
 		}
-		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " descubre la mentira de " + pr.getNombre() + " en " + ca.getNombre());
-		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " insulta a " + pr.getNombre() + " y este la encierra en " + ap.getNombre());
+		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " descubre la mentira de " + pr.getNombre()+" y ella le insulta. ");
+		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " la encierra en " + ap.getNombre());
 		
 
 end
@@ -1471,36 +1488,11 @@ rule "Creacion Acto5"
 		insert(new PasilloCastillo());
 		insert(new PuertaCastillo());
 		insert(new SalonCastillo());
-		System.out.println("Acto 5");
-		Archivo.getUnicaInstancia().addInf("\nActo5\n");
-end 
-
-/*
-rule "5.1 Creación Personajes Acto5"
-	when
-		cur: Curandero()
-		sac: Sacerdote()
-		ig: IglesiaCastillo()
-		cs: CasaMilagrosoMax()
-		//Auxiliar
-	then
-		
-		insert(new Valerie(cs, cur)); 
-		insert(new Obispo(ig, sac));
-		insert(new Max(cs, cur ));
-		//Auxiliar.
-		System.out.println("hola");
-		
-	
 end
-*/
-
 
 rule "Creacion Valerie"
 	when
 		cur: Curandero()
-		sac: Sacerdote()
-		ig: IglesiaCastillo()
 		cs: CasaMilagrosoMax()
 		eval (!CharacterDeletor.getInstance().shouldDelete("Valerie"))
 	then
@@ -1511,10 +1503,8 @@ end
 
 rule "Creacion Obispo"
 	when
-		cur: Curandero()
 		sac: Sacerdote()
 		ig: IglesiaCastillo()
-		cs: CasaMilagrosoMax()
 		eval (!CharacterDeletor.getInstance().shouldDelete("Obispo Gangoso"))
 	then
 		
@@ -1526,8 +1516,6 @@ end
 rule "Creacion Max"
 	when
 		cur: Curandero()
-		sac: Sacerdote()
-		ig: IglesiaCastillo()
 		cs: CasaMilagrosoMax()
 		eval (!CharacterDeletor.getInstance().shouldDelete("Milagroso Max"))
 	then
