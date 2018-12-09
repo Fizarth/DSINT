@@ -821,7 +821,7 @@ end
 
 /*** ACTO 3  Buttercup	y	Westley	llegan	al	pantano	hasta que	muere	el	rey****/
 
-rule "Creacion Acto3"
+rule "3.01 Creacion Acto3"
 	agenda-group "Acto3"
 	then 
 		insert(new PantanoFuego());
@@ -829,7 +829,14 @@ rule "Creacion Acto3"
 		System.out.println("Acto3");
 end
 
-rule "3.02 Principe llega  a Colina"
+rule "3.02 Animal Acto3"
+	when 
+		p: PantanoFuego()
+	then
+		insert(new RoedorAspectoGigantesco(p));
+end
+
+rule "3.03 Principe llega  a Colina"
 	when 
 		co: Colina()
 		cm: CaminoMontana()
@@ -842,17 +849,12 @@ rule "3.02 Principe llega  a Colina"
 		modify(c){
 			setUbicacionActual(co);
 		}
-		Archivo.getUnicaInstancia().addInf("Cuando están juntos se produce el beso de amor verdadero.\n");
+		Archivo.getUnicaInstancia().addInf(" El príncipe llega a la colina buscando a Buttercup y su secuestrador.");
 end 
 
-rule "3.1 Necesario Acto3"
-	when 
-		p: PantanoFuego()
-	then
-		insert(new RoedorAspectoGigantesco(p));
-end 
+ 
 
-rule "3.2 Adentrar en el pantano"
+rule "3.04 Adentrar en el pantano"
 	when 
 		coa: ColinaAbajo()
 		cm: CaminoMontana()
