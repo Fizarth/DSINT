@@ -125,6 +125,22 @@ rule "0.08 Relacion Conocer"
         } 
 end
 
+rule "0.08.1 Relacion Finge Ser"
+	when
+		p1: PersonajeCuento()
+		p2: PersonajeCuento(nombre!=p1.getNombre())
+		r: Relacion() from p1.getRelacion(p2)
+		eval(r.getNombre() == "finge ser")
+	then
+		modify(p2){
+			setUbicacionActual(p1.getUbicacionActual()),
+			setMotivacion(p1.getMotivacion()),
+			setEstadoSalud(p1.getEstadoSalud()),
+			setEstadoCivil(p1.getEstadoCivil()),
+			setRelacionesPersonaje(p1.getRelacionesPersonaje());
+		}
+end
+
 rule "0.09 Amor en la Granja"
 	when
 		g: Granja()
