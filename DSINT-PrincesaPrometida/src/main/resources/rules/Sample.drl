@@ -1714,6 +1714,7 @@ end
 rule "Consulta si Sexo"
  	when 
   		consulta : ConsultaSi()
+  		eval (consulta.getValorAtributo() != null)
   		eval (Sexo.isValor(consulta.getValorAtributo()))
  		p: Personaje(nombre == consulta.getNombre())
  	then
@@ -1786,4 +1787,18 @@ rule "Consulta si Profesion"
 		//insert (consulta.getConsulta());
 		
 		System.out.println("ENTRO EN CONSULTA SI profesion Y MODIFICO " + p.getNombre() + " en " + p.getProfesion());
+end
+
+
+rule "Consulta si no existe" 
+	salience 10 
+	when 
+		consulta: ConsultaSi(valorAtributo == null)
+		//eval(consulta.getValorAtributo() == null)
+		p: PersonajeCuento(nombre == consulta.getNombre())
+	then 
+		delete(p);
+		//insert (consulta.getConsulta());
+		System.out.println("eeeeeeeeeeeeeeeee");
+		//System.out.println("ENTRO EN CONSULTA SI profesion Y MODIFICO " + p.getNombre() + " en " + p.getProfesion());
 end 
