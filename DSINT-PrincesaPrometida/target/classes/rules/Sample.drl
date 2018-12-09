@@ -34,7 +34,7 @@ rule "0.03 Creación Animales"
 		insert(new Cerdo(granja));
 		insert(new Vaca(granja));
 end
-
+/*
 rule "0.04 Creación Personajes Acto 0"
 	when 
 		hab: HabitacionN()
@@ -43,6 +43,34 @@ rule "0.04 Creación Personajes Acto 0"
 		insert(new Madre(hab));
 		insert(new Nieto(hab));
 end
+*/
+
+rule "Creacion Abuelo"
+	when
+		hab: HabitacionN()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Abuelo"))
+	then
+		insert(new Abuelo(hab));
+end
+
+
+rule "Creacion Madre"
+	when
+		hab: HabitacionN()
+		eval (!CharacterDeletor.getInstance().shouldDelete("La Madre"))
+	then
+		insert(new Madre(hab));
+end
+
+rule "Creacion Nieto"
+	when
+		hab: HabitacionN()
+		eval (!CharacterDeletor.getInstance().shouldDelete("El Nieto"))
+	then
+		insert(new Nieto(hab));
+end
+
+
 
 rule "0.05 Visita familiar"
   when
@@ -1235,12 +1263,14 @@ rule "5.1 Creación Personajes Acto5"
 		cs: CasaMilagrosoMax()
 		//Auxiliar
 	then
-		insert(new Max(cs, cur ));
-		insert(new Valerie(cs, cur));
+		
+		insert(new Valerie(cs, cur)); 
 		insert(new Obispo(ig, sac));
+		insert(new Max(cs, cur ));
 		//Auxiliar.
 		System.out.println("hola");
 		
+	
 end
 
 rule "5.2 Comprar un milagro"
@@ -1795,10 +1825,19 @@ rule "Consulta si no existe"
 	when 
 		consulta: ConsultaSi(valorAtributo == null)
 		//eval(consulta.getValorAtributo() == null)
-		p: PersonajeCuento(nombre == consulta.getNombre())
+		//p: PersonajeCuento(nombre == consulta.getNombre())
 	then 
-		delete(p);
+		CharacterDeletor.getInstance().setPersonaje(consulta.getNombre());
+		//delete(p);
 		//insert (consulta.getConsulta());
 		System.out.println("eeeeeeeeeeeeeeeee");
 		//System.out.println("ENTRO EN CONSULTA SI profesion Y MODIFICO " + p.getNombre() + " en " + p.getProfesion());
-end 
+end
+
+
+
+
+
+
+
+
