@@ -120,6 +120,7 @@ when
   	}
   	Archivo.getUnicaInstancia().addInf(md.getNombre()+" se despide y "
   	+ ab.getNombre()+ " lee un cuento a " + nt.getNombre()+". ");
+  	Archivo.getUnicaInstancia().addInf("El cuento es una historia de aventuras y amor.\n");
 end
 
 rule "0.07 Inicio cuento"
@@ -131,11 +132,21 @@ rule "0.07 Inicio cuento"
 		granja: Granja()
 		granjero: Granjero()
 		eval (!CharacterDeletor.getInstance().shouldDelete("Westley"))
-		eval (!CharacterDeletor.getInstance().shouldDelete("Buttercup"))
 	then
 		insert(new Westley(granja, granjero));
+end
+
+rule "0.07.1 Inicio cuento"
+	when
+		hab: HabitacionN()
+		Nieto( ubicacionActual == hab )
+		Abuelo( ubicacionActual == hab )
+		Madre( ubicacionActual == null )
+		granja: Granja()
+		granjero: Granjero()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Buttercup"))
+	then
 		insert(new Buttercup(granja, granjero));
-		Archivo.getUnicaInstancia().addInf("El cuento es una historia de aventuras y amor.\n");
 end
 
 rule "0.08 Relacion Conocer"
