@@ -390,12 +390,14 @@ rule "1.5 Buttercup sale a pasear"
 		modify(bt){
 			setUbicacionActual(b);
 		}
-	    Archivo.getUnicaInstancia().addInf(bt.getNombre()+ " sale a pasear por " + b.getNombre());
+	    Archivo.getUnicaInstancia().addInf(bt.getNombre()+ " sale a pasear por " 
+	    + b.getNombre()+". ");
 end			
 
 rule "1.6 Secuestro Buttercup"
 	when
-		b: Bosque();
+		b: Bosque()
+		mar: Mar()
 		princesa: Buttercup(ubicacionActual == b)
 		mer: Mercenario()
 		v: Vizzini(ubicacionActual == b, profesion == mer)
@@ -403,55 +405,66 @@ rule "1.6 Secuestro Buttercup"
 		f: Fezzik(ubicacionActual == b, profesion == mer)
 	then
 		modify(i){
+			setUbicacionActual(mar),
 			setMotivacion(Motivacion.SECUESTRAR_PRINCESA);
 		}
 		modify(f){
+			setUbicacionActual(mar),
 			setMotivacion(Motivacion.SECUESTRAR_PRINCESA);
 		}
 		modify(v){
+			setUbicacionActual(mar),
 			setMotivacion(Motivacion.SECUESTRAR_PRINCESA);
-		}
-		Archivo.getUnicaInstancia().addInf(v.getNombre() + "," + i.getNombre() + " y " + f.getNombre() + " secuestran a "+ princesa.getNombre()+".");
-end
-
-rule "1.7 Huida por el mar"
-	when
-		b: Bosque();
-		princesa: Buttercup(ubicacionActual == b)
-		mer: Mercenario()
-		v: Vizzini(ubicacionActual == b, profesion == mer, motivacion == Motivacion.SECUESTRAR_PRINCESA)
-		i: Inigo(ubicacionActual == b, profesion == mer)
-		f: Fezzik(ubicacionActual == b, profesion == mer)
-		mar: Mar()
-	then
-		modify(v){
-			setMotivacion(Motivacion.DECLARAR_GUERRA),
-			setUbicacionActual(mar);
 		}
 		modify(princesa){
 			setUbicacionActual(mar);
 		}
+		Archivo.getUnicaInstancia().addInf(v.getNombre() + "," + i.getNombre() + " y " 
+		+ f.getNombre() + " secuestran a "+ princesa.getNombre()+". ");
+end
+
+rule "1.7 Huida por el mar"
+	when
+		mar: Mar()
+		princesa: Buttercup(ubicacionActual == mar)
+		mer: Mercenario()
+		v: Vizzini(ubicacionActual == mar, profesion == mer, motivacion == Motivacion.SECUESTRAR_PRINCESA)
+		i: Inigo(ubicacionActual == mar, profesion == mer)
+		f: Fezzik(ubicacionActual == mar, profesion == mer)
+		bm: BarcoMercenarios()
+	then
+		modify(v){
+			setMotivacion(Motivacion.DECLARAR_GUERRA),
+			setUbicacionActual(bm);
+		}
+		modify(princesa){
+			setUbicacionActual(bm);
+		}
 		modify(i){
-			setUbicacionActual(mar);
+			setUbicacionActual(bm);
 		}
 		modify(f){
-			setUbicacionActual(mar);
+			setUbicacionActual(bm);
 		}
-		Archivo.getUnicaInstancia().addInf("Los mercenarios se llevan a Buttercup por el mar para llegar a la frontera de Guilder.");
+		Archivo.getUnicaInstancia().addInf("Los mercenarios se llevan a "+princesa.getNombre()+
+		" por " +mar.getNombre()+" para llegar a la frontera de Guilder.");
 		
 end
 
 rule "1.8 Anguila ataca a buttercup"
 	when 
-		m: Mar();
-		bt: Buttercup(ubicacionActual == m )
+		m: Mar()
+		bm: BarcoMercenarios()
+		bt: Buttercup(ubicacionActual == bm )
 		a: AnguilaChillona(ubicacionActual == m)
 	then 
 		modify(bt){
 			setEstadoSalud(EstadoSalud.EN_PELIGRO);
 		}
 		
-		Archivo.getUnicaInstancia().addInf(bt.getNombre() + " intenta escapar y en el agua es atacada por " + a.getNombre() + ", ahora ella está " + bt.getEstadoSalud().getString() +".");
+		Archivo.getUnicaInstancia().addInf(bt.getNombre() + 
+		" intenta escapar y en el agua es atacada por " + a.getNombre() 
+		+ ", ahora ella está " + bt.getEstadoSalud().getString() +".");
 end
 
 rule "1.9 Fezzik salva a Buttercup"
