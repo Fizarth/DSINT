@@ -22,12 +22,8 @@ public class Main {
 		// System.out.println(kContainer.verify().getMessages().toString());
 
 
-		//String filePath = funcionalidadConsola();
-
-		String filePath = "C:\\Users\\maris\\Desktop\\pruebasDsint\\pruebaActo2.txt";
-		Archivo.setPath(filePath + ".output.txt");
-		
-		//Archivo.setPath(outputPath(filePath));
+		String filePath = funcionalidadConsola();
+		Archivo.setPath(outputPath(filePath));
 		
 		ArrayList<Consulta> consultas = null;
 		try {

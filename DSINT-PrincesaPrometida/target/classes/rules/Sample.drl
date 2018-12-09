@@ -998,7 +998,6 @@ rule "3.01 Creacion Acto3"
 		insert(new PantanoFuego());
 		insert(new PozoDesesperacion());
 		insert(new Sirviente());
-		System.out.println("Acto3");
 end
 
 rule "3.02 Animal y personaje Acto3"
