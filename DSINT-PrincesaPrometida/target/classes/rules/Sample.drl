@@ -993,11 +993,17 @@ end
 rule "3.02 Animal y personaje Acto3"
 	when 
 		p: PantanoFuego()
-		po : PozoDesesperacion()
-		s: Sirviente()
 	then
 		insert(new RoedorAspectoGigantesco(p));
-		insert(new Albino(p, s));
+end
+
+rule "Creacion Albino"
+	when
+		po : PozoDesesperacion()
+		s: Sirviente()
+		eval (!CharacterDeletor.getInstance().shouldDelete("Jai"))
+	then
+		insert(new Albino(po, s));
 end
 
 rule "3.03 Principe llega  a Colina"
@@ -1108,7 +1114,7 @@ rule "3.08 promesa de vida"
 		ca: Castillo()
 		we: Westley(ubicacionActual == bo)
 		bu: Buttercup(ubicacionActual == bo)
-		pr: Principe(ubicacionActual == bo)		
+		pr: Principe(ubicacionActual == bo, motivacion == Motivacion.SALVAR_BUTTERCUP)		
 		conde: Conde(ubicacionActual == bo)
 		po: PozoDesesperacion()
 	then 
@@ -1131,19 +1137,20 @@ rule "3.08 promesa de vida"
 			setUbicacionActual(po);
 		} 
 		modify(bu){
-			setUbicacionActual(ca);
+			setUbicacionActual(null);
 		}
 		modify(pr){
+			setMotivacion(Motivacion.ESTAR_CON_BUTTERCUP),
 			removeRelacion(c),
 			addRelacion(r1),
-			setUbicacionActual(ca);
+			setUbicacionActual(null);
 		}
 		modify(conde){
 			removeRelacion(c1),
 			addRelacion(r1),
-			setUbicacionActual(ca);
+			setUbicacionActual(null);
 		}
-		
+		Archivo.getUnicaInstancia().addInf(pr.getNombre()+ " ordena al conde que mate a " + we.getNombre()+". ");
 		Archivo.getUnicaInstancia().addInf(we.getNombre() + " descubre que " + conde.getNombre() + " tiene 6 dedos. ");
 		Archivo.getUnicaInstancia().addInf("El conde deja "+ we.getEstadoSalud().getString() + "a "+ we.getNombre()+". ");
 		Archivo.getUnicaInstancia().addInf(conde.getNombre() + "," + bu.getNombre() + " y " + pr.getNombre() + " se dirigen a "+
@@ -1178,6 +1185,9 @@ rule "3.10 La muerte del Rey"
 		po: PozoDesesperacion()
 		we: Westley(ubicacionActual == po, estadoSalud == EstadoSalud.RECUPERADO)
 		rey: Rey( ubicacionActual == ca , estadoSalud == EstadoSalud.VIVO)
+		Principe( ubicacionActual ==null )
+		Conde( ubicacionActual ==null )
+		Buttercup( ubicacionActual ==null )
 	then 
 		modify(rey){
 			setEstadoSalud(EstadoSalud.MUERTO);
@@ -1196,38 +1206,20 @@ agenda-group "Acto4"
 		insert(new BosqueLadrones());
 		insert(new AposentosPrincesa());
 end
-/*
-rule "4.1 Creación de Personajes Acto4"
-	when
-		pa: PatioCastillo()
-		ca: Castillo()
-		ind: Indefinido()
-		gu: Guardia()
-	then
-		insert(new Anciana(pa,ind));
-		insert(new Yalin(ca, gu));
-		Archivo.getUnicaInstancia().addInf("\n Acto 4\n");	
-end
-*/
 
 rule "Creacion Anciana"
 	when
 		pa: PatioCastillo()
-		ca: Castillo()
 		ind: Indefinido()
-		gu: Guardia()
 		eval (!CharacterDeletor.getInstance().shouldDelete("Anciana Abucheadora"))
 	then
 		insert(new Anciana(pa,ind));
-		Archivo.getUnicaInstancia().addInf("\n Acto 4\n");	
 end
 
 
 rule "Creacion Yalin"
 	when
-		pa: PatioCastillo()
 		ca: Castillo()
-		ind: Indefinido()
 		gu: Guardia()
 		eval (!CharacterDeletor.getInstance().shouldDelete("Yalin"))
 	then
@@ -1238,19 +1230,22 @@ end
 
 rule "4.2 Sueño Buttercup"
 	when
-		ca: Castillo()
-		pa: PatioCastillo()	
-		wes: Westley()
-		rey: Rey()
+		pa: PatioCastillo()
+		rey: Rey(estadoSalud == EstadoSalud.MUERTO)
 		an: Anciana(ubicacionActual == pa)
-		conde: Conde(ubicacionActual == ca)
-		bu: Buttercup(ubicacionActual == ca)
-		pr: Principe (ubicacionActual == ca)
+		conde: Conde(ubicacionActual == null)
+		bu: Buttercup(ubicacionActual == null)
+		pr: Principe (ubicacionActual == null, motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
 	then
-
+		Archivo.getUnicaInstancia().addInf("Tras la muerte del rey, " + pr.getNombre()+ " y " + 
+		bu.getNombre()+" se casan y son proclamados reyes. Sin embargo, una " + an.getNombre() + 
+		" recrimina a la nueva reina por renunciar de su amor verdadero. ");
+		modify(rey){
+			setEstadoSalud(EstadoSalud.VIVO);
+		} 
 		modify(conde){
 			setUbicacionActual(pa);
-		} 
+		}
 		modify(bu){
 			setUbicacionActual(pa);
 		}
@@ -1260,65 +1255,78 @@ rule "4.2 Sueño Buttercup"
 		modify(an){
 			setUbicacionActual(null);
 		}
-		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " sueña que " + rey.getNombre() + " muere y se casa con " + pr.getNombre());
-		Archivo.getUnicaInstancia().addInf(an.getNombre() + " abuchea a " + bu.getNombre() + " por no casarse con " + wes.getNombre() + " y renunciar al amor verdadero");	
 		
+		Archivo.getUnicaInstancia().addInf(bu.getNombre()+" despierta y se da cuenta que se trataba de una pesadilla. ");	
+		Archivo.getUnicaInstancia().addInf(rey.getNombre()+" todavía seguía con vida. ");
 end
 
 rule "4.3 Trato principe"
 	when
 	ca: Castillo()
-	pa: PatioCastillo()
+	pa: PatioCastillo()	
+	ap: AposentosPrincesa()
 	po: PozoDesesperacion()
-	pr: Principe (ubicacionActual == pa)
+	we: Westley( ubicacionActual == po )
+	Anciana( ubicacionActual ==null )
+	pr: Principe (ubicacionActual == pa, motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
 	bu: Buttercup(ubicacionActual == pa)
-	conde: Conde(ubicacionActual == pa)
-	we: Westley(ubicacionActual == po)
-		
+	conde: Conde(ubicacionActual == pa, motivacion == Motivacion.SERVIR_PRINCIPE)
 	then
 		modify(conde){
 			setUbicacionActual(ca);
 		} 
 		modify(bu){
-			setUbicacionActual(ca);
+			setUbicacionActual(ap);
 		}
 		modify(pr){
-			setMotivacion(Motivacion.DECLARAR_GUERRA),
 			setUbicacionActual(ca);
 		}
-		modify(we){
-			setEstadoSalud(EstadoSalud.EN_PELIGRO);
-		}
+		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " hace un trato con " + bu.getNombre() + " para casarse con ella. ");
+		Archivo.getUnicaInstancia().addInf("Si " +we.getNombre()+" llega antes de la fecha de la boda, pordrán irse los dos. ");
 		
-		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " hace un trato con " + bu.getNombre() + " para casarse con ella");
-		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " planea matar a " + bu.getNombre() + " para incriminar a la nacion enemiga y declarar la guerra");
-	
 end
 
-//REGLA SE DESCUBRE QUE PRINCIPE QUIERE MATAR A BUTTERCUP
-/*rule "4.3.1 Plan para declarar la guerra a Guilder"
+rule "4.3.1 Plan para declarar la guerra a Guilder"
 	when
-		
+		ca: Castillo()
+		ap: AposentosPrincesa()
+		po: PozoDesesperacion()
+		bo: Bosque( )
+		pr: Principe (ubicacionActual == ca, motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
+		bu: Buttercup(ubicacionActual == ap)
+		conde: Conde(ubicacionActual == ca, motivacion == Motivacion.SERVIR_PRINCIPE)
+		Westley( ubicacionActual == po, estadoSalud == EstadoSalud.RECUPERADO)
 	then
-		
-end*/
+		modify(pr){
+			setMotivacion(Motivacion.DECLARAR_GUERRA);
+		}
+		modify(conde){
+			setUbicacionActual(bo);
+		}
+		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " planea matar a " +
+		bu.getNombre() + " para incriminar a la nacion enemiga y " +pr.getMotivacion().getString()+". ");
+end
 
 rule "4.4 Tortura a Westley"
 	when
 	po: PozoDesesperacion()
-	ca: Castillo()
-	wes: Westley(ubicacionActual == po, estadoSalud == EstadoSalud.EN_PELIGRO)
-	conde: Conde(ubicacionActual == ca)
+	bo: Bosque()
+	wes: Westley(ubicacionActual == po, estadoSalud == EstadoSalud.RECUPERADO)
+	conde: Conde(ubicacionActual == bo, motivacion == Motivacion.SERVIR_PRINCIPE)
 	
 	then
 		modify(conde){
+			setMotivacion(Motivacion.ESTUDIAR_DOLOR),
 			setUbicacionActual(po);
 		}
-		Archivo.getUnicaInstancia().addInf(conde.getNombre() + " tortura a " + wes.getNombre() + " en " + po.getNombre()); 
+		modify(wes){
+			setEstadoSalud(EstadoSalud.EN_PELIGRO);
+		}
+		Archivo.getUnicaInstancia().addInf(conde.getNombre() + " declara que su objetivo es " +conde.getMotivacion().getString() +
+		"en el cuerpo humano y empieza a torturar a "+wes.getNombre() + " en " + po.getNombre() +". "); 
 	
 end
 
-// no funciona?? (Arreglado) -> BOsque de ladrones insertado en consulta 4
 rule "4.5 Pricipe ordena a Yalin"
 	when
 		ca: Castillo()
