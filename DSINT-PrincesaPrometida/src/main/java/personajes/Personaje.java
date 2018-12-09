@@ -53,6 +53,12 @@ public abstract class Personaje {
 	public void addRelacion(Relacion rel) {
 		this.relacionesPersonaje.add(rel);
 	}
+	
+	public void addRelacionesPersonaje(ArrayList<Relacion> listRelaciones) {
+		for (Relacion rel : listRelaciones) {
+			relacionesPersonaje.add(rel);
+		}
+	}
 
 	public void removeRelacion(Relacion rel) {
 		this.relacionesPersonaje.remove(rel);

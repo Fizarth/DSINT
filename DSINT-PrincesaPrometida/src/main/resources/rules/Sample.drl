@@ -113,6 +113,7 @@ rule "0.08 Relacion Conocer"
         p1 : Personaje(ubicacionActual != null, estadoSalud == EstadoSalud.VIVO)
         p2 : Personaje(nombre != p1.getNombre(), ubicacionActual == p1.getUbicacionActual(), estadoSalud == EstadoSalud.VIVO)
         eval (p1.noTieneRelacion(p2))
+        eval (p2.noTieneRelacion(p1))
     then
 
         Relacion r = new ConoceA(p2);
@@ -700,6 +701,7 @@ rule "2.01 Creación Lugar y Profesion Acto 2"
 agenda-group "Acto2"
 	then
 		insert(new Colina());
+		insert(new ColinaAbajo());
 		insert(new Espadachin());	
 end 
 
@@ -710,7 +712,6 @@ rule "2.02 Principe llega al camino rocoso"
 		Vizzini(estadoSalud == EstadoSalud.MUERTO)
 		p: Principe(ubicacionActual == ac)
 		conde: Conde(ubicacionActual == ac)
-		co: Colina()
 	then 
 		modify(p){
 			setUbicacionActual(cr)
@@ -718,7 +719,7 @@ rule "2.02 Principe llega al camino rocoso"
 		modify(conde){
 			setUbicacionActual(cr)
 		}
-		Archivo.getUnicaInstancia().addInf(p.getNombre() + " llega a " + cr.getNombre());
+		Archivo.getUnicaInstancia().addInf(p.getNombre() + " llega a " + cr.getNombre()+". ");
 end 
 
 rule "2.03 Pirata y Buttercup huyen"
@@ -735,10 +736,11 @@ rule "2.03 Pirata y Buttercup huyen"
 		modify(p){
 			setUbicacionActual(colina)
 		}
-		Archivo.getUnicaInstancia().addInf("El pirata y Buttercup huyen hacia la colina");
+		Archivo.getUnicaInstancia().addInf(p.getNombre()+" y " + b.getNombre()
+		+" huyen hacia" +colina.getNombre()+". ");
 end
 
-rule "2.04 Principe rastrea a Buttercup"
+rule "2.04 Principe descubre Vizzini muerto"
 	when 
 		cr: CaminoRocoso()
 		col: Colina()
@@ -754,73 +756,95 @@ rule "2.04 Principe rastrea a Buttercup"
 		modify(conde){
 			setUbicacionActual(cm)
 		}
-		Archivo.getUnicaInstancia().addInf(p.getNombre() + " rastrea a su prometida hasta "+ cm.getNombre());
+		Archivo.getUnicaInstancia().addInf(p.getNombre() + " encuentra en "+ cm.getNombre()
+		+ " a Vizzini muerto. ");
 end 
 
-rule "2.3 Buttercup descubre quien es su secuestrador"
+rule "2.05 Buttercup descubre quien es su secuestrador"
 	when 
 		colina: Colina()
 		but: Buttercup(ubicacionActual == colina)
 		pir: Pirata(ubicacionActual == colina)
 	then 
-		Archivo.getUnicaInstancia().addInf(but.getNombre() +" descubre que ha sido secuestrada por " + pir.getNombre());
-	
+		Archivo.getUnicaInstancia().addInf(but.getNombre() +
+		" descubre que ha sido secuestrada por " + pir.getNombre()+". ");
 end
 
-rule "2.4 Principe alcanza a la princesa"
+rule "2.06 Como Desees en la colina"
 	when 
 		co: Colina()
-		cm: CaminoMontana()
-		but: Buttercup(ubicacionActual == co)
-		pir: Pirata(ubicacionActual == co)
-		prin: Principe(ubicacionActual == cm)
-		conde: Conde(ubicacionActual == cm)
-	then 
-		modify(prin){
-			setUbicacionActual(co)
-		}
-		modify(conde){
-			setUbicacionActual(co)
-		}
-		Archivo.getUnicaInstancia().addInf(prin.getNombre() + " alcanza a la princesa en " + co.getNombre());
-end
-
-rule "2.5 Como Desees en la colina"
-	when 
-		co: Colina()
-		we: Westley(estadoSalud == EstadoSalud.MUERTO)
+		coa: ColinaAbajo()
+		m: Mar()
+		we: Westley(estadoSalud == EstadoSalud.MUERTO, ubicacionActual == m)
 		bu: Buttercup(ubicacionActual == co)
-		pr: Principe (ubicacionActual == co)
 		pi: Pirata(ubicacionActual == co)
-		es: Espadachin()
-		
+		pir: Pirateria()
 	then 
-		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " empuja a " + pi.getNombre()+ " y grita: COMO DESEES.");
+		
+		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " empuja a " + pi.getNombre()
+		+ " " +coa.getNombre()+" mientras que este grita: ¡COMO DESEEES!. En ese momento "
+		+ bu.getNombre()+ " se da cuenta que realmente es "+ we.getNombre()+". ");
+		Relacion r1 = bu.getRelacion(pi);
+		Relacion r2 = pi.getRelacion(bu);
+		Relacion r3 = pi.getRelacion(we);
+		Relacion r4 = we.getRelacion(pi);
+		
+		modify(bu){
+			setUbicacionActual(coa),
+			removeRelacion(r1);
+		}
+		
+		modify(pi){
+			setUbicacionActual(coa),
+			removeRelacion(r3),
+			removeRelacion(r2);
+		}
+		
+		FingeSer f1 = new FingeSer(pi);
+		
+		ArrayList<Relacion> list = pi.getRelacionesPersonaje();
+		
 		modify(we){
+			removeRelacion(r4),
 			setEstadoSalud(EstadoSalud.VIVO),
-			setUbicacionActual(co),
-			setProfesion(es);
+			setUbicacionActual(coa),
+			setProfesion(pir),
+			setMotivacion(Motivacion.ESTAR_CON_BUTTERCUP),
+			addRelacionesPersonaje(list),
+			addRelacion(f1);
 		}
-		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " se tira por " + co.getNombre());
-		Archivo.getUnicaInstancia().addInf("Se produce el beso de amor verdadero");
-		
-//no se que hacer con el principe ni el pirata xD
-		
+		Archivo.getUnicaInstancia().addInf(bu.getNombre() + " se tira por "	+ coa.getNombre()+". ");
+		Archivo.getUnicaInstancia().addInf("Cuando están juntos se produce el beso de amor verdadero.\n");
 end
+
 /*
-rule "ubicacionPirata"
+rule "2.07 Beso de amor verdadero"
 	when
-		w: Westley(estadoSalud == EstadoSalud.VIVO)
-		p: Pirata(ubicacionActual != w.getUbicacionActual)
-	then 
-		modify(p){
-			setUbicacionActual(w.getUbicacionActual());
+		coa: ColinaAbajo()
+		we: Westley(estadoSalud == EstadoSalud.VIVO, ubicacionActual == coa, motivacion==Motivacion.GANAR_DINERO)
+		bu: Buttercup(ubicacionActual == coa)
+		pi: Pirata(ubicacionActual == coa)
+	then
+		Relacion r3 = pi.getRelacion(we);
+		Relacion r4 = we.getRelacion(pi);
+		
+		modify(pi){
+			removeRelacion(r3);
 		}
-end 
+		
+		FingeSer f1 = new FingeSer(pi);
+		
+		ArrayList<Relacion> list = pi.getRelacionesPersonaje();
+		modify(we){
+			removeRelacion(r4),
+			setMotivacion(Motivacion.ESTAR_CON_BUTTERCUP),
+			addRelacionesPersonaje(list),
+			addRelacion(f1);
+		}
+		
+		Archivo.getUnicaInstancia().addInf("Cuando están juntos se produce el beso de amor verdadero.\n");
+end
 */
-
-
-
 /*** ACTO 3  Buttercup	y	Westley	llegan	al	pantano	hasta que	muere	el	rey****/
 
 rule "Creacion Acto3"
@@ -1715,6 +1739,7 @@ end
 rule "Consulta si Sexo"
  	when 
   		consulta : ConsultaSi()
+  		eval (consulta.getValorAtributo() != null)
   		eval (Sexo.isValor(consulta.getValorAtributo()))
  		p: Personaje(nombre == consulta.getNombre())
  	then
@@ -1787,4 +1812,18 @@ rule "Consulta si Profesion"
 		//insert (consulta.getConsulta());
 		
 		System.out.println("ENTRO EN CONSULTA SI profesion Y MODIFICO " + p.getNombre() + " en " + p.getProfesion());
+end
+
+
+rule "Consulta si no existe" 
+	salience 10 
+	when 
+		consulta: ConsultaSi(valorAtributo == null)
+		//eval(consulta.getValorAtributo() == null)
+		p: PersonajeCuento(nombre == consulta.getNombre())
+	then 
+		delete(p);
+		//insert (consulta.getConsulta());
+		System.out.println("eeeeeeeeeeeeeeeee");
+		//System.out.println("ENTRO EN CONSULTA SI profesion Y MODIFICO " + p.getNombre() + " en " + p.getProfesion());
 end 
