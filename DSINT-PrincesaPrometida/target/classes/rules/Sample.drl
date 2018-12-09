@@ -827,6 +827,22 @@ rule "Creacion Acto3"
 		insert(new PantanoFuego());
 		insert(new PozoDesesperacion());
 		System.out.println("Acto3");
+end
+
+rule "3.02 Como Desees en la colina"
+	when 
+		co: Colina()
+		cm: CaminoMontana()
+		p: Principe(ubicacionActual == cm)
+		c: Conde(ubicacionActual == cm)
+	then 
+		modify(p){
+			setUbicacionActual(co);
+		}
+		modify(c){
+			setUbicacionActual(co);
+		}
+		Archivo.getUnicaInstancia().addInf("Cuando están juntos se produce el beso de amor verdadero.\n");
 end 
 
 rule "3.1 Necesario Acto3"
