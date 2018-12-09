@@ -1323,7 +1323,7 @@ rule "4.4 Tortura a Westley"
 			setEstadoSalud(EstadoSalud.EN_PELIGRO);
 		}
 		Archivo.getUnicaInstancia().addInf(conde.getNombre() + " declara que su objetivo es " +conde.getMotivacion().getString() +
-		"en el cuerpo humano y empieza a torturar a "+wes.getNombre() + " en " + po.getNombre() +". "); 
+		" en el cuerpo humano y empieza a torturar a "+wes.getNombre() + " en " + po.getNombre() +". "); 
 	
 end
 
@@ -1331,10 +1331,11 @@ rule "4.5 Pricipe ordena a Yalin"
 	when
 		ca: Castillo()
 		bl: BosqueLadrones()
-		pr: Principe (ubicacionActual == ca, motivacion == Motivacion.DECLARAR_GUERRA)
-		ya: Yalin(ubicacionActual == ca)
+		gu: Guardia()
+		pr: Principe(ubicacionActual == ca, motivacion == Motivacion.DECLARAR_GUERRA)
+		ya: Yalin(ubicacionActual == ca, profesion == gu)
 	then
-		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " ordena a " + ya.getNombre() + " vaciar " + bl.getNombre());
+		Archivo.getUnicaInstancia().addInf(pr.getNombre() + " ordena a " + ya.getNombre() + " vaciar " + bl.getNombre()+". ");
 		modify(ya){
 			setUbicacionActual(bl);
 		}
@@ -1343,7 +1344,6 @@ end
 
 rule "4.6 Reencuentro Iñigo y Fezzik"
 	when
-		// ubicacion actual ????
 		bl: BosqueLadrones()
 		des: Desempleado( )
 		br: BrigadaBrutal()
