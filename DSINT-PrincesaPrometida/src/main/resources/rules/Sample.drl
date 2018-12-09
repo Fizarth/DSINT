@@ -836,11 +836,12 @@ end
 
 rule "3.2 Adentrar en el pantano"
 	when 
-		co: Colina()
-		bu: Buttercup(ubicacionActual == co)
+		coa: ColinaAbajo()
+		cm: CaminoMontana()
+		bu: Buttercup(ubicacionActual == coa)
 		pa: PantanoFuego()
-		we: Westley(estadoSalud == EstadoSalud.VIVO,ubicacionActual == co)
-		pr: Principe(ubicacionActual == co)
+		we: Westley(estadoSalud == EstadoSalud.VIVO,ubicacionActual == coa)
+		pr: Principe(ubicacionActual == cm)
 	then
 		modify(bu){
 			setUbicacionActual(pa);
