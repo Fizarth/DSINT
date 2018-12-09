@@ -1918,14 +1918,47 @@ rule "Reunión final"
 		}
 end
 
-/*rule "Huida del Castillo"
+rule "Huida del Castillo"
+	when
+		ap : AposentosPrincesa()
+		pC: PatioCastillo()
+		b: Buttercup(ubicacionActual == ap)
+		w: Westley(ubicacionActual == ap, estadoSalud == EstadoSalud.DEBIL)
+		i: Inigo(ubicacionActual == ap, estadoSalud == EstadoSalud.HERIDO)
+		f: Fezzik(ubicacionActual == pC)
+	then
+		Archivo.getUnicaInstancia().addInf("Los cuatro cabalgan hacia la libertad. \n");
+		modify(i){
+			setUbicacionActual(null);
+		}
+		modify(w){
+			setUbicacionActual(null);
+		}
+		modify(f){
+			setUbicacionActual(null);
+		}
+		modify(b){
+			setUbicacionActual(null);
+		}
+		Archivo.getUnicaInstancia().addInf("Al amanecer todos estaban a salvo.\n");
+end
 
-end*/
-
-/*rule "Fin del cuento"
-
-end*/
-
+rule "Fin del cuento"
+	when
+		Buttercup(ubicacionActual == null)
+		Westley(ubicacionActual == null, estadoSalud == EstadoSalud.DEBIL)
+		Inigo(ubicacionActual == null, estadoSalud == EstadoSalud.HERIDO)
+		Fezzik(ubicacionActual == null)
+		ab: Abuelo(estadoSalud == EstadoSalud.VIVO)
+		ni: Nieto(estadoSalud == EstadoSalud.ENFERMO)
+	then
+		Archivo.getUnicaInstancia().addInf("El "+ab.getNombre() + " termina de narrar el cuento y "+
+		ni.getNombre()+" se va a dormir. Antes de despedirse el niño le pide a su abuelo que "+
+		"vuelva a leerle el cuento al día siguiente. El abuelo contesta \"como desees\". \n");
+		modify(ab){
+			setUbicacionActual(null);
+		}
+end
 //Consultas
 rule "Consulta Quien" 
 	when 
