@@ -261,7 +261,7 @@ rule "1.03 Creación de Personajes Acto1"
 		insert(new AnguilaChillona(mar));
 end
 
-rule "1.4 El Rey"
+rule "1.04 El Rey"
 	when
 		g: Gobernante()
 		r: Rey(profesion == g)
@@ -272,7 +272,7 @@ rule "1.4 El Rey"
 		}
 end
 
-rule "1.5 El Príncipe"
+rule "1.05 El Príncipe"
 	when
 		g: Gobernante()
 		p: Principe(profesion == g)
@@ -283,7 +283,7 @@ rule "1.5 El Príncipe"
 		}
 		
 end
-rule "1.6 El Conde"
+rule "1.06 El Conde"
 	when
 		v: Visir()
 		c: Conde( profesion==v )
@@ -294,7 +294,7 @@ rule "1.6 El Conde"
 		}
 end
 
-rule "1.7 Rey y Príncipe son familia"
+rule "1.07 Rey y Príncipe son familia"
   when
   	g: Gobernante()
     pr: Principe(profesion == g)
@@ -316,7 +316,7 @@ rule "1.7 Rey y Príncipe son familia"
     }
 end
 
-rule "1.8 Principe y Conde amigos"
+rule "1.08 Principe y Conde amigos"
   when
   	g: Gobernante()
   	v: Visir()
@@ -341,7 +341,7 @@ rule "1.8 Principe y Conde amigos"
     }
 end
 
-rule "1.9 El príncipe quiere a Buttercup"
+rule "1.09 El príncipe quiere a Buttercup"
   when
     pr: Principe( estadoSalud == EstadoSalud.VIVO )
     bt: Buttercup( estadoSalud == EstadoSalud.VIVO )
@@ -355,7 +355,7 @@ rule "1.9 El príncipe quiere a Buttercup"
     Archivo.getUnicaInstancia().addInf(pr.getNombre() + " quiere a " + bt.getNombre()+ ". ");
 end
 
-rule "1.4 Buttercup prometida del príncipe"
+rule "1.10 Buttercup prometida del príncipe"
   when
   	m: Mar()
     pr: Principe(motivacion == Motivacion.ESTAR_CON_BUTTERCUP)
@@ -378,7 +378,7 @@ rule "1.4 Buttercup prometida del príncipe"
     bt.getNombre() + " se prometen y se anuncia la boda. ");
 end
 
-rule "1.5 Buttercup sale a pasear"
+rule "1.11 Buttercup sale a pasear"
 	when
 		b: Bosque()
 		c: Castillo()
@@ -393,7 +393,7 @@ rule "1.5 Buttercup sale a pasear"
 	    + b.getNombre()+". ");
 end			
 
-rule "1.6 Secuestro Buttercup"
+rule "1.12 Secuestro Buttercup"
 	when
 		b: Bosque()
 		mar: Mar()
@@ -422,7 +422,7 @@ rule "1.6 Secuestro Buttercup"
 		+ f.getNombre() + " secuestran a "+ princesa.getNombre()+". ");
 end
 
-rule "1.7 Huida por el mar"
+rule "1.13 Huida por el mar"
 	when
 		mar: Mar()
 		princesa: Buttercup(ubicacionActual == mar)
@@ -452,7 +452,7 @@ rule "1.7 Huida por el mar"
 		
 end
 
-rule "1.8 Anguila ataca a buttercup"
+rule "1.14 Anguila ataca a buttercup"
 	when 
 		m: Mar()
 		bm: BarcoMercenarios()
@@ -468,7 +468,7 @@ rule "1.8 Anguila ataca a buttercup"
 		+ ", ahora ella está " + bt.getEstadoSalud().getString() +". ");
 end
 
-rule "1.9 Fezzik salva a Buttercup"
+rule "1.15 Fezzik salva a Buttercup"
 	when 
 		m: Mar()
 		bm: BarcoMercenarios()
@@ -486,7 +486,7 @@ rule "1.9 Fezzik salva a Buttercup"
 		" y "+ a.getNombre() + " muere. ");		
 end
 
-rule "1.10 Llegada a los acantilados"
+rule "1.16 Llegada a los acantilados"
 	when
 		bm: BarcoMercenarios()
 		b:BarcoPirata()
@@ -519,7 +519,7 @@ rule "1.10 Llegada a los acantilados"
 		+ p.getMotivacion().getString()+". ");
 end
 
-rule "1.11 Pirata llega a los acantilados"
+rule "1.17 Pirata llega a los acantilados"
 	when
 		b: BarcoPirata()
 		cr: CaminoRocoso()
@@ -561,7 +561,7 @@ rule "1.11 Pirata llega a los acantilados"
 		Archivo.getUnicaInstancia().addInf(p.getNombre() + " llega a " + ac.getNombre()+". ");
 end
 
-rule "1.12 Historia Domingo Montoya"
+rule "1.18 Historia Domingo Montoya"
 	when
 		ac: AcantiladosLocura()
 		h: Herrero(  )
@@ -584,7 +584,7 @@ rule "1.12 Historia Domingo Montoya"
 		+ i.getNombre() + " busca al hombre que tiene seis dedos para vengarse. ");
 end
 
-rule "1.13 Pirata vence a Iñigo"
+rule "1.19 Pirata vence a Iñigo"
 	when
 		ac: AcantiladosLocura()
 		cr: CaminoRocoso()
@@ -612,7 +612,7 @@ rule "1.13 Pirata vence a Iñigo"
 		
 end 
 
-rule "1.14 Pirata vence a Fezzik"
+rule "1.20 Pirata vence a Fezzik"
 	when
 		cr: CaminoRocoso()
 		cm : CaminoMontana()
@@ -638,7 +638,7 @@ rule "1.14 Pirata vence a Fezzik"
 		" y continúa hacia " + cm.getNombre() +". ");
 end
 
-rule "1.15 Príncipe llega a los acantilados"
+rule "1.21 Príncipe llega a los acantilados"
 	when
 		ac: AcantiladosLocura()
 		cr: CaminoRocoso()
@@ -662,7 +662,7 @@ rule "1.15 Príncipe llega a los acantilados"
 		" llegan a los acantilados para "+pr.getMotivacion().getString() +". ");
 end 
 
-rule "1.16 Muere Vizzini"
+rule "1.22 Muere Vizzini"
 	when 
 		cm : CaminoMontana()
 		p: Pirata(ubicacionActual == cm, estadoSalud == EstadoSalud.VIVO)
@@ -680,14 +680,32 @@ rule "1.16 Muere Vizzini"
 end
 
 /*** ACTO 2 El	príncipe	sigue	las	huellas	hasta	que	se	produce	el beso	de	amor	verdadero****/
-rule "Creación Acto2"
+rule "2.01 Creación Lugar y Profesion Acto 2"
 agenda-group "Acto2"
 	then
 		insert(new Colina());
-		insert(new Espadachin());
-		System.out.println("Acto2");	
+		insert(new Espadachin());	
 end 
-rule "2.1 Pirata y Buttercup huyen"
+
+rule "2.02 Principe llega al camino rocoso"
+	when 
+		ac: AcantiladosLocura()
+		cr: CaminoRocoso()
+		Vizzini(estadoSalud == EstadoSalud.MUERTO)
+		p: Principe(ubicacionActual == ac)
+		conde: Conde(ubicacionActual == ac)
+		co: Colina()
+	then 
+		modify(p){
+			setUbicacionActual(cr)
+		}
+		modify(conde){
+			setUbicacionActual(cr)
+		}
+		Archivo.getUnicaInstancia().addInf(p.getNombre() + " llega a " + cr.getNombre());
+end 
+
+rule "2.03 Pirata y Buttercup huyen"
 	when 
 		camino : CaminoMontana()
 		v: Vizzini(estadoSalud == EstadoSalud.MUERTO)
@@ -704,14 +722,15 @@ rule "2.1 Pirata y Buttercup huyen"
 		Archivo.getUnicaInstancia().addInf("El pirata y Buttercup huyen hacia la colina");
 end
 
-rule "2.2 Principe rastrea a Buttercup"
+rule "2.04 Principe rastrea a Buttercup"
 	when 
-		ac: AcantiladosLocura()
-		pirata: Pirata(ubicacionActual != ac) //soolo llega cuando ya no esten alli.
-		p: Principe(ubicacionActual == ac)
+		cr: CaminoRocoso()
+		col: Colina()
 		cm: CaminoMontana()
-		conde: Conde(ubicacionActual == ac)
-		co: Colina()
+		Pirata(ubicacionActual == col)
+		Buttercup(ubicacionActual == col)
+		p: Principe(ubicacionActual == cr)
+		conde: Conde(ubicacionActual == cr)
 	then 
 		modify(p){
 			setUbicacionActual(cm)
@@ -1092,6 +1111,7 @@ rule "4.7 Iñigo y Fezzik buscan a Westley"
 		fe: Fezzik(ubicacionActual == bl)
 	then
 		modify(i){
+			setMotivacion(Motivacion.VENGAR_PADRE),
 			setEstadoSalud(EstadoSalud.RECUPERADO);
 		}
 		
