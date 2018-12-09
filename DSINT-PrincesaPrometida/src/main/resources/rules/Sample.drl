@@ -829,7 +829,7 @@ rule "Creacion Acto3"
 		System.out.println("Acto3");
 end
 
-rule "3.02 Como Desees en la colina"
+rule "3.02 Principe llega  a Colina"
 	when 
 		co: Colina()
 		cm: CaminoMontana()
