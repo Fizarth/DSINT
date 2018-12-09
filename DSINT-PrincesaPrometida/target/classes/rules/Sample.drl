@@ -878,18 +878,16 @@ rule "3.03 Principe llega  a Colina"
 			setUbicacionActual(co);
 		}
 		Archivo.getUnicaInstancia().addInf(" El príncipe llega a la colina buscando a Buttercup y su secuestrador.");
-end 
-
- 
+end
 
 rule "3.04 Adentrar en el pantano"
 	when 
 		coa: ColinaAbajo()
-		cm: CaminoMontana()
+		co: Colina()
 		bu: Buttercup(ubicacionActual == coa)
 		pa: PantanoFuego()
 		we: Westley(estadoSalud == EstadoSalud.VIVO,ubicacionActual == coa)
-		pr: Principe(ubicacionActual == cm)
+		pr: Principe(ubicacionActual == co)
 	then
 		modify(bu){
 			setUbicacionActual(pa);
