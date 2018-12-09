@@ -1649,7 +1649,6 @@ rule "Reunión final"
 		ap : AposentosPrincesa()
 		pC: PatioCastillo()
 		sc : SalonCastillo()
-		
 		b: Buttercup(ubicacionActual == ap, estadoCivil == EstadoCivil.SOLTERO)
 		w: Westley(ubicacionActual == ap, estadoSalud == EstadoSalud.RECUPERADO)
 		p: Principe(ubicacionActual == ap, motivacion == Motivacion.SEGUIR_VIVO)
@@ -1670,9 +1669,30 @@ rule "Reunión final"
 		}
 end
 
-/*rule "Huida del Castillo"
-
-end*/
+rule "Huida del Castillo"
+	when
+		ap : AposentosPrincesa()
+		pC: PatioCastillo()
+		b: Buttercup(ubicacionActual == ap)
+		w: Westley(ubicacionActual == ap, estadoSalud == EstadoSalud.DEBIL)
+		i: Inigo(ubicacionActual == ap, estadoSalud == EstadoSalud.HERIDO)
+		f: Fezzik(ubicacionActual == pC)
+	then
+		Archivo.getUnicaInstancia().addInf("Los cuatro cabalgan hacia la libertad. \n");
+		modify(i){
+			setUbicacionActual(null);
+		}
+		modify(w){
+			setUbicacionActual(null);
+		}
+		modify(f){
+			setUbicacionActual(null);
+		}
+		modify(b){
+			setUbicacionActual(null);
+		}
+		Archivo.getUnicaInstancia().addInf("Al amanecer todos estaban a salvo.\n");
+end
 
 /*rule "Fin del cuento"
 
@@ -1710,26 +1730,25 @@ rule "Consulta Que"
 		//System.out.println(Archivo.getUnicaInstancia().getpath());
 end
 
-
 rule "Consulta si Sexo"
+//agenda-group "consultaSi"
  	when 
   		consulta : ConsultaSi()
-  		eval (consulta.getValorAtributo() != null)
+  		//s: Sexo()
   		eval (Sexo.isValor(consulta.getValorAtributo()))
  		p: Personaje(nombre == consulta.getNombre())
  	then
   		modify(p){
-   			setSexo(Sexo.get(consulta.getValorAtributo()));
+   			setSexo(Sexo.atributo(consulta.getValorAtributo()));
   		}
  		//insert (consulta.getConsulta()); 
-  		System.out.println("SE PUEDE HACER ");
-  		System.out.println( p.getNombre() +" es "+ p.getSexo());
+  		System.out.println("Consulta sexo ");
+  		System.out.println( p.toString());
 end
 
 
 
 rule "Consulta si Lugar" 
-	salience 10 
 	when 
 		consulta: ConsultaSi()
 		lugar: Lugar(nombre == consulta.getValorAtributo())
@@ -1745,7 +1764,6 @@ end
 
 
 rule "Consulta si Origen"
-	salience 10
 	when 
 		consulta: ConsultaSi()
 		eval (Origen.isValor(consulta.getValorAtributo()))
@@ -1775,8 +1793,7 @@ rule "Consulta si EstadoSalud"
 end 
 
 rule "Consulta si Profesion" 
-	salience 10 
-	when 
+	when
 		consulta: ConsultaSi()
 		profesion: Profesion(nombre == consulta.getValorAtributo())
 		p: PersonajeCuento(nombre == consulta.getNombre())
@@ -1791,7 +1808,6 @@ end
 
 
 rule "Consulta si no existe" 
-	salience 10 
 	when 
 		consulta: ConsultaSi(valorAtributo == null)
 		//eval(consulta.getValorAtributo() == null)
