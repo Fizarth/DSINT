@@ -855,22 +855,6 @@ rule "Creacion Acto3"
 		insert(new PantanoFuego());
 		insert(new PozoDesesperacion());
 		System.out.println("Acto3");
-end
-
-rule "3.02 Principe llega  a Colina"
-	when 
-		co: Colina()
-		cm: CaminoMontana()
-		p: Principe(ubicacionActual == cm)
-		c: Conde(ubicacionActual == cm)
-	then 
-		modify(p){
-			setUbicacionActual(co);
-		}
-		modify(c){
-			setUbicacionActual(co);
-		}
-		Archivo.getUnicaInstancia().addInf("Cuando están juntos se produce el beso de amor verdadero.\n");
 end 
 
 rule "3.1 Necesario Acto3"
@@ -1695,6 +1679,7 @@ rule "Reunión final"
 		ap : AposentosPrincesa()
 		pC: PatioCastillo()
 		sc : SalonCastillo()
+		
 		b: Buttercup(ubicacionActual == ap, estadoCivil == EstadoCivil.SOLTERO)
 		w: Westley(ubicacionActual == ap, estadoSalud == EstadoSalud.RECUPERADO)
 		p: Principe(ubicacionActual == ap, motivacion == Motivacion.SEGUIR_VIVO)
@@ -1715,47 +1700,13 @@ rule "Reunión final"
 		}
 end
 
-rule "Huida del Castillo"
-	when
-		ap : AposentosPrincesa()
-		pC: PatioCastillo()
-		b: Buttercup(ubicacionActual == ap)
-		w: Westley(ubicacionActual == ap, estadoSalud == EstadoSalud.DEBIL)
-		i: Inigo(ubicacionActual == ap, estadoSalud == EstadoSalud.HERIDO)
-		f: Fezzik(ubicacionActual == pC)
-	then
-		Archivo.getUnicaInstancia().addInf("Los cuatro cabalgan hacia la libertad. \n");
-		modify(i){
-			setUbicacionActual(null);
-		}
-		modify(w){
-			setUbicacionActual(null);
-		}
-		modify(f){
-			setUbicacionActual(null);
-		}
-		modify(b){
-			setUbicacionActual(null);
-		}
-		Archivo.getUnicaInstancia().addInf("Al amanecer todos estaban a salvo.\n");
-end
+/*rule "Huida del Castillo"
 
-rule "Fin del cuento"
-	when
-		Buttercup(ubicacionActual == null)
-		Westley(ubicacionActual == null, estadoSalud == EstadoSalud.DEBIL)
-		Inigo(ubicacionActual == null, estadoSalud == EstadoSalud.HERIDO)
-		Fezzik(ubicacionActual == null)
-		ab: Abuelo(estadoSalud == EstadoSalud.VIVO)
-		ni: Nieto(estadoSalud == EstadoSalud.ENFERMO)
-	then
-		Archivo.getUnicaInstancia().addInf("El "+ab.getNombre() + " termina de narrar el cuento y "+
-		ni.getNombre()+" se va a dormir. Antes de despedirse el niño le pide a su abuelo que "+
-		"vuelva a leerle el cuento al día siguiente. El abuelo contesta \"como desees\". \n");
-		modify(ab){
-			setUbicacionActual(null);
-		}
-end
+end*/
+
+/*rule "Fin del cuento"
+
+end*/
 
 //Consultas
 rule "Consulta Quien" 
@@ -1789,25 +1740,26 @@ rule "Consulta Que"
 		//System.out.println(Archivo.getUnicaInstancia().getpath());
 end
 
+
 rule "Consulta si Sexo"
-//agenda-group "consultaSi"
  	when 
   		consulta : ConsultaSi()
-  		//s: Sexo()
+  		eval (consulta.getValorAtributo() != null)
   		eval (Sexo.isValor(consulta.getValorAtributo()))
  		p: Personaje(nombre == consulta.getNombre())
  	then
   		modify(p){
-   			setSexo(Sexo.atributo(consulta.getValorAtributo()));
+   			setSexo(Sexo.get(consulta.getValorAtributo()));
   		}
  		//insert (consulta.getConsulta()); 
-  		System.out.println("Consulta sexo ");
-  		System.out.println( p.toString());
+  		System.out.println("SE PUEDE HACER ");
+  		System.out.println( p.getNombre() +" es "+ p.getSexo());
 end
 
 
 
 rule "Consulta si Lugar" 
+	salience 10 
 	when 
 		consulta: ConsultaSi()
 		lugar: Lugar(nombre == consulta.getValorAtributo())
@@ -1823,6 +1775,7 @@ end
 
 
 rule "Consulta si Origen"
+	salience 10
 	when 
 		consulta: ConsultaSi()
 		eval (Origen.isValor(consulta.getValorAtributo()))
@@ -1852,7 +1805,8 @@ rule "Consulta si EstadoSalud"
 end 
 
 rule "Consulta si Profesion" 
-	when
+	salience 10 
+	when 
 		consulta: ConsultaSi()
 		profesion: Profesion(nombre == consulta.getValorAtributo())
 		p: PersonajeCuento(nombre == consulta.getNombre())
@@ -1867,6 +1821,7 @@ end
 
 
 rule "Consulta si no existe" 
+	salience 10 
 	when 
 		consulta: ConsultaSi(valorAtributo == null)
 		//eval(consulta.getValorAtributo() == null)
