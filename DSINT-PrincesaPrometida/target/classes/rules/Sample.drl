@@ -775,7 +775,7 @@ rule "2.06 Como Desees en la colina"
 		co: Colina()
 		coa: ColinaAbajo()
 		m: Mar()
-		we: Westley(estadoSalud == EstadoSalud.MUERTO, ubicacionActual == m)
+		we: Westley(estadoSalud == EstadoSalud.MUERTO, ubicacionActual == m, motivacion == Motivacion.GANAR_DINERO)
 		bu: Buttercup(ubicacionActual == co)
 		pi: Pirata(ubicacionActual == co)
 		pir: Pirateria()
@@ -817,34 +817,6 @@ rule "2.06 Como Desees en la colina"
 		Archivo.getUnicaInstancia().addInf("Cuando están juntos se produce el beso de amor verdadero.\n");
 end
 
-/*
-rule "2.07 Beso de amor verdadero"
-	when
-		coa: ColinaAbajo()
-		we: Westley(estadoSalud == EstadoSalud.VIVO, ubicacionActual == coa, motivacion==Motivacion.GANAR_DINERO)
-		bu: Buttercup(ubicacionActual == coa)
-		pi: Pirata(ubicacionActual == coa)
-	then
-		Relacion r3 = pi.getRelacion(we);
-		Relacion r4 = we.getRelacion(pi);
-		
-		modify(pi){
-			removeRelacion(r3);
-		}
-		
-		FingeSer f1 = new FingeSer(pi);
-		
-		ArrayList<Relacion> list = pi.getRelacionesPersonaje();
-		modify(we){
-			removeRelacion(r4),
-			setMotivacion(Motivacion.ESTAR_CON_BUTTERCUP),
-			addRelacionesPersonaje(list),
-			addRelacion(f1);
-		}
-		
-		Archivo.getUnicaInstancia().addInf("Cuando están juntos se produce el beso de amor verdadero.\n");
-end
-*/
 /*** ACTO 3  Buttercup	y	Westley	llegan	al	pantano	hasta que	muere	el	rey****/
 
 rule "Creacion Acto3"
