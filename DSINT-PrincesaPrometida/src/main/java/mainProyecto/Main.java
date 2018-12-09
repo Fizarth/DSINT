@@ -2,6 +2,7 @@ package mainProyecto;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
@@ -22,11 +23,12 @@ public class Main {
 
 
 		String filePath = "/home/norberto/input1.txt";
+		//String filePath = funcionalidadConsola();
 		
 		//String filePath = "C:\\Users\\fires\\Desktop\\Nueva\\que.txt";
 
 		//String filePath = "C:\\Users\\maris\\Desktop\\pruebasDsint\\prueba.txt";
-		Archivo.setPath(filePath + ".output.txt");
+		Archivo.setPath(outputPath(filePath));
 		
 		ArrayList<Consulta> consultas = null;
 		try {
@@ -54,11 +56,9 @@ public class Main {
 			kSession.insert(consulta);
 			
 		
-			//System.out.println(Archivo.getUnicaInstancia().getInformacion());
 			
 			
 			kSession.fireAllRules();
-			//kSession.dispose();
 			kSession.destroy();
 			Archivo.getUnicaInstancia().resetearInf();
 
@@ -81,5 +81,31 @@ public class Main {
 			kSession.fireAllRules();
 		}
 	}
+	
+	
+	private static String funcionalidadConsola() {
+		System.out.println("Inserte la ruta del fichero a tratar");
+		String cadena = "";
+		Scanner entrada = new Scanner(System.in);
+		cadena = entrada.nextLine();
+		System.out.println("Ruta recibida: "+ cadena);		
+		return cadena;
+	}
+	
+	
+	private static String outputPath(String input) {
+		String out = new String(input);
+		if(out.subSequence(input.length()-4,input.length() ).equals(".txt"))
+			out = out.substring(0, input.length()-4);
+		
+		out+=".output.txt";
+		
+		return out;
+		
+	}
+	
+	
+	
+	
 
 }
